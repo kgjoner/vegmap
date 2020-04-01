@@ -1,0 +1,93 @@
+aside {
+  width: 370px;
+  min-height: calc(100vh - 120px);
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 30px 20px 0 20px;
+  border: 2px solid var(--dark-color);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+aside h1 {
+  color: var(--main-color);
+  font-family: 'Atma';
+  font-weight: 900;
+  font-size: 3em;
+}
+
+aside h1 span {
+  color: var(--ovolacto-color);
+}
+
+aside .legend {
+  margin-top: 20px;
+}
+
+aside .icon-info {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  font-size: 0.9em;
+  color: var(--dark-color);
+  margin-top: 15px;
+  border-bottom-left-radius: 6px;
+  padding-right: 8px;
+  border-bottom: 2px solid var(--main-color);  
+}
+
+aside .opção-vegana.icon-info {
+  border-color: var(--veg-opt-color);
+}
+
+aside .ovolacto.icon-info {
+  border-color: var(--ovolacto-color);
+}
+
+aside .icon-info .icon-box {
+  margin-right: 5px;
+}
+
+aside button {
+  background-color: var(--main-color);
+  color: #f2f2f2;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+aside button.login-btn {
+  background-color: var(--veg-opt-color);
+}
+
+aside p {
+  font-size: 0.9em;
+  color: var(--dark-color);
+  margin-top: 10px;
+}
+
+aside .foot-message {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 10px 20px;
+  background-color: var(--dark-color);
+  color: #fdfdfd;
+  font-size: 0.85em;
+  display: flex;
+  justify-content: flex-end;
+  align-self: center; 
+}
+
+aside .foot-message div {
+  margin-left: 5px;
+  transform: scale(0.9);  
+  background-color: #fdfdfddd;
+}

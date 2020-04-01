@@ -1,26 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import LoginBox from './components/LoginBox'
+import SignupBox from './components/SignupBox'
+import RestaurantCard from './components/RestaurantCard'
+
+import './global.css'
+import './App.css'
+import api from './services/api';
 
 function App() {
+  const [restaurants, setRestaurants] = useState([])
+  const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+  const [showPopup, setShowPopup] = useState(false)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    api.get('/restaurants')
+      .then(resp => {
+        setRestaurants(resp.data)
+      })
+  }, [])
+
+  function addRestaurant(newRestaurant) {
+    setRestaurants([...restaurants, newRestaurant])
+  }
+
+  function closePopup(e) {
+    if(!e || e.target === document.querySelector('.popup-bg')) {
+      setShowPopup(false)
+      if(selectedRestaurant) setSelectedRestaurant(null)
+    }
+  }
+
+  function editRestaurant(restaurant) {
+    setSelectedRestaurant(restaurant)
+    setShowPopup(true)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div id="app">
+      { showPopup ?
+        <div className="popup-bg" onClick={e => closePopup(e)}>
+          <SignupBox addRestaurant={addRestaurant} 
+            closePopup={closePopup}
+            selectedRestaurant={selectedRestaurant}
+            user={user} />
+        </div> 
+        : null
+      }
+      <LoginBox setShowPopup={setShowPopup} 
+        user={user} 
+        setUser={setUser} />
+      <main>
+        <ul>
+          {restaurants.map(restaurant => (
+            <RestaurantCard key={restaurant._id} 
+              restaurant={ restaurant }
+              user={user} 
+              edit={editRestaurant}/>
+          ))}
+        </ul>
+      </main>
     </div>
-  );
+  )
 }
 
 export default App;

@@ -1,0 +1,165 @@
+.restaurant-card {
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 16px;
+  padding-bottom: 0;
+  border: 2px solid var(--main-color);
+  position: relative;
+}
+
+.restaurant-card .edit-box {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.restaurant-card header {
+  display: flex;
+  align-items: center;
+}
+
+.restaurant-card header img,
+.restaurant-card header .icon-box  {
+  width: 54px;
+  height: 54px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.user-info strong {
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-info span {
+  font-size: 13px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.restaurant-card p {
+  color: #fdfdfdcb;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.restaurant-card .body-info {
+  margin: 10px 0;
+}
+
+.restaurant-card footer {
+  background-color: var(--main-color);
+  width: calc(100% + 32px);
+  height: 44px;
+  position: relative;
+  left: -16px;
+  padding-left: 16px;
+  padding-top: 10px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  overflow: hidden;
+}
+
+.restaurant-card footer button {
+  position: absolute;
+  right: 20px;
+  top: 8px;
+}
+
+.restaurant-card button.copy-coord {
+  color: var(--dark-color);
+  background-color: rgb(223, 223, 223);
+  border-radius: 4px;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: bold;
+}
+
+.restaurant-card button.copy-coord:hover {
+  width: 155px;
+}
+
+.restaurant-card .copy-coord .content-box {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 150px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.copy-coord .content-box .pin-icon {
+  margin-left: 5px;
+}
+
+.restaurant-card .external-links {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.restaurant-card a {
+  background-color: var(--dark-color);
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.restaurant-card a div {
+  mask-image: url('../assets/img/home.svg');
+  background-color: #fdfdfd;
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+.restaurant-card a .fb-icon {
+  mask-image: url('../assets/img/facebook.svg');
+}
+
+.restaurant-card a .ig-icon {
+  mask-image: url('../assets/img/instagram.svg');
+}
+
+.restaurant-card a + a {
+  margin-left: 10px;
+}
+
+.restaurant-card a:hover {
+  background-color: var(--main-color);
+}
+
+.opção-vegana header .icon-box {
+  background: var(--veg-opt-color);
+}
+
+.opção-vegana {
+  border-color: var(--veg-opt-color);
+}
+
+.opção-vegana a:hover,
+.opção-vegana footer {
+  background-color: var(--veg-opt-color);
+}
+
+.ovolacto header .icon-box {
+  background: var(--ovolacto-color);
+}
+
+.ovolacto a:hover {
+  background-color: var(--ovolacto-color);
+}

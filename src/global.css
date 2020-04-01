@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Atma|Roboto:400,700&display=swap');
+
+*{
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --main-color: #28bd6b;
+  --veg-opt-color: rgb(34, 88, 189);
+  --ovolacto-color: rgb(189, 127, 34);
+  --dark-color: #636363;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+
+body {
+  background-color: #c7dbcb;
+  -webkit-font-smoothing: antialised;
+}
+
+body, input, button {
+  font-family: 'Roboto', sans-serif;
+}
+
+.popup-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 98;
+}
+
+.icon-box {
+  background: var(--main-color);
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.opção-vegana .icon-box {
+  background: var(--veg-opt-color);
+}
+
+.ovolacto .icon-box {
+  background: var(--ovolacto-color);
+}
+
+.leaf-icon {
+  mask-image: url('./assets/img/leaf.svg');
+  background-color: #fff;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+aside .heart-icon {
+  mask-image: url('./assets/img/heart.svg');
+  background-color: rgb(201, 82, 82);
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+.pin-icon {
+  mask-image: url('./assets/img/location.svg');
+  background-color: var(--dark-color);
+  width: 17px;
+  height: 17px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+.edit-icon {
+  mask-image: url('./assets/img/edit.svg');
+  background-color: #666;
+  width: 15px;
+  height: 15px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}

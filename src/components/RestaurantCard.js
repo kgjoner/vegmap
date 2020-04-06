@@ -14,7 +14,7 @@ function RestaurantCard({ restaurant, user, edit }) {
 
   return (
     <li className={`restaurant-card ${restaurant.type}`}>
-      { !user ? 
+      { user ? 
         <button className="edit-box" onClick={e => edit(restaurant)}>
           <div className="edit-icon"></div>
         </button> : null

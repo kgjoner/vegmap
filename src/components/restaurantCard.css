@@ -4,16 +4,33 @@
   border-radius: 4px;
   padding: 16px;
   padding-bottom: 0;
-  border: 2px solid var(--main-color);
+  border: 2px solid var(--light-color);
   position: relative;
 }
 
 .restaurant-card .edit-box {
   position: absolute;
-  right: 10px;
-  top: 10px;
-  background-color: transparent;
+  left: calc(100% - 10px);
+  top: -10px;
+  width: 0;
+  overflow: hidden;
+  background-color: var(--light-color);
   cursor: pointer;
+  border-radius: 4px;
+  transition: 0.4s;
+}
+
+.restaurant-card.vegan .edit-box {
+  background-color: var(--primary-color);
+}
+
+.restaurant-card.vegetarian .edit-box {
+  background-color: var(--secondary-color);
+}
+
+.restaurant-card:hover .edit-box {
+  width: auto;
+  padding: 5px;
 }
 
 .restaurant-card header {
@@ -27,6 +44,17 @@
   height: 54px;
   border-radius: 4px;
   margin-right: 10px;
+}
+
+.restaurant-card header .icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.restaurant-card header .leaf-icon {
+  height: 25px;
+  width: 25px;
 }
 
 .user-info strong {
@@ -50,10 +78,26 @@
 
 .restaurant-card .body-info {
   margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.body-info .like-box {
+  color: var(--primary-color);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.body-info .like-box button {
+  background: none;
+  border: none;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 .restaurant-card footer {
-  background-color: var(--main-color);
+  background-color: var(--light-color);
   width: calc(100% + 32px);
   height: 44px;
   position: relative;
@@ -140,26 +184,57 @@
 }
 
 .restaurant-card a:hover {
-  background-color: var(--main-color);
+  background-color: var(--light-color);
 }
 
-.opção-vegana header .icon-box {
-  background: var(--veg-opt-color);
+.vegan header .icon-box {
+  background: var(--primary-color);
 }
 
-.opção-vegana {
-  border-color: var(--veg-opt-color);
+.vegan {
+  border-color: var(--primary-color);
 }
 
-.opção-vegana a:hover,
-.opção-vegana footer {
-  background-color: var(--veg-opt-color);
+.vegan a:hover,
+.vegan footer {
+  background-color: var(--primary-color);
 }
 
-.ovolacto header .icon-box {
-  background: var(--ovolacto-color);
+.vegetarian header .icon-box {
+  background: var(--secondary-color);
 }
 
-.ovolacto a:hover {
-  background-color: var(--ovolacto-color);
+.vegetarian {
+  border-color: var(--secondary-color);
+}
+
+.vegetarian a:hover,
+.vegetarian footer {
+  background-color: var(--secondary-color);
+}
+
+
+.flags-box {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  display: flex;
+}
+
+.flags-box .flag {
+  height: 20px;
+  width: 15px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%);
+}
+
+.flags-box .flag + .flag {
+  margin-left: 5px;
+}
+
+.flag.vegan {
+  background-color: var(--primary-color);
+}
+
+.flag.vegetarian {
+  background-color: var(--secondary-color);
 }

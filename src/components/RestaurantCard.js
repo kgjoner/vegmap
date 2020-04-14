@@ -1,4 +1,5 @@
 import React from 'react'
+import api from '../services/api'
 import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, user, edit }) {
@@ -12,8 +13,22 @@ function RestaurantCard({ restaurant, user, edit }) {
     alert('Coordenadas Copiadas!')
   }
 
+  function likeRestaurant() {
+    if(!user || restaurant.likes.indexOf(user.userID) !== -1) return 
+    const payload = {
+      username: restaurant.username,
+      author: user,
+      action: 'like'
+    }
+    api.put('/restaurants', payload)
+  }
+
   return (
     <li className={`restaurant-card ${restaurant.type}`}>
+      <div className="flags-box">
+        { restaurant.option && restaurant.option.vegan ? <div className="vegan flag"></div> : null }
+        { restaurant.option && restaurant.option.vegetarian ? <div className="vegetarian flag"></div> : null }
+      </div>
       { user ? 
         <button className="edit-box" onClick={e => edit(restaurant)}>
           <div className="edit-icon"></div>
@@ -40,6 +55,14 @@ function RestaurantCard({ restaurant, user, edit }) {
             rel="noopener noreferrer"><div className="fb-icon"></div></a> : null }
           { restaurant.instagramUsername ? <a href={`https://instagram.com/${restaurant.instagramUsername}`} target="_blank"
             rel="noopener noreferrer"><div className="ig-icon"></div></a> : null }
+        </div>
+        <div className="like-box">
+          { restaurant.likes.length }
+          <button className="like-btn"
+            onClick={e => likeRestaurant()}>
+            <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
+              'chef-icon' : 'chef-filled-icon'}></div>
+          </button>
         </div>
       </div>
       <footer>

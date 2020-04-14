@@ -4,11 +4,12 @@
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 30px 20px;
+  overflow-y: scroll;
+  max-height: calc(100vh - 30px);
 }
 
 .popup-bg > div strong {
-  font-size: 20px;
-  text-align: center;
+  font-size: 24px;
   display: block;
   color: #333;
 }
@@ -18,8 +19,9 @@
 }
 
 .popup-bg > div form .input-block + .input-block,
-.popup-bg > div form .input-group + .input-block {
-  margin-top: 20px;
+.popup-bg > div form .input-group + .input-block,
+.popup-bg > div form .input-group + .input-group {
+  margin-top: 30px;
 }
 
 .popup-bg > div form .input-group {
@@ -44,7 +46,7 @@
   display: block;
 }
 
-.popup-bg > div form .input-block input,
+.popup-bg > div form .input-block:not(.checkbox) input,
 .popup-bg > div form .input-block select {
   width: 100%;
   height: 32px;
@@ -54,17 +56,55 @@
   border-bottom: 1px solid #eee;
 }
 
-.popup-bg > div form .input-block input:focus,
+.popup-bg > div form .input-block.checkbox {
+  display: flex;
+  flex-direction: column;
+  height: 34px;
+  justify-content: space-between;
+}
+
+form .input-block.checkbox .check-option {
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+
+form .input-block.checkbox .check-option + .check-option {
+  margin-top: 5px;
+}
+
+.input-block.checkbox .check-option input {
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.input-block.checkbox.error .check-option label {
+  color: var(--danger-color);
+}
+
+.check-option label {
+  cursor: pointer;
+}
+
+.popup-bg > div form .input-block:not(.checkbox) input:focus,
 .popup-bg > div form .input-block select:focus  {
   border-color: #1ead5f;
   box-shadow: 0 2px 0 #1ead5e52;
   transition: 0.5s;
 }
 
+.popup-bg > div form .input-block:not(.checkbox) input.error,
+.popup-bg > div form .input-block select.error,
+.input-block.checkbox.error .check-option input  {
+  border-color: var(--danger-color-variant);
+  box-shadow: 0 2px 0 rgba(235, 101, 101, 0.3);
+}
+
 .popup-bg > div form button[type="submit"] {
-  width: 100%;
+  width: 50%;
   border: 0;
-  margin-top: 30px;
   background-color:#28bd6b;
   border-radius: 4px;
   padding: 15px 20px;
@@ -85,7 +125,7 @@
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  top: -25px;
+  bottom: 0px;
 }
 
 .popup-bg > div .get-coord {
@@ -99,4 +139,41 @@
   cursor: pointer;
   transition: background 0.5s;
   opacity: 0.8;
+}
+
+.submit-block {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.submit-block .error-sign {
+  width: 100%;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 10px;
+  margin-left: 20px;
+  background-color: var(--danger-color);
+  position: relative;
+  visibility: hidden;
+}
+
+.submit-block .error-sign.error-visible {
+  visibility: visible;
+  animation: error-shake 0.4s;
+}
+
+@keyframes error-shake {
+  0%{
+    left: 0;
+  }
+  35% {
+    left: 10px;
+  }
+  80% {
+    left: -8px;
+  }
+  100% {
+    left: 0
+  }
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import normalizeFood from '../../utils/normalizeFood'
 import "./foodInput.css"
 
-function FoodInput({ foods, setFoods }) {
+function FoodInput({ foods, setFoods, error }) {
   const [foodHint, setFoodHint] = useState('')
   const [foodOnTyping, setFoodOnTyping] = useState('')
   const [allFoods, setAllFoods] = useState([])
@@ -31,7 +31,7 @@ function FoodInput({ foods, setFoods }) {
   }, [])
 
   function normalizeString(str) {
-    return str.normalize('NFD').replace(/[\u0300-\u036f ,;/\\|]/g, "")
+    return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f ,;/\\|]/g, "")
   }
 
   function handleFoodOptions(food) {
@@ -86,7 +86,10 @@ function FoodInput({ foods, setFoods }) {
   }
 
   return (
-    <div className={`food-input-group ${focus ? 'food-input-focused' : ''}`}>
+    <div className={`food-input-group 
+      ${focus ? 'food-input-focused' : ''}
+      ${error.target === 'food' ? 'error' : ''}`}
+    >  
       {foods.length > 0 ?
         foods.map((food, index) => (
           <span className="typed-food" key={index}>{food}</span>
@@ -94,7 +97,7 @@ function FoodInput({ foods, setFoods }) {
       }
       <div className="typing-group">
         {foodHint ? <p className="food-hint">{foodHint}</p> : null}
-        <input name="foods" id="foods" required={foods.length === 0}
+        <input name="foods" id="foods"
           value={foodOnTyping}
           onChange={e => handleFoodOptions(e.target.value)}
           onKeyDown={e => handleKeyInput(e)}

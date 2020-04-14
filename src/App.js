@@ -38,28 +38,30 @@ function App() {
 
   return (
     <div id="app">
-      { showPopup ?
-        <div className="popup-bg" onClick={e => closePopup(e)}>
-          <SignupBox addRestaurant={addRestaurant} 
-            closePopup={closePopup}
-            selectedRestaurant={selectedRestaurant}
-            user={user} />
-        </div> 
-        : null
-      }
-      <LoginBox setShowPopup={setShowPopup} 
-        user={user} 
-        setUser={setUser} />
-      <main>
-        <ul>
-          {restaurants.map(restaurant => (
-            <RestaurantCard key={restaurant._id} 
-              restaurant={ restaurant }
-              user={user} 
-              edit={editRestaurant}/>
-          ))}
-        </ul>
-      </main>
+      <div className="container">
+        { showPopup ?
+          <div className="popup-bg" onClick={e => closePopup(e)}>
+            <SignupBox addRestaurant={addRestaurant} 
+              closePopup={closePopup}
+              selectedRestaurant={selectedRestaurant}
+              user={user} />
+          </div> 
+          : null
+        }
+        <LoginBox setShowPopup={setShowPopup} 
+          user={user} 
+          setUser={setUser} />
+        <main>
+          <ul>
+            {restaurants.map(restaurant => (
+              <RestaurantCard key={restaurant._id} 
+                restaurant={ restaurant }
+                user={user} 
+                edit={editRestaurant}/>
+            ))}
+          </ul>
+        </main>
+      </div>
     </div>
   )
 }

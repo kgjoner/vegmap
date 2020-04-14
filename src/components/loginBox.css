@@ -13,15 +13,20 @@ aside {
   position: relative;
 }
 
+aside .logo {
+  display: flex;
+}
+
 aside h1 {
-  color: var(--main-color);
+  color: var(--primary-color);
   font-family: 'Atma';
   font-weight: 900;
   font-size: 3em;
+  margin-left: 15px;
 }
 
 aside h1 span {
-  color: var(--ovolacto-color);
+  color: var(--secondary-color);
 }
 
 aside .legend {
@@ -37,15 +42,15 @@ aside .icon-info {
   margin-top: 15px;
   border-bottom-left-radius: 6px;
   padding-right: 8px;
-  border-bottom: 2px solid var(--main-color);  
+  border-bottom: 2px solid var(--primary-color);  
 }
 
-aside .opção-vegana.icon-info {
-  border-color: var(--veg-opt-color);
+aside .vegan.icon-info {
+  border-color: var(--primary-color);
 }
 
-aside .ovolacto.icon-info {
-  border-color: var(--ovolacto-color);
+aside .vegetarian.icon-info {
+  border-color: var(--secondary-color);
 }
 
 aside .icon-info .icon-box {
@@ -53,7 +58,7 @@ aside .icon-info .icon-box {
 }
 
 aside button {
-  background-color: var(--main-color);
+  background-color: var(--primary-color);
   color: #f2f2f2;
   padding: 8px 12px;
   border-radius: 4px;
@@ -64,7 +69,7 @@ aside button {
 }
 
 aside button.login-btn {
-  background-color: var(--veg-opt-color);
+  background-color: #2258BD;
 }
 
 aside p {
@@ -88,6 +93,7 @@ aside .foot-message {
 
 aside .foot-message div {
   margin-left: 5px;
+  margin-right: 5px;
   transform: scale(0.9);  
   background-color: #fdfdfddd;
 }

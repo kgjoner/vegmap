@@ -9,10 +9,16 @@
 }
 
 :root {
-  --main-color: #28bd6b;
-  --veg-opt-color: rgb(34, 88, 189);
-  --ovolacto-color: rgb(189, 127, 34);
+  --primary-color: #28bd6b;
+  /* --secondary-color: #669EFF; */
+  /* --secondary-color: #007885; */
+  --secondary-color: #F5B25F;
+  /* --secondary-color: #DEB887; */
+  --light-color: #99AEBB;
+  /* --light-color: #afaeae; */
   --dark-color: #636363;
+  --danger-color: rgb(216, 125, 125);
+  --danger-color-variant: rgb(235, 101, 101);
 }
 
 html, body, #root {
@@ -21,8 +27,22 @@ html, body, #root {
 
 
 body {
-  background-color: #c7dbcb;
+  /* background-color: #c7dbcb; */
   -webkit-font-smoothing: antialised;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('./assets/img/floripa-map.png');
+  background-size: cover;
+  background-position: 50% 50%;
+  filter: blur(3px);
+  z-index: -1;
 }
 
 body, input, button {
@@ -43,19 +63,19 @@ body, input, button {
 }
 
 .icon-box {
-  background: var(--main-color);
+  background: var(--light-color);
   width: 30px;
   height: 30px;
   padding: 5px;
   border-radius: 4px;
 }
 
-.opção-vegana .icon-box {
-  background: var(--veg-opt-color);
+.vegan .icon-box {
+  background: var(--primary-color);
 }
 
-.ovolacto .icon-box {
-  background: var(--ovolacto-color);
+.vegetarian .icon-box {
+  background: var(--secondary-color);
 }
 
 .leaf-icon {
@@ -90,10 +110,50 @@ aside .heart-icon {
 
 .edit-icon {
   mask-image: url('./assets/img/edit.svg');
-  background-color: #666;
+  background-color: #f2f2f2;
   width: 15px;
   height: 15px;
   padding: 0;
   mask-repeat: no-repeat;
   mask-size: cover;
+}
+
+.chef-icon {
+  mask-image: url('./assets/img/chef.svg');
+  background-color: var(--primary-color);
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+.chef-filled-icon {
+  mask-image: url('./assets/img/chef-filled.svg');
+  background-color: var(--primary-color);
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+
+.loading-icon {
+  mask-image: url('./assets/img/loading.svg');
+  background-color: #fff;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  animation: load-spin 0.8s infinite linear;
+}
+
+@keyframes load-spin {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }

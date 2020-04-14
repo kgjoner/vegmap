@@ -15,6 +15,11 @@
   transition: 0.5s;
 }
 
+.food-input-group.error {
+  border-color: var(--danger-color-variant);
+  box-shadow: 0 2px 0 rgba(235, 101, 101, 0.3);
+}
+
 .typed-food {
   background-color: var(--dark-color);
   color: #fdfdfd;

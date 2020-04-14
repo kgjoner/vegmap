@@ -1,6 +1,7 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import "./loginBox.css"
+import logo from "../assets/img/logo.svg"
 
 function LoginBox({ setShowPopup, user, setUser }) {
 
@@ -10,26 +11,23 @@ function LoginBox({ setShowPopup, user, setUser }) {
 
   return (
     <aside>
-      <h1>Veg<span>Map</span></h1>
+      <div className="logo">
+        <img src={logo} alt="logo" width="80"/>
+        <h1>Veg<span>Map</span></h1>
+      </div>
       
       <div className="legend">
-        <div className="icon-info">
+        <div className="icon-info vegan">
           <div className="icon-box">
             <div className="leaf-icon"></div>
           </div>
-          exclusivamente vegano
+          Vegano
         </div>
-        <div className="icon-info ovolacto">
+        <div className="icon-info vegetarian">
           <div className="icon-box">
             <div className="leaf-icon"></div>
           </div>
-          ovolacto com opção vegana
-        </div>
-        <div className="icon-info opção-vegana">
-          <div className="icon-box">
-            <div className="leaf-icon"></div>
-          </div>
-          opção vegana
+          Vegetariano
         </div>
       </div>
       
@@ -50,6 +48,7 @@ function LoginBox({ setShowPopup, user, setUser }) {
       <div className="foot-message">
         ©2020 | Feito com
         <div className="heart-icon"></div>
+        em Floripa
       </div>
     </aside>
   )

@@ -25,53 +25,65 @@ function RestaurantCard({ restaurant, user, edit }) {
 
   return (
     <li className={`restaurant-card ${restaurant.type}`}>
-      <div className="flags-box">
-        { restaurant.option && restaurant.option.vegan ? <div className="vegan flag"></div> : null }
-        { restaurant.option && restaurant.option.vegetarian ? <div className="vegetarian flag"></div> : null }
+      <div className="restaurant-card__flags">
+        { restaurant.option && restaurant.option.vegan ? 
+          <div className="restaurant-card__flag restaurant-card__flag--vegan"></div> : null }
+        { restaurant.option && restaurant.option.vegetarian ? 
+          <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
       { user ? 
-        <button className="edit-box" onClick={e => edit(restaurant)}>
-          <div className="edit-icon"></div>
+        <button className="restaurant-card__edit" onClick={e => edit(restaurant)}>
+          <div className="icon icon--edit"></div>
         </button> : null
       }
-      <header>
+      <header className="restaurant-card__header">
       { restaurant.pictureURL ?
-          <img src={restaurant.pictureURL} alt="foto"/> :
-          <div className="icon-box">
-            <div className="leaf-icon"></div>
+          <img src={restaurant.pictureURL} className="restaurant-card__picture" alt="foto"/> :
+          <div className="restaurant-card__picture restaurant-card__picture--icon">
+            <div className="icon icon--leaf"></div>
           </div>
         }
-        <div className="user-info">
-          <strong>{restaurant.name || restaurant.username}</strong>
-          <span>{restaurant.foods.length <= 3 ? restaurant.foods.join(', ')
-            : restaurant.foods.slice(0, 3).join(', ') + '…'}</span>
+        <div>
+          <strong className="restaurant-card__name">
+            {restaurant.name || restaurant.username}
+          </strong>
+          <span className="restaurant-card__foods">
+            {restaurant.foods.length <= 3 ? restaurant.foods.join(', ')
+            : restaurant.foods.slice(0, 3).join(', ') + '…'}
+          </span>
         </div>
       </header>
-      <div className="body-info">
-        <div className="external-links">
+      <div className="restaurant-card__body">
+        <div className="restaurant-card__links">
           { restaurant.website ? <a href={`http://${restaurant.website}`} target="_blank"
-            rel="noopener noreferrer"><div className="site-icon"></div></a> : null }
+            className="restaurant-card__link" rel="noopener noreferrer">
+              <div className="icon icon--home"></div>
+          </a> : null }
           { restaurant.facebookUsername ? <a href={`https://facebook.com/${restaurant.facebookUsername}`} target="_blank"
-            rel="noopener noreferrer"><div className="fb-icon"></div></a> : null }
+            className="restaurant-card__link" rel="noopener noreferrer">
+              <div className="icon icon--facebook"></div>
+          </a> : null }
           { restaurant.instagramUsername ? <a href={`https://instagram.com/${restaurant.instagramUsername}`} target="_blank"
-            rel="noopener noreferrer"><div className="ig-icon"></div></a> : null }
+            className="restaurant-card__link" rel="noopener noreferrer">
+              <div className="icon icon--instagram"></div>
+          </a> : null }
         </div>
-        <div className="like-box">
+        <div className="restaurant-card__like-info">
           { restaurant.likes.length }
-          <button className="like-btn"
+          <button className="restaurant-card__like-btn"
             onClick={e => likeRestaurant()}>
             <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
-              'chef-icon' : 'chef-filled-icon'}></div>
+              'icon icon--chef' : 'icon icon--chef-filled'}></div>
           </button>
         </div>
       </div>
-      <footer>
-        <p>{restaurant.address}</p>
-        <button className="copy-coord" 
+      <footer className="restaurant-card__footer">
+        <p className="restaurant-card__address">{restaurant.address}</p>
+        <button className="restaurant-card__coords" 
           onClick={e => copyCoordinatesToClipboard(restaurant._id)}>
-          <div className="content-box">
+          <div className="restaurant-card__btn-container">
             Copiar Coordenadas
-            <div className="pin-icon"></div>
+            <div className="icon icon--pin"></div>
           </div>
         </button>
         <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 

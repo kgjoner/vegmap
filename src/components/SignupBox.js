@@ -131,9 +131,9 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user }) {
   }
 
   return (
-    <div>
-      <strong>Cadastro</strong>
-      <form onSubmit={handleSubmit}>
+    <div className="signup">
+      <strong className="signup__title">Cadastro</strong>
+      <form className="signup__form" onSubmit={handleSubmit}>
         <div className="input-group">
           <div className="input-block">
             <label htmlFor="name">Nome*</label>
@@ -239,7 +239,7 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user }) {
           <button type="submit">
             { !isLoading ?
             'Confirmar' :
-            <div className="loading-icon"></div>
+            <div className="icon icon--loading"></div>
             }
           </button>
           <div className={error.msg ? 'error-sign error-visible' : 'error-sign'}>

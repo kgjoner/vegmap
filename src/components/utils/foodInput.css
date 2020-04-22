@@ -3,6 +3,7 @@
   position: relative;
   overflow: hidden;
   display: flex;
+  justify-content: flex-end;
   width: 100%;
   height: 32px;
   font-size: 14px;
@@ -37,6 +38,7 @@
 .typing-group {
   position: relative;
   width: 100%;
+  min-width: 120px;
 }
 
 .food-hint {

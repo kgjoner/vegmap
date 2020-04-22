@@ -1,4 +1,4 @@
-aside {
+.presentation {
   width: 370px;
   min-height: calc(100vh - 120px);
   background: #fdfdfd;
@@ -13,27 +13,23 @@ aside {
   position: relative;
 }
 
-aside .logo {
+.logo {
   display: flex;
+  align-items: center;
+  height: 80px;
 }
 
-aside h1 {
-  color: var(--primary-color);
-  font-family: 'Atma';
-  font-weight: 900;
-  font-size: 3em;
+.logo__logotype {
+  height: 100%;
   margin-left: 15px;
+  height: 60px;
 }
 
-aside h1 span {
-  color: var(--secondary-color);
-}
-
-aside .legend {
+.presentation__legend {
   margin-top: 20px;
 }
 
-aside .icon-info {
+.presentation__item {
   display: flex;
   align-items: center;
   align-self: flex-start;
@@ -45,19 +41,19 @@ aside .icon-info {
   border-bottom: 2px solid var(--primary-color);  
 }
 
-aside .vegan.icon-info {
+.presentation__item--vegan {
   border-color: var(--primary-color);
 }
 
-aside .vegetarian.icon-info {
+.presentation__item--vegetarian {
   border-color: var(--secondary-color);
 }
 
-aside .icon-info .icon-box {
+.presentation .icon-box {
   margin-right: 5px;
 }
 
-aside button {
+.presentation__btn {
   background-color: var(--primary-color);
   color: #f2f2f2;
   padding: 8px 12px;
@@ -68,17 +64,17 @@ aside button {
   cursor: pointer;
 }
 
-aside button.login-btn {
+.presentation__btn--facebook {
   background-color: #2258BD;
 }
 
-aside p {
+.presentation__user {
   font-size: 0.9em;
   color: var(--dark-color);
   margin-top: 10px;
 }
 
-aside .foot-message {
+.presentation__footer {
   position: absolute;
   width: 100%;
   bottom: 0;
@@ -91,7 +87,7 @@ aside .foot-message {
   align-self: center; 
 }
 
-aside .foot-message div {
+.presentation__footer .icon {
   margin-left: 5px;
   margin-right: 5px;
   transform: scale(0.9);  

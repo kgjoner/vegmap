@@ -1,0 +1,81 @@
+.icon {
+  background-color: var(--dark-color);
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+}
+
+.icon--leaf {
+  mask-image: url('../img/leaf.svg');
+  background-color: #fff;
+  width: 18px;
+  height: 18px;
+}
+
+.icon--heart {
+  mask-image: url('../img/heart.svg');
+  background-color: rgb(201, 82, 82);
+  width: 17px;
+  height: 17px;
+}
+
+.icon--pin {
+  mask-image: url('../img/location.svg');
+  width: 17px;
+  height: 17px;
+}
+
+.icon--edit {
+  mask-image: url('../img/edit.svg');
+  background-color: #f2f2f2;
+  width: 15px;
+  height: 15px;
+}
+
+.icon--chef {
+  mask-image: url('../img/star.svg');
+  background-color: var(--primary-color);
+}
+
+.icon--chef-filled {
+  mask-image: url('../img/star-filled.svg');
+  background-color: var(--primary-color);
+}
+
+.icon--home {
+  mask-image: url('../img/home.svg');
+  background-color: #fdfdfd;
+  width: 17px;
+  height: 17px;
+}
+
+.icon--facebook {
+  mask-image: url('../img/facebook.svg');
+  background-color: #fdfdfd;
+  width: 17px;
+  height: 17px;
+}
+
+.icon--instagram {
+  mask-image: url('../img/instagram.svg');
+  background-color: #fdfdfd;
+  width: 17px;
+  height: 17px;
+}
+
+.icon--loading {
+  mask-image: url('../img/loading.svg');
+  background-color: #fff;
+  animation: load-spin 0.8s infinite linear;
+}
+
+@keyframes load-spin {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}

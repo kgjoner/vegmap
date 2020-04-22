@@ -25,7 +25,7 @@
 }
 
 @media (max-width: 1000px) {
-  #app {
+  #app .container {
     flex-direction: column;
   }
 

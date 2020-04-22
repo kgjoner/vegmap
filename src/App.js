@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import LoginBox from './components/LoginBox'
+import Presentation from './components/Presentation'
 import SignupBox from './components/SignupBox'
 import RestaurantCard from './components/RestaurantCard'
 
-import './global.css'
+import './assets/css/global.css'
+import './assets/css/icon.css'
 import './App.css'
 import api from './services/api';
 
@@ -48,7 +49,7 @@ function App() {
           </div> 
           : null
         }
-        <LoginBox setShowPopup={setShowPopup} 
+        <Presentation setShowPopup={setShowPopup} 
           user={user} 
           setUser={setUser} />
         <main>

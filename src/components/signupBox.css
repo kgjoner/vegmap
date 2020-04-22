@@ -1,4 +1,4 @@
-.popup-bg > div {
+.signup {
   width: 670px;
   background: #fdfdfd;
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
@@ -8,46 +8,46 @@
   max-height: calc(100vh - 30px);
 }
 
-.popup-bg > div strong {
+.signup__title {
   font-size: 24px;
   display: block;
   color: #333;
 }
 
-.popup-bg > div form {
+.signup__form {
   margin-top: 50px;
 }
 
-.popup-bg > div form .input-block + .input-block,
-.popup-bg > div form .input-group + .input-block,
-.popup-bg > div form .input-group + .input-group {
+.signup form .input-block + .input-block,
+.signup form .input-group + .input-block,
+.signup form .input-group + .input-group {
   margin-top: 30px;
 }
 
-.popup-bg > div form .input-group {
+.signup form .input-group {
   margin-top: 20px;
   display: flex;
   align-items: center;
 }
 
-.popup-bg > div form .input-group .input-block {
+.signup form .input-group .input-block {
   margin-top: 0;
   width: 100%;
 }
 
-.popup-bg > div form .input-group .input-block + .input-block {
+.signup form .input-group .input-block + .input-block {
   margin-left: 20px;
 }
 
-.popup-bg > div form .input-block label {
+.signup form .input-block label {
   color: #acacac;
   font-size: 14px;
   font-weight: bold;
   display: block;
 }
 
-.popup-bg > div form .input-block:not(.checkbox) input,
-.popup-bg > div form .input-block select {
+.signup form .input-block:not(.checkbox) input,
+.signup form .input-block select {
   width: 100%;
   height: 32px;
   font-size: 14px;
@@ -56,7 +56,7 @@
   border-bottom: 1px solid #eee;
 }
 
-.popup-bg > div form .input-block.checkbox {
+.signup form .input-block.checkbox {
   display: flex;
   flex-direction: column;
   height: 34px;
@@ -88,21 +88,21 @@ form .input-block.checkbox .check-option + .check-option {
   cursor: pointer;
 }
 
-.popup-bg > div form .input-block:not(.checkbox) input:focus,
-.popup-bg > div form .input-block select:focus  {
+.signup form .input-block:not(.checkbox) input:focus,
+.signup form .input-block select:focus  {
   border-color: #1ead5f;
   box-shadow: 0 2px 0 #1ead5e52;
   transition: 0.5s;
 }
 
-.popup-bg > div form .input-block:not(.checkbox) input.error,
-.popup-bg > div form .input-block select.error,
+.signup form .input-block:not(.checkbox) input.error,
+.signup form .input-block select.error,
 .input-block.checkbox.error .check-option input  {
   border-color: var(--danger-color-variant);
   box-shadow: 0 2px 0 rgba(235, 101, 101, 0.3);
 }
 
-.popup-bg > div form button[type="submit"] {
+.signup form button[type="submit"] {
   width: 50%;
   border: 0;
   background-color:#28bd6b;
@@ -113,13 +113,15 @@ form .input-block.checkbox .check-option + .check-option {
   color: #fff;
   cursor: pointer;
   transition: background 0.5s;
+  display: flex;
+  justify-content: center;
 }
 
-.popup-bg > div form button[type="submit"]:hover {
+.signup form button[type="submit"]:hover {
   background-color: #1ead5f;
 }
 
-.popup-bg > div .btn-block {
+.signup .btn-block {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -128,7 +130,7 @@ form .input-block.checkbox .check-option + .check-option {
   bottom: 0px;
 }
 
-.popup-bg > div .get-coord {
+.signup .get-coord {
   border: 0;
   background-color:var(--dark-color);
   border-radius: 4px;

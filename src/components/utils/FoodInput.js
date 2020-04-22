@@ -40,10 +40,12 @@ function FoodInput({ foods, setFoods, error }) {
       setFoodHint('')
       return
     }
-    let foodHint = allFoods.filter(f => {
-      const norm = new RegExp('^' + normalizeString(food))
-      return normalizeString(f).match(norm)
-    })[0] || ''
+    let foodHint = allFoods.filter(f => !foods.includes(f))
+      .filter(f => {
+        const norm = new RegExp('^' + normalizeString(food))
+        return normalizeString(f).match(norm)
+      })[0] || ''
+    
     setFoodHint(foodHint)
   }
 

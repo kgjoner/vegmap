@@ -4,7 +4,7 @@ import "./presentation.css"
 import logo from "../assets/img/logo.svg"
 import logotype from "../assets/img/logotype.svg"
 
-function Presentation({ setShowPopup, user, setUser }) {
+function Presentation({ setShowPopup, setShowMap, user, setUser }) {
 
   function responseFacebook(response) {
     setUser(response)
@@ -52,6 +52,9 @@ function Presentation({ setShowPopup, user, setUser }) {
           </button>
         )}/>
       }
+      <div className="map-btn__container">
+        <button className="map-btn" onClick={() => setShowMap(true)}>Ir para o mapa</button>
+      </div>
       <div className="presentation__footer">
         ©2020 | Feito com
         <div className="icon icon--heart"></div>

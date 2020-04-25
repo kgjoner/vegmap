@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import normalizeFood from '../../utils/normalizeFood'
 import "./foodInput.css"
 
-function FoodInput({ foods, setFoods, error }) {
+function FoodInput({ foods, setFoods, error, variant }) {
   const [foodHint, setFoodHint] = useState('')
   const [foodOnTyping, setFoodOnTyping] = useState('')
   const [allFoods, setAllFoods] = useState([])
@@ -90,7 +90,8 @@ function FoodInput({ foods, setFoods, error }) {
   return (
     <div className={`food-input-group 
       ${focus ? 'food-input-focused' : ''}
-      ${error.target === 'food' ? 'error' : ''}`}
+      ${error.target === 'food' ? 'error' : ''}
+      ${variant? `food-input-group--${variant}` : ''}`}
     >  
       {foods.length > 0 ?
         foods.map((food, index) => (
@@ -99,7 +100,8 @@ function FoodInput({ foods, setFoods, error }) {
       }
       <div className="typing-group">
         {foodHint ? <p className="food-hint">{foodHint}</p> : null}
-        <input name="foods" id="foods"
+        <input name="foods" id="foods" 
+          placeholder={variant === 'search' && foods.length === 0 ? 'Pesquise por comidas...' : ''}
           value={foodOnTyping}
           onChange={e => handleFoodOptions(e.target.value)}
           onKeyDown={e => handleKeyInput(e)}

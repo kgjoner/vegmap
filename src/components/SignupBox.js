@@ -4,7 +4,7 @@ import existOrError from '../utils/existOrError'
 import api from '../services/api'
 import "./signupBox.css"
 
-function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user }) {
+function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, userLocation }) {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
@@ -36,19 +36,8 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user }) {
   }, [selectedRestaurant])
 
   function getCoords() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords
-        setLatitude(latitude)
-        setLongitude(longitude)
-      },
-      (err) => {
-        console.log(err)
-      },
-      {
-        timeout: 30000,
-      }
-    )
+    setLatitude(userLocation.latitude)
+    setLongitude(userLocation.longitude)
   }
 
   function handleSubmit(e) {

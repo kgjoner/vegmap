@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import api from '../services/api'
 import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, user, edit, variant }) {
+  const [showMenu, setShowMenu] = useState(false)
+
+  useEffect(() => {
+    if(showMenu) {
+      window.addEventListener('click', checkMenu)
+    }
+  }, [showMenu])
+
+  function checkMenu(e) {
+    if(e.target !== document.querySelector('.restaurant-card__menu')) {
+      window.removeEventListener('click', checkMenu)
+      setShowMenu(false)
+    }
+  }
+
   function copyCoordinatesToClipboard(id) {
     if(!id) return
     const coordsEl = document.getElementById(`coords-${id}`)
@@ -32,10 +47,14 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
           <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
       { user ? 
-        <button className="restaurant-card__edit" onClick={e => edit(restaurant)}>
-          <div className="icon icon--edit"></div>
+        <button className="restaurant-card__config" onClick={() => setShowMenu(true)}>
+          <div className="icon icon--elipsis"></div>
         </button> : null
       }
+      <ul className={`restaurant-card__menu ${showMenu ? 'restaurant-card__menu--visible' : ''}`}>
+          <li className="restaurant-card__menu-item" onClick={e => edit(restaurant)}>editar</li>
+          <li className="restaurant-card__menu-item">denunciar</li>
+      </ul>
       <header className="restaurant-card__header">
       { restaurant.pictureURL ?
           <img src={restaurant.pictureURL} className="restaurant-card__picture" alt="foto"/> :

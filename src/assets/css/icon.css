@@ -27,6 +27,10 @@
   height: 17px;
 }
 
+.icon--elipsis {
+  mask-image: url('../img/elipsis.svg');
+}
+
 .icon--edit {
   mask-image: url('../img/edit.svg');
   background-color: #f2f2f2;

@@ -101,7 +101,7 @@ function App() {
           <main>
             <SearchBar location={mapLocation}
               setRestaurants={setRestaurants}/>
-            <ul>
+            <ul className="app__card-list">
               {restaurants.map(restaurant => (
                 <RestaurantCard key={restaurant._id} 
                   restaurant={ restaurant }

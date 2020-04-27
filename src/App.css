@@ -29,7 +29,7 @@
   margin-left: 30px;
 }
 
-#app main ul {
+.app__card-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;

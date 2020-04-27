@@ -1,5 +1,5 @@
 
-.food-input-group {
+.food-input {
   position: relative;
   overflow: hidden;
   display: flex;
@@ -10,7 +10,7 @@
   border-bottom: 1px solid #eee;
 }
 
-.food-input-group--search {
+.food-input--search {
   border: 2px solid var(--light-color);
   border-radius: 4px;
   background-color: #fff;
@@ -19,13 +19,13 @@
   padding: 0 10px;
 }
 
-.food-input-group:not(.food-input-group--search).food-input-focused {
+.food-input:not(.food-input--search).food-input--focused {
   border-color: #1ead5f;
   box-shadow: 0 2px 0 #1ead5e52;
   transition: 0.5s;
 }
 
-.food-input-group.error {
+.food-input.error {
   border-color: var(--danger-color-variant);
   box-shadow: 0 2px 0 rgba(235, 101, 101, 0.3);
 }
@@ -44,7 +44,7 @@
   opacity: 0.8;
 }
 
-.food-input-group--search .typed-food {
+.food-input--search .typed-food {
   top: 0;
 }
 
@@ -61,15 +61,16 @@
   width: 100%;
   height: 32px;
   font-size: 14px;
-  color: rgb(180, 179, 179);
+  color: rgba(0,0,0,0.4);
   z-index: 1;
 }
 
-.food-input-group--search .food-hint {
+.food-input--search .food-hint {
   top: 0;
+  letter-spacing: -0.3px;
 }
 
-.popup-bg > div form .input-block .food-input-group input {
+.popup-bg > div form .input-block .food-input input {
   z-index: 5;
   background-color: transparent;
   border-bottom: 0;

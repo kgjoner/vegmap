@@ -3,7 +3,7 @@ import FoodInput from './utils/FoodInput'
 import api from '../services/api'
 import './searchBar.css'
 
-function SearchBar({ userLocation, setRestaurants, isOnMap }) {
+function SearchBar({ location, setRestaurants, isOnMap }) {
   const [query, setQuery] = useState([])
   const [option, setOption] = useState({ vegan: true, vegetarian: true })
 
@@ -13,11 +13,12 @@ function SearchBar({ userLocation, setRestaurants, isOnMap }) {
 
   useEffect(() => {
     submitQuery()
-  }, [option])
+  }, [option, location])
 
   function submitQuery() {
+    if(!location || !location.latitude) return
     api.get('/search', { params: { 
-      ...userLocation,
+      ...location,
       foods: query.join(','), 
       ...option,
     }}).then(resp => {
@@ -41,6 +42,7 @@ function SearchBar({ userLocation, setRestaurants, isOnMap }) {
           foods={query}
           setFoods={setQuery}
           error={{msg: null}}
+          onEnter={submitQuery}
         />
 
         <div className="search-bar__options">

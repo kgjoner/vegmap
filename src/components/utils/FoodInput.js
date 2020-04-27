@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import normalizeFood from '../../utils/normalizeFood'
 import "./foodInput.css"
 
-function FoodInput({ foods, setFoods, error, variant }) {
+function FoodInput({ foods, setFoods, error, variant, onEnter }) {
   const [foodHint, setFoodHint] = useState('')
   const [foodOnTyping, setFoodOnTyping] = useState('')
   const [allFoods, setAllFoods] = useState([])
@@ -35,7 +35,7 @@ function FoodInput({ foods, setFoods, error, variant }) {
   }
 
   function handleFoodOptions(food) {
-    setFoodOnTyping(food)
+    setFoodOnTyping(food.toLowerCase())
     if(food.length < 2) {
       setFoodHint('')
       return
@@ -61,6 +61,12 @@ function FoodInput({ foods, setFoods, error, variant }) {
       addFoodToChain(foodOnTyping)
     }
 
+    if(e.key === 'Enter') {
+      e.preventDefault()
+      addFoodToChain(foodHint)
+      if(onEnter) onEnter()
+    }
+
     if(e.key === 'Backspace' && foodOnTyping.length === 0) {
       const newChain = foods
       newChain.pop()
@@ -69,29 +75,34 @@ function FoodInput({ foods, setFoods, error, variant }) {
       setFoodOnTyping('')
       setRender(!render)
     }
+  }
 
-    function addFoodToChain(food) {
-      food = normalizeFood(food)
-      const newChain = foods
-      if(food) {
-        newChain.push(food)
-      }
-      setFoods(newChain)
-      setFoodHint('')
-      setFoodOnTyping('')
+  function addFoodToChain(food) {
+    food = normalizeFood(food)
+    const newChain = foods
+    if(food) {
+      newChain.push(food)
     }
+    setFoods(newChain)
+    setFoodHint('')
+    setFoodOnTyping('')
   }
 
   function goOutOfFocus() {
     setFocus(false)
     setFoodHint('')
+    if(foodHint) {
+      addFoodToChain(foodHint)
+    } else {
+      setFoodOnTyping('')
+    }
   }
 
   return (
-    <div className={`food-input-group 
-      ${focus ? 'food-input-focused' : ''}
+    <div className={`food-input 
+      ${focus ? 'food-input--focused' : ''}
       ${error.target === 'food' ? 'error' : ''}
-      ${variant? `food-input-group--${variant}` : ''}`}
+      ${variant? `food-input--${variant}` : ''}`}
     >  
       {foods.length > 0 ?
         foods.map((food, index) => (

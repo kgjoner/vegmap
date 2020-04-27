@@ -2,7 +2,7 @@ import React from 'react'
 import api from '../services/api'
 import "./restaurantCard.css"
 
-function RestaurantCard({ restaurant, user, edit }) {
+function RestaurantCard({ restaurant, user, edit, variant }) {
   function copyCoordinatesToClipboard(id) {
     if(!id) return
     const coordsEl = document.getElementById(`coords-${id}`)
@@ -24,11 +24,11 @@ function RestaurantCard({ restaurant, user, edit }) {
   }
 
   return (
-    <li className={`restaurant-card ${restaurant.type}`}>
+    <li className={`restaurant-card ${restaurant.type} ${variant ? `restaurant-card--${variant}` : ''}`}>
       <div className="restaurant-card__flags">
-        { restaurant.option && restaurant.option.vegan ? 
+        { restaurant.option.vegan ? 
           <div className="restaurant-card__flag restaurant-card__flag--vegan"></div> : null }
-        { restaurant.option && restaurant.option.vegetarian ? 
+        { restaurant.option.vegetarian ? 
           <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
       { user ? 

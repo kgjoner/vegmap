@@ -7,7 +7,9 @@ import logotype from "../assets/img/logotype.svg"
 function Presentation({ setShowPopup, setShowMap, user, setUser }) {
 
   function responseFacebook(response) {
-    setUser(response)
+    if(response.name) {
+      setUser(response)
+    }
   }
 
   return (

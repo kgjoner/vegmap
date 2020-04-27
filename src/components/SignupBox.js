@@ -4,7 +4,7 @@ import existOrError from '../utils/existOrError'
 import api from '../services/api'
 import "./signupBox.css"
 
-function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, userLocation }) {
+function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation }) {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
@@ -35,10 +35,12 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, userLo
     }
   }, [selectedRestaurant])
 
-  function getCoords() {
-    setLatitude(userLocation.latitude)
-    setLongitude(userLocation.longitude)
-  }
+  useEffect(() => {
+    if(pinLocation.latitude) {
+      setLatitude(pinLocation.latitude)
+      setLongitude(pinLocation.longitude)
+    }
+  }, [pinLocation])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -196,7 +198,7 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, userLo
             </input>
           </div>
           <div className="btn-block">
-            <button type="button" className="get-coord" onClick={e => getCoords()}>Minhas Coordenadas</button>
+            <button type="button" className="get-coord" onClick={e => pickCoordsOnMap()}>Selecionar no Mapa</button>
           </div>
         </div>
                

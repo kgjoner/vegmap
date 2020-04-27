@@ -8,7 +8,6 @@ import Maps from './components/Map'
 import './assets/css/global.css'
 import './assets/css/icon.css'
 import './App.css'
-import api from './services/api';
 
 function App() {
   const [restaurants, setRestaurants] = useState([])
@@ -16,14 +15,12 @@ function App() {
   const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
   const [userLocation, setUserLocation] = useState({latitude: null, longitude: null})
+  const [mapLocation, setMapLocation] = useState({latitude: null, longitude: null })
+  const [pinLocation, setPinLocation] = useState({latitude: null, longitude: null })
   const [showMap, setShowMap] = useState(false)
+  const [isPicking, setIsPicking] = useState(false)
 
   useEffect(() => {
-    api.get('/restaurants')
-      .then(resp => {
-        setRestaurants(resp.data)
-      })
-
     getCoords()
   }, [])
 
@@ -32,6 +29,7 @@ function App() {
       (position) => {
         const { latitude, longitude } = position.coords
         setUserLocation({ latitude, longitude })
+        setMapLocation({ latitude, longitude })
       },
       (err) => {
         console.log(err)
@@ -58,13 +56,30 @@ function App() {
     setShowPopup(true)
   }
 
+  function pickCoordsOnMap() {
+    setShowPopup(false)
+    setShowMap(true)
+    setIsPicking(true)
+  }
+
+  useEffect(() => {
+    if(pinLocation.latitude) {
+      setIsPicking(false)
+      setShowMap(false)
+      setShowPopup(true)
+    }
+  }, [pinLocation])
+
   return (
     <div id="app">
-      { showMap && userLocation.latitude ? 
-        <Maps  center={{lat: Number(userLocation.latitude.toFixed(2)), lng: Number(userLocation.longitude.toFixed(2))}} 
+      { showMap && mapLocation.latitude ? 
+        <Maps  mapLocation={mapLocation}
+          setMapLocation={setMapLocation} 
           restaurants={restaurants} 
           setRestaurants={setRestaurants}
-          setShowMap={setShowMap}  
+          setShowMap={setShowMap}
+          isPicking={isPicking}
+          setPinLocation={setPinLocation}
         /> :
 
         <div className={`container ${showMap ? 'container--frontOf' : ''}`}>
@@ -74,7 +89,8 @@ function App() {
                 closePopup={closePopup}
                 selectedRestaurant={selectedRestaurant}
                 user={user}
-                userLocation={userLocation} />
+                pickCoordsOnMap={pickCoordsOnMap}
+                pinLocation={pinLocation} />
             </div> 
             : null
           }
@@ -83,7 +99,7 @@ function App() {
             setUser={setUser}
             setShowMap={setShowMap} />
           <main>
-            <SearchBar userLocation={userLocation}
+            <SearchBar location={mapLocation}
               setRestaurants={setRestaurants}/>
             <ul>
               {restaurants.map(restaurant => (

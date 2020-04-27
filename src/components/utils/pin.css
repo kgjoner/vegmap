@@ -1,0 +1,38 @@
+.pin {
+  position: relative;
+  top: -20px;
+  left: -10px;
+  width: 20px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.pin--fall {
+  transform-origin: bottom center;
+  animation: fall 0.8s;
+  opacity: 1;
+}
+
+.pin .icon {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes fall {
+  0%{
+    top: -80vh;
+    left: -80px;
+    transform: rotate(-10deg)
+  }
+  75% {
+    top: -20px;
+    left: -10px;
+    transform: rotate(-10deg)
+  }
+  80% {
+    transform: rotate(20deg)
+  }
+  95% {
+    transform: rotate(-20deg)
+  }
+}

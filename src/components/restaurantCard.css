@@ -6,6 +6,19 @@
   padding-bottom: 0;
   border: 2px solid var(--light-color);
   position: relative;
+  list-style: none;
+}
+
+.restaurant-card--float {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 2;
+  width: 350px;
+}
+
+.restaurant-card--invisible {
+  display: none;
 }
 
 .restaurant-card__flags {
@@ -106,6 +119,7 @@
 
 .restaurant-card__body {
   margin: 10px 0;
+  height: 25px;
   display: flex;
   justify-content: space-between;
 }

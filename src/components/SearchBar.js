@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
+
 import FoodInput from './utils/FoodInput'
 import api from '../services/api'
+import { connect, disconnect } from '../services/socket'
+
 import './searchBar.css'
 
 function SearchBar({ location, setRestaurants, isOnMap }) {
@@ -17,13 +20,21 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
 
   function submitQuery() {
     if(!location || !location.latitude) return
-    api.get('/search', { params: { 
+    const params = {
       ...location,
       foods: query.join(','), 
-      ...option,
-    }}).then(resp => {
-      setRestaurants(resp.data)
-    })
+      ...option
+    }
+    api.get('/search', { params })
+      .then(resp => {
+        setRestaurants(resp.data)
+        setupWebsocket(params)
+      })
+  }
+
+  function setupWebsocket(params) {
+    disconnect()
+    connect(params)
   }
 
   function handleCheckbox(value, target) {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './utils/Marker'
 import Pin from './utils/Pin'
@@ -17,6 +17,20 @@ class Maps extends Component {
       lat: null,
       lng: null
     }
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if(props.restaurants.length === 0) return {}
+
+    let newCard = props.restaurants.filter(r => r.username === state.card.username)[0]
+      || {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}}
+
+    if(newCard.likes.length !== state.card.likes.length) {
+      setTimeout(() => {
+        props.setRestaurants([...props.restaurants])
+      }, 0)
+    }
+    return {card: { ...newCard }}
   }
 
   handleMarkerClick = (restaurant) => {
@@ -89,7 +103,8 @@ class Maps extends Component {
           setRestaurants={this.props.setRestaurants}
           isOnMap={true}/>
         <RestaurantCard variant={ !this.state.card.null ? 'float' : 'invisible'}
-          restaurant={{...this.state.card}} />
+          restaurant={{...this.state.card}}
+          user={this.props.user} />
       </div>
     )
   }

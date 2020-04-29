@@ -4,7 +4,7 @@ import existOrError from '../utils/existOrError'
 import api from '../services/api'
 import "./signupBox.css"
 
-function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation }) {
+function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation }) {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
@@ -96,7 +96,7 @@ function SignupBox({ addRestaurant, selectedRestaurant, closePopup, user, pickCo
         setInstagramUsername('')
         setError({msg: null})
         setIsLoading(false)
-        if(!selectedRestaurant) addRestaurant(resp.data)
+        // if(!selectedRestaurant) addRestaurant(resp.data)
         closePopup()
       })
       .catch(e => {

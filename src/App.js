@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+
 import Presentation from './components/Presentation'
 import SignupBox from './components/SignupBox'
 import SearchBar from './components/SearchBar'
 import RestaurantCard from './components/RestaurantCard'
 import Maps from './components/Map'
+import { subscribeToNewRestaurant, subscribeToUpdateRestaurant } from './services/socket'
 
 import './assets/css/global.css'
 import './assets/css/icon.css'
@@ -44,6 +46,22 @@ function App() {
     setRestaurants([...restaurants, newRestaurant])
   }
 
+  function updateRestaurant(restaurant) {
+    const updatedRestaurants = [...restaurants]
+    updatedRestaurants.some((r, index) => {
+      if(r.username === restaurant.username) {
+        updatedRestaurants[index] = {...restaurant}
+        return true
+      }
+    })
+    setRestaurants(updatedRestaurants)
+  }
+
+  useEffect(() => {
+    subscribeToNewRestaurant(addRestaurant)
+    subscribeToUpdateRestaurant(updateRestaurant)
+  }, [restaurants])
+
   function closePopup(e) {
     if(!e || e.target === document.querySelector('.popup-bg')) {
       setShowPopup(false)
@@ -57,7 +75,7 @@ function App() {
   }
 
   function pickCoordsOnMap() {
-    setShowPopup(false)
+    document.querySelector('.popup-bg').style.visibility = 'hidden'
     setShowMap(true)
     setIsPicking(true)
   }
@@ -66,7 +84,7 @@ function App() {
     if(pinLocation.latitude) {
       setIsPicking(false)
       setShowMap(false)
-      setShowPopup(true)
+      document.querySelector('.popup-bg').style.visibility = 'visible'
     }
   }, [pinLocation])
 
@@ -77,23 +95,13 @@ function App() {
           setMapLocation={setMapLocation} 
           restaurants={restaurants} 
           setRestaurants={setRestaurants}
+          user={user}
           setShowMap={setShowMap}
           isPicking={isPicking}
           setPinLocation={setPinLocation}
         /> :
 
-        <div className={`container ${showMap ? 'container--frontOf' : ''}`}>
-          { showPopup ?
-            <div className="popup-bg" onClick={e => closePopup(e)}>
-              <SignupBox addRestaurant={addRestaurant} 
-                closePopup={closePopup}
-                selectedRestaurant={selectedRestaurant}
-                user={user}
-                pickCoordsOnMap={pickCoordsOnMap}
-                pinLocation={pinLocation} />
-            </div> 
-            : null
-          }
+        <div className={`container`}>
           <Presentation setShowPopup={setShowPopup} 
             user={user} 
             setUser={setUser}
@@ -111,6 +119,17 @@ function App() {
             </ul>
           </main>
         </div>
+      }
+
+      { showPopup ?
+        <div className="popup-bg" onClick={e => closePopup(e)}>
+          <SignupBox closePopup={closePopup}
+            selectedRestaurant={selectedRestaurant}
+            user={user}
+            pickCoordsOnMap={pickCoordsOnMap}
+            pinLocation={pinLocation} />
+        </div> 
+        : null
       }
     </div>
   )

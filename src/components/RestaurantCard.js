@@ -4,6 +4,7 @@ import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, user, edit, variant }) {
   const [showMenu, setShowMenu] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
 
   useEffect(() => {
     if(showMenu) {
@@ -29,13 +30,15 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
   }
 
   function likeRestaurant() {
-    if(!user || restaurant.likes.indexOf(user.userID) !== -1) return 
+    if(!user || isWaiting || restaurant.likes.indexOf(user.userID) !== -1) return
     const payload = {
       username: restaurant.username,
       author: user,
       action: 'like'
     }
+    setIsWaiting(true)
     api.put('/restaurants', payload)
+      .then(() => setIsWaiting(false))
   }
 
   return (
@@ -46,7 +49,7 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
         { restaurant.option.vegetarian ? 
           <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
-      { user ? 
+      { user && edit ? 
         <button className="restaurant-card__config" onClick={() => setShowMenu(true)}>
           <div className="icon icon--elipsis"></div>
         </button> : null
@@ -90,7 +93,7 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
         <div className="restaurant-card__like-info">
           { restaurant.likes.length }
           <button className="restaurant-card__like-btn"
-            onClick={e => likeRestaurant()}>
+            onClick={() => likeRestaurant()}>
             <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
               'icon icon--chef' : 'icon icon--chef-filled'}></div>
           </button>

@@ -84,33 +84,6 @@
   margin-top: 8px;
 }
 
-.restaurant-card__edit {
-  position: absolute;
-  left: calc(100% - 10px);
-  top: -10px;
-  opacity: 0;
-  visibility: hidden;
-  overflow: hidden;
-  background-color: var(--light-color);
-  cursor: pointer;
-  border-radius: 4px;
-  /* transition: 0.4s; */
-  padding: 5px;
-}
-
-.restaurant-card.vegan .restaurant-card__edit {
-  background-color: var(--primary-color);
-}
-
-.restaurant-card.vegetarian .restaurant-card__edit {
-  background-color: var(--secondary-color);
-}
-
-.restaurant-card:hover .restaurant-card__edit {
-  opacity: 1;
-  visibility: visible;
-}
-
 .restaurant-card__header {
   display: flex;
   align-items: center;

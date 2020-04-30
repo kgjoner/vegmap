@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-
 import FoodInput from './utils/FoodInput'
 import api from '../services/api'
 import { connect, disconnect } from '../services/socket'
-
 import './searchBar.css'
+
 
 function SearchBar({ location, setRestaurants, isOnMap }) {
   const [query, setQuery] = useState([])
@@ -37,7 +36,7 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
     connect(params)
   }
 
-  function handleCheckbox(value, target) {
+  function handleRadio(value, target) {
     if(!value) return
     const newOption = {
       vegan: target !== 'vegetarian',
@@ -60,19 +59,19 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
           <label className="search-bar__option">
             Todos
             <input className="search-bar__radio" type="radio" name="option" id="both"
-              onChange={e => handleCheckbox(e.target.checked, 'both')} />
+              onChange={e => handleRadio(e.target.checked, 'both')} />
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
             Vegano
-            <input className="search-bar__radio" type="radio" name="option" id="vegan-option"
-              onChange={e => handleCheckbox(e.target.checked, 'vegan')}/>
+            <input className="search-bar__radio" type="radio" name="option" id="vegan-radio"
+              onChange={e => handleRadio(e.target.checked, 'vegan')}/>
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
             Vegetariano
-            <input className="search-bar__radio" type="radio" name="option" id="vegetarian-option"
-              onChange={e => handleCheckbox(e.target.checked, 'vegetarian')}/>
+            <input className="search-bar__radio" type="radio" name="option" id="vegetarian-radio"
+              onChange={e => handleRadio(e.target.checked, 'vegetarian')}/>
             <span className="search-bar__checkmark"></span>
           </label>
         </div>

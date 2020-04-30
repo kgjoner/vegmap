@@ -1,10 +1,11 @@
 import socketio from 'socket.io-client'
 
-// const baseURL = 'http://localhost:3030'
-const baseURL = 'https://vegmap-backend.herokuapp.com'
+const baseURL = 'http://localhost:3030'
+// const baseURL = 'https://vegmap-backend.herokuapp.com'
 
-const socket = socketio(baseURL, {
-  autoConnect: false,
+const socket = socketio(baseURL,  {
+  transports: ['websocket'],
+  autoConnect: false
 })
 
 function subscribeToNewRestaurant(subscribeFunction) {

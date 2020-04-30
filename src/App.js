@@ -16,7 +16,7 @@ function App() {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null)
   const [showPopup, setShowPopup] = useState(false)
   const [user, setUser] = useState(null)
-  const [userLocation, setUserLocation] = useState({latitude: null, longitude: null})
+  // const [userLocation, setUserLocation] = useState({latitude: null, longitude: null})
   const [mapLocation, setMapLocation] = useState({latitude: null, longitude: null })
   const [pinLocation, setPinLocation] = useState({latitude: null, longitude: null })
   const [showMap, setShowMap] = useState(false)
@@ -30,7 +30,7 @@ function App() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords
-        setUserLocation({ latitude, longitude })
+        // setUserLocation({ latitude, longitude })
         setMapLocation({ latitude, longitude })
       },
       (err) => {
@@ -55,6 +55,7 @@ function App() {
       }
     })
     setRestaurants(updatedRestaurants)
+    console.log('recebeu')
   }
 
   useEffect(() => {
@@ -127,7 +128,8 @@ function App() {
             selectedRestaurant={selectedRestaurant}
             user={user}
             pickCoordsOnMap={pickCoordsOnMap}
-            pinLocation={pinLocation} />
+            pinLocation={pinLocation}
+            setPinLocation={setPinLocation} />
         </div> 
         : null
       }

@@ -4,7 +4,7 @@ import existOrError from '../utils/existOrError'
 import api from '../services/api'
 import "./signupBox.css"
 
-function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation }) {
+function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation, setPinLocation }) {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
@@ -39,6 +39,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
     if(pinLocation.latitude) {
       setLatitude(pinLocation.latitude)
       setLongitude(pinLocation.longitude)
+      setPinLocation({latitude: null, longitude: null })
     }
   }, [pinLocation])
 

@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import Marker from './utils/Marker'
 import Pin from './utils/Pin'
@@ -69,7 +69,7 @@ class Maps extends Component {
     return (
       <div style={{ height: '100vh', width: '100vw' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{key: 'AIzaSyDrnBGWDiDjBSbrPS1bGmDMXDpUzkhEEvo'}}
+          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
           defaultCenter={this.state.center}
           zoom={this.state.zoom}
           onZoomAnimationEnd={this.handleZoomChanged}

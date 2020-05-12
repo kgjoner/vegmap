@@ -53,6 +53,7 @@ function App() {
         updatedRestaurants[index] = {...restaurant}
         return true
       }
+      return false
     })
     setRestaurants(updatedRestaurants)
     console.log('recebeu')
@@ -123,7 +124,7 @@ function App() {
       }
 
       { showPopup ?
-        <div className="popup-bg" onClick={e => closePopup(e)}>
+        <div className="popup-bg" onMouseDown={e => closePopup(e)}>
           <SignupBox closePopup={closePopup}
             selectedRestaurant={selectedRestaurant}
             user={user}

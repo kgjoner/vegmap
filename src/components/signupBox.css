@@ -165,6 +165,33 @@ form .input-block.checkbox .check-option + .check-option {
   animation: error-shake 0.4s;
 }
 
+.input-block--facebook,
+.input-block--instagram {
+  position: relative;
+}
+
+#facebook {
+  padding-left: 10px;
+}
+
+#instagram {
+  padding-left: 16px;
+}
+
+.input-block--facebook::before,
+.input-block--instagram::before {
+  content: '/';
+  position: absolute;
+  top: 22px;
+  left: 2px;
+  color:#aaa;
+}
+
+.input-block--instagram::before {
+  content: '@';
+  font-size: 14px;
+}
+
 @keyframes error-shake {
   0%{
     left: 0;

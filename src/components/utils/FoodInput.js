@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import normalizeFood from '../../utils/normalizeFood'
+import { getAllFoods } from '../../utils/foodTable'
 import "./foodInput.css"
 
 function FoodInput({ foods, setFoods, error, variant, onEnter }) {
@@ -10,24 +11,7 @@ function FoodInput({ foods, setFoods, error, variant, onEnter }) {
   const [render, setRender] = useState(false)
 
   useEffect(() => {
-    setAllFoods([
-      'almoço',
-      'hambúrguer',
-      'pizza',
-      'hotdog',
-      'porções',
-      'drinks',
-      'café',
-      'salgados',
-      'doces',
-      'salada',
-      'sushi',
-      'brasileiro',
-      'mexicano',
-      'italiano',
-      'árabe',
-      'chinês'
-    ])
+    setAllFoods(getAllFoods())
   }, [])
 
   function normalizeString(str) {

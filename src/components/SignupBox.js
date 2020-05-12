@@ -211,14 +211,14 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
               onChange={e => setWebsite(e.target.value)}>
             </input>
           </div>
-          <div className="input-block">
+          <div className="input-block input-block--facebook">
             <label htmlFor="facebook">Facebook</label>
             <input name="facebook" id="facebook"
               value={facebookUsername}
               onChange={e => setFacebookUsername(e.target.value)}>
             </input>
           </div>       
-          <div className="input-block">
+          <div className="input-block input-block--instagram">
             <label htmlFor="instagram">Instagram</label>
             <input name="instagram" id="instagram"
               value={instagramUsername}

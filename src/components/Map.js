@@ -69,7 +69,7 @@ class Maps extends Component {
     return (
       <div style={{ height: '100vh', width: '100vw' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
+          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey || process.env.GoogleApiKey}}
           defaultCenter={this.state.center}
           zoom={this.state.zoom}
           onZoomAnimationEnd={this.handleZoomChanged}
@@ -78,6 +78,7 @@ class Maps extends Component {
           options={(maps) => { 
             return { minZoom: 12 } }}
         >
+          {console.log('reactKey', process.env.REACT_APP_GoogleApiKey, 'other', process.env.GoogleApiKey)}
           {this.props.isPicking ? null :
             this.props.restaurants.map((restaurant, index) => {
             return (<Marker

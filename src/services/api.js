@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const api = axios.create({
-  // baseURL: 'http://localhost:3030'
-  baseURL: 'https://vegmap-backend.herokuapp.com'
+  baseURL: process.env.NODE_ENV === 'development' ? 
+    'http://localhost:3030' : 'https://vegmap-backend.herokuapp.com'
 })
 
 export default api

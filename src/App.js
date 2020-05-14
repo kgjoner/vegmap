@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import Presentation from './components/Presentation'
 import SignupBox from './components/SignupBox'
@@ -22,15 +22,10 @@ function App() {
   const [showMap, setShowMap] = useState(false)
   const [isPicking, setIsPicking] = useState(false)
 
-  useEffect(() => {
-    getCoords()
-  }, [])
-
-  function getCoords() {
+  const getCoords = useCallback(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords
-        // setUserLocation({ latitude, longitude })
         setMapLocation({ latitude, longitude })
       },
       (err) => {
@@ -40,13 +35,19 @@ function App() {
         timeout: 30000,
       }
     )
-  }
+  }, [])
 
-  function addRestaurant(newRestaurant) {
+  useEffect(() => {
+    console.log(process.env, process.env.NODE_ENV)
+    getCoords()
+  }, [getCoords])
+
+
+  const addRestaurant = useCallback((newRestaurant) => {
     setRestaurants([...restaurants, newRestaurant])
-  }
+  }, [restaurants])
 
-  function updateRestaurant(restaurant) {
+  const updateRestaurant = useCallback((restaurant) => {
     const updatedRestaurants = [...restaurants]
     updatedRestaurants.some((r, index) => {
       if(r.username === restaurant.username) {
@@ -56,13 +57,13 @@ function App() {
       return false
     })
     setRestaurants(updatedRestaurants)
-    console.log('recebeu')
-  }
+  }, [restaurants])
 
   useEffect(() => {
     subscribeToNewRestaurant(addRestaurant)
     subscribeToUpdateRestaurant(updateRestaurant)
-  }, [restaurants])
+  }, [restaurants, addRestaurant, updateRestaurant])
+  
 
   function closePopup(e) {
     if(!e || e.target === document.querySelector('.popup-bg')) {

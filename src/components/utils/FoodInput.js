@@ -28,8 +28,9 @@ function FoodInput({ foods, setFoods, error, variant, onEnter }) {
       .filter(f => {
         const norm = new RegExp('^' + normalizeString(food))
         return normalizeString(f).match(norm)
-      })[0] || ''
-    
+      }) 
+      .filter(f => f !== food.replace(/\s+$/, ''))[0] || ''
+
     setFoodHint(foodHint)
   }
 
@@ -39,7 +40,13 @@ function FoodInput({ foods, setFoods, error, variant, onEnter }) {
       addFoodToChain(foodHint)
     }
 
-    const separatorKeys = [',', ';', '.', ' ', '/', '\\', '|']
+    if(e.key === ' ') {
+      if(allFoods.some(food => food.includes(foodOnTyping + ' '))) return
+      e.preventDefault()
+      addFoodToChain(foodOnTyping)
+    }
+
+    const separatorKeys = [',', ';', '.', '/', '\\', '|']
     if(separatorKeys.indexOf(e.key) !== -1) {
       e.preventDefault()
       addFoodToChain(foodOnTyping)

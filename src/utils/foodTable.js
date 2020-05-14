@@ -5,6 +5,7 @@ function getAllFoods() {
 }
 
 const foodTable = {
+  acai: 'açaí',
   escondidinho: 'escondidinho',
   salada: 'salada',
   saladas: 'saladas',

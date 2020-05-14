@@ -19,24 +19,24 @@ class Maps extends Component {
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if(props.restaurants.length === 0) return {}
+  // static getDerivedStateFromProps(props, state) {
+  //   if(props.restaurants.length === 0) return {}
 
-    let newCard = props.restaurants.filter(r => r.username === state.card.username)[0]
-      || {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}}
+  //   let newCard = props.restaurants.filter(r => r.username === state.card.username)[0]
+  //     || {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}}
 
-    if(newCard.likes.length !== state.card.likes.length) {
-      setTimeout(() => {
-        props.setRestaurants([...props.restaurants])
-      }, 0)
-    }
-    return {card: { ...newCard }}
-  }
+  //   if(newCard.likes.length !== state.card.likes.length) {
+  //     setTimeout(() => {
+  //       props.setRestaurants([...props.restaurants])
+  //     }, 0)
+  //   }
+  //   return {card: { ...newCard }}
+  // }
 
   handleMarkerClick = (restaurant) => {
     if(!this.state.card.null) this.props.setRestaurants([...this.props.restaurants])
     setTimeout(() => {
-      this.setState({ card: {...restaurant} })
+      this.setState({ card: restaurant.username })
     }, 0)
   }
 
@@ -62,6 +62,8 @@ class Maps extends Component {
       setTimeout(() => {
         this.props.setPinLocation({latitude: lat, longitude: lng})
       }, 1000)
+    } else if(!this.state.card.null) {
+      this.setState({ card: {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}} })
     }
   }
 
@@ -69,7 +71,7 @@ class Maps extends Component {
     return (
       <div style={{ height: '100vh', width: '100vw' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey || process.env.GoogleApiKey}}
+          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
           defaultCenter={this.state.center}
           zoom={this.state.zoom}
           onZoomAnimationEnd={this.handleZoomChanged}
@@ -78,12 +80,13 @@ class Maps extends Component {
           options={(maps) => { 
             return { minZoom: 12 } }}
         >
-          {console.log('reactKey', process.env.REACT_APP_GoogleApiKey, 'other', process.env.GoogleApiKey)}
           {this.props.isPicking ? null :
-            this.props.restaurants.map((restaurant, index) => {
+            this.props.restaurants.map((restaurant) => {
             return (<Marker
-              key={index} 
+              key={restaurant._id} 
               restaurant={restaurant}
+              user={this.props.user}
+              showCard={this.state.card === restaurant.username}
               lat={restaurant.location.coordinates[1]} 
               lng={restaurant.location.coordinates[0]}
               handleMarkerClick={this.handleMarkerClick}

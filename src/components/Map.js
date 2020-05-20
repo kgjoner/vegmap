@@ -1,43 +1,45 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+
 import GoogleMapReact from 'google-map-react'
 import Marker from './utils/Marker'
 import Pin from './utils/Pin'
 import SearchBar from './SearchBar'
 import RestaurantCard from './RestaurantCard'
+import { changeSelectedRestaurant } from '../store/restaurant/actions'
+import { setCenterMapLocation, setPinLocation, changeMapMode } from '../store/map/actions'
+import { mapModes } from '../store/map/actionTypes'
+
+import './map.css'
+
+
+const mapStateToProps = (state) => ({
+  centerMapLocation: state.map.centerMapLocation,
+  pinLocation: state.map.pinLocation,
+  isHidden: state.map.mapMode === mapModes.HIDDEN,
+  isPicking: state.map.mapMode === mapModes.PICKING,
+  restaurants: state.restaurant.restaurants,
+  selectedRestaurant: state.restaurant.selectedRestaurant
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  changeSelectedRestaurant: (restaurant) => dispatch(changeSelectedRestaurant(restaurant)),
+  setCenterMapLocation: (location) => dispatch(setCenterMapLocation(location)),
+  setPinLocation: (location) => dispatch(setPinLocation(location)),
+  changeMapMode: (mode) => dispatch(changeMapMode(mode))
+})
 
 class Maps extends Component {
   state = {
-    card: {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}},
     zoom: 16,
     center: {
-      lat: this.props.mapLocation.latitude, 
-      lng: this.props.mapLocation.longitude
-    },
-    pin: {
-      lat: null,
-      lng: null
+      lat: this.props.centerMapLocation.latitude, 
+      lng: this.props.centerMapLocation.longitude
     }
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   if(props.restaurants.length === 0) return {}
-
-  //   let newCard = props.restaurants.filter(r => r.username === state.card.username)[0]
-  //     || {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}}
-
-  //   if(newCard.likes.length !== state.card.likes.length) {
-  //     setTimeout(() => {
-  //       props.setRestaurants([...props.restaurants])
-  //     }, 0)
-  //   }
-  //   return {card: { ...newCard }}
-  // }
-
   handleMarkerClick = (restaurant) => {
-    if(!this.state.card.null) this.props.setRestaurants([...this.props.restaurants])
-    setTimeout(() => {
-      this.setState({ card: restaurant.username })
-    }, 0)
+    this.props.changeSelectedRestaurant(restaurant)
   }
 
   handleZoomChanged = (newZoom) => {
@@ -52,24 +54,27 @@ class Maps extends Component {
       latitude: e.center.lat(),
       longitude: e.center.lng()
     }
-    this.props.setMapLocation(newMapLocation)
+    this.props.setCenterMapLocation(newMapLocation)
   }
 
   handleClick = ({ lat, lng }) => {
     if(this.props.isPicking) {
-      if(this.state.pin.lat) document.querySelector('.pin').classList.remove('pin--fall')
-      this.setState({ pin: {lat, lng}})
-      setTimeout(() => {
-        this.props.setPinLocation({latitude: lat, longitude: lng})
-      }, 1000)
-    } else if(!this.state.card.null) {
-      this.setState({ card: {null: true, option: {}, foods: [], likes: [], location:{ coordinates: []}} })
+      this.props.setPinLocation({latitude: lat, longitude: lng})
+    } else if(Object.keys(this.props.selectedRestaurant).length > 0) {
+      this.props.changeSelectedRestaurant(null)
     }
+  }
+
+  hideMap = () => {
+    if(Object.keys(this.props.selectedRestaurant).length > 0) {
+      this.props.changeSelectedRestaurant(null)
+    }
+    this.props.changeMapMode(mapModes.HIDDEN)
   }
 
   render() {
     return (
-      <div style={{ height: '100vh', width: '100vw' }}>
+      <div className={`map ${this.props.isHidden ? 'map--hidden' : ''}`}>
         <GoogleMapReact
           bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
           defaultCenter={this.state.center}
@@ -77,7 +82,7 @@ class Maps extends Component {
           onZoomAnimationEnd={this.handleZoomChanged}
           onDragEnd={this.handleDrag}
           onClick={this.handleClick}
-          options={(maps) => { 
+          options={() => { 
             return { minZoom: 12 } }}
         >
           {this.props.isPicking ? null :
@@ -85,33 +90,32 @@ class Maps extends Component {
             return (<Marker
               key={restaurant._id} 
               restaurant={restaurant}
-              user={this.props.user}
-              showCard={this.state.card === restaurant.username}
               lat={restaurant.location.coordinates[1]} 
               lng={restaurant.location.coordinates[0]}
               handleMarkerClick={this.handleMarkerClick}
             />)
           })}
-          {this.state.pin.lat ? 
+          {this.props.pinLocation.latitude ? 
             <Pin 
-              lat={this.state.pin.lat}
-              lng={this.state.pin.lng}
-              location={this.state.pin}
+              lat={this.props.pinLocation.latitude}
+              lng={this.props.pinLocation.longitude}
             />
             : null}
         </GoogleMapReact>
         { this.props.isPicking ? null :
-          <button className="map-btn map-btn--apart" onClick={() => this.props.setShowMap(false)}>Voltar</button>
+          <button className="map-btn map-btn--apart" 
+            onClick={this.hideMap}>
+              Voltar
+          </button>
         }
-        <SearchBar location={this.props.mapLocation}
-          setRestaurants={this.props.setRestaurants}
-          isOnMap={true}/>
-        <RestaurantCard variant={ !this.state.card.null ? 'float' : 'invisible'}
-          restaurant={{...this.state.card}}
-          user={this.props.user} />
+        { Object.keys(this.props.selectedRestaurant).length > 0 ?
+          <RestaurantCard variant='float'
+            restaurant={{...this.props.selectedRestaurant}} />
+          : null
+        }
       </div>
     )
   }
 }
 
-export default Maps
+export default connect(mapStateToProps, mapDispatchToProps)(Maps)

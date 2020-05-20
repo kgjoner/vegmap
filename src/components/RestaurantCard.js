@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import api from '../services/api'
+import { useSelector, useDispatch } from 'react-redux'
+import { likeRestaurant, changeSelectedRestaurant } from '../store/restaurant/actions'
+import { openPopup } from '../store/popup/actions'
+import { popups } from '../store/popup/actionTypes'
+
 import "./restaurantCard.css"
 
-function RestaurantCard({ restaurant, user, edit, variant }) {
+function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
   const [isWaiting, setIsWaiting] = useState(false)
 
+  const user = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if(showMenu) {
-      window.addEventListener('click', checkMenu)
+      window.addEventListener('click', hideMenu)
     }
   }, [showMenu])
 
-  function checkMenu(e) {
+  function hideMenu(e) {
     if(e.target !== document.querySelector('.restaurant-card__menu')) {
-      window.removeEventListener('click', checkMenu)
+      window.removeEventListener('click', hideMenu)
       setShowMenu(false)
     }
   }
@@ -22,23 +29,21 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
   function copyCoordinatesToClipboard(id) {
     if(!id) return
     const coordsEl = document.getElementById(`coords-${id}`)
-    console.log(coordsEl, id)
     coordsEl.select();
     coordsEl.setSelectionRange(0, 99999);
     document.execCommand("copy");
     alert('Coordenadas Copiadas!')
   }
 
-  function likeRestaurant() {
+  function like() {
     if(!user || isWaiting || restaurant.likes.indexOf(user.userID) !== -1) return
-    const payload = {
-      username: restaurant.username,
-      author: user,
-      action: 'like'
-    }
     setIsWaiting(true)
-    api.put('/restaurants', payload)
-      .then(() => setIsWaiting(false))
+    dispatch(likeRestaurant({ restaurant, user }))
+  }
+
+  function editRestaurant() {
+    dispatch(changeSelectedRestaurant(restaurant))
+    dispatch(openPopup(popups.SIGNUP))
   }
 
   return (
@@ -49,13 +54,16 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
         { restaurant.option.vegetarian ? 
           <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
-      { user && edit ? 
+      { user ? 
         <button className="restaurant-card__config" onClick={() => setShowMenu(true)}>
           <div className="icon icon--elipsis"></div>
         </button> : null
       }
       <ul className={`restaurant-card__menu ${showMenu ? 'restaurant-card__menu--visible' : ''}`}>
-          <li className="restaurant-card__menu-item" onClick={e => edit(restaurant)}>editar</li>
+          <li className="restaurant-card__menu-item" 
+            onClick={e => editRestaurant()}>
+              editar
+          </li>
           <li className="restaurant-card__menu-item">denunciar</li>
       </ul>
       <header className="restaurant-card__header">
@@ -93,7 +101,7 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
         <div className="restaurant-card__like-info">
           { restaurant.likes.length }
           <button className="restaurant-card__like-btn"
-            onClick={() => likeRestaurant()}>
+            onClick={() => like()}>
             <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
               'icon icon--chef' : 'icon icon--chef-filled'}></div>
           </button>
@@ -109,7 +117,7 @@ function RestaurantCard({ restaurant, user, edit, variant }) {
           </div>
         </button>
         <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 
-          defaultValue={restaurant.location.coordinates.reverse().join(' ')}></input>
+          defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}></input>
       </footer>
     </li>
   )

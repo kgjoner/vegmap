@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react'
-import FoodInput from './utils/FoodInput'
-import api from '../services/api'
+import { useSelector, useDispatch } from 'react-redux'
 import { connect, disconnect } from '../services/socket'
+import { getRestaurants } from '../store/restaurant/actions'
+import { mapModes } from '../store/map/actionTypes'
+
+import FoodInput from './utils/FoodInput'
 import './searchBar.css'
 
 
-function SearchBar({ location, setRestaurants, isOnMap }) {
+function SearchBar() {
   const [query, setQuery] = useState([])
   const [option, setOption] = useState({ vegan: true, vegetarian: true })
+
+  const location = useSelector(state => state.map.centerMapLocation)
+  const isOnMap = useSelector(state => state.map.mapMode === mapModes.RESTAURANTS)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     document.getElementById('both').checked = true
@@ -24,11 +31,8 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
       foods: query.join(','), 
       ...option
     }
-    api.get('/search', { params })
-      .then(resp => {
-        setRestaurants(resp.data)
-        setupWebsocket(params)
-      })
+    dispatch(getRestaurants(params))
+    setupWebsocket(params)
   }
 
   function setupWebsocket(params) {
@@ -51,7 +55,7 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
         <FoodInput variant="search"
           foods={query}
           setFoods={setQuery}
-          error={{msg: null}}
+          error={null}
           onEnter={submitQuery}
         />
 
@@ -85,4 +89,4 @@ function SearchBar({ location, setRestaurants, isOnMap }) {
   )
 }
 
-export default SearchBar
+export default  SearchBar;

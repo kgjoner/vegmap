@@ -92,7 +92,7 @@ function FoodInput({ foods, setFoods, error, variant, onEnter }) {
   return (
     <div className={`food-input 
       ${focus ? 'food-input--focused' : ''}
-      ${error.target === 'food' ? 'error' : ''}
+      ${error && error.name === 'foods' ? 'error' : ''}
       ${variant? `food-input--${variant}` : ''}`}
     >  
       {foods.length > 0 ?

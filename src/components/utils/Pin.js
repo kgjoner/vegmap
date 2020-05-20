@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { mapModes } from '../../store/map/actionTypes'
 import './pin.css'
 
-function Pin({ location }) {
+function Pin() {
+  const pinLocation = useSelector(state => state.map.pinLocation)
+  const mapMode = useSelector(state => state.map.mapMode)
+
   useEffect(() => {
-    setTimeout(() => {
+    if(mapMode === mapModes.PICKING) {
       document.querySelector('.pin').classList.add('pin--fall')
-    }, 100)
-  }, [location])
+    }
+    // setTimeout(() => {
+    //   document.querySelector('.pin').classList.remove('pin--fall')
+    // }, 1000)
+  }, [pinLocation])
 
   return (
     <div className="pin pin--fall">

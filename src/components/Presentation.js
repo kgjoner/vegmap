@@ -1,14 +1,25 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../store/user/actions'
+import { changeMapMode } from '../store/map/actions'
+import { openPopup } from '../store/popup/actions'
+import { mapModes } from '../store/map/actionTypes';
+import { popups } from '../store/popup/actionTypes'
+
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import "./presentation.css"
+
 import logo from "../assets/img/logo.svg"
 import logotype from "../assets/img/logotype.svg"
+import "./presentation.css"
 
-function Presentation({ setShowPopup, setShowMap, user, setUser }) {
+
+function Presentation() {
+  const user = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
 
   function responseFacebook(response) {
     if(response.name) {
-      setUser(response)
+      dispatch(setUser(response))
     }
   }
 
@@ -37,7 +48,7 @@ function Presentation({ setShowPopup, setShowMap, user, setUser }) {
       { user ? 
       <div>
         <button className="presentation__btn" 
-          onClick={e => setShowPopup(true)}>
+          onClick={e => dispatch(openPopup(popups.SIGNUP))}>
           Cadastrar Restaurante
         </button> 
         <p className="presentation__user">como <strong>{user.name}</strong></p>
@@ -55,7 +66,10 @@ function Presentation({ setShowPopup, setShowMap, user, setUser }) {
         )}/>
       }
       <div className="map-btn__container">
-        <button className="map-btn" onClick={() => setShowMap(true)}>Ir para o mapa</button>
+        <button className="map-btn" 
+          onClick={() => dispatch(changeMapMode(mapModes.RESTAURANTS))}>
+            Ir para o mapa
+        </button>
       </div>
       <div className="presentation__footer">
         ©2020 | Feito com

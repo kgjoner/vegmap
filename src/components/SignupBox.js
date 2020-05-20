@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { addRestaurant, updateRestaurant } from '../store/restaurant/actions'
+import { setPinLocation, changeMapMode } from '../store/map/actions'
+import { mapModes } from '../store/map/actionTypes'
+
 import FoodInput from './utils/FoodInput'
-import existOrError from '../utils/existOrError'
-import api from '../services/api'
 import "./signupBox.css"
 
-function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinLocation, setPinLocation }) {
+function SignupBox() {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
@@ -15,11 +18,17 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
   const [instagramUsername, setInstagramUsername] = useState('')
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
-  const [error, setError] = useState({msg: null})
-  const [isLoading, setIsLoading] = useState(false)
+
+  const selectedRestaurant = useSelector(state => state.restaurant.selectedRestaurant)
+  const isLoading = useSelector(state => state.restaurant.saving)
+  const error = useSelector(state => state.restaurant.error)
+  const pinLocation = useSelector(state => state.map.pinLocation)
+  const mapMode = useSelector(state => state.map.mapMode)
+  const user = useSelector(state => state.user.user)
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    if(selectedRestaurant) {
+    if(Object.keys(selectedRestaurant).length > 0) {
       setName(selectedRestaurant.name)
       setType(selectedRestaurant.type)
       setFoods([...selectedRestaurant.foods])
@@ -35,40 +44,9 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
     }
   }, [selectedRestaurant])
 
-  useEffect(() => {
-    if(pinLocation.latitude) {
-      setLatitude(pinLocation.latitude)
-      setLongitude(pinLocation.longitude)
-      setPinLocation({latitude: null, longitude: null })
-    }
-  }, [pinLocation])
-
   function handleSubmit(e) {
     e.preventDefault()
-    setIsLoading(true)
-
-    try{
-      existOrError(name, 'name:Informe o nome do restaurante.')
-      existOrError(type, 'type:Informe o tipo do restaurante.')
-      existOrError(option.vegan || option.vegetarian, 'option:O restaurante deve atender ao menos uma das opções.')
-      existOrError(foods, 'food:Informe as comidas servidas.')
-      existOrError(address, 'address:Informe o endereço do restaurante.')
-      existOrError(latitude, 'coord:Informe as coordenadas do restaurante.')
-      existOrError(longitude, 'coord:Informe as coordenadas do restaurante.')
-    } catch(e) {
-      if(error.msg) setError({msg: null})
-      const newError = {
-        target: e.split(':')[0],
-        msg: e.split(':')[1]
-      }
-      setTimeout(() => {
-        setError(newError)
-        setIsLoading(false)
-      }, 0)
-      return
-    }
-
-    const restaurantInfo = {
+    const restaurantInputData = {
       name,
       type,
       option,
@@ -79,31 +57,32 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
       instagramUsername,
       latitude,
       longitude,
-      author: user,
     }
-
-    const method = selectedRestaurant ? 'put' : 'post'
-    if(selectedRestaurant) restaurantInfo.username = selectedRestaurant.username
-
-    api[method]('/restaurants', restaurantInfo)
-      .then(resp => {
-        setName('')
-        setType('')
-        setOption({ vegan: false, vegetarian: false })
-        setFoods([])
-        setAddress('')
-        setWebsite('')
-        setFacebookUsername('')
-        setInstagramUsername('')
-        setError({msg: null})
-        setIsLoading(false)
-        // if(!selectedRestaurant) addRestaurant(resp.data)
-        closePopup()
-      })
-      .catch(e => {
-        setError({msg: e})
-      })
+    if(Object.keys(selectedRestaurant).length > 0) {
+      restaurantInputData.username = selectedRestaurant.username
+      dispatch(updateRestaurant({ restaurant: restaurantInputData, user }))
+    } else {
+      dispatch(addRestaurant({ restaurant: restaurantInputData, user }))
+    }
   }
+
+  function pickCoordsOnMap() {
+    document.querySelector('.popup__bg').style.visibility = 'hidden'
+    dispatch(changeMapMode(mapModes.PICKING))
+  }
+
+  useEffect(() => {
+    if(mapMode === mapModes.PICKING) {
+      setLatitude(pinLocation.latitude)
+      setLongitude(pinLocation.longitude)
+      setTimeout(() => {
+        dispatch(changeMapMode(mapModes.HIDDEN))
+        document.querySelector('.popup__bg').style.visibility = 'visible'
+        dispatch(setPinLocation({latitude: null, longitude: null }))
+      }, 1000)
+    }
+  }, [pinLocation])
+
 
   function handleType(value) {
     setType(value)
@@ -115,6 +94,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
     document.getElementById('vegetarian-option').checked = newOption.vegetarian
     setOption(newOption)
   }
+
 
   function handleCheckbox(value, key) {
     const newOption = {...option}
@@ -130,7 +110,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
           <div className="input-block">
             <label htmlFor="name">Nome*</label>
             <input name="name" id="name"
-              className={error.target === 'name' ? 'error' : ''}
+              className={error && error.name === 'name' ? 'error' : ''}
               value={name}
               onChange={e => setName(e.target.value)}>
             </input>
@@ -139,7 +119,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
           <div className="input-block">
             <label htmlFor="type">Tipo*</label>
             <select name="type" id="type"
-              className={error.target === 'type' ? 'error' : ''}
+              className={error && error.name === 'type' ? 'error' : ''}
               value={type}
               onChange={e => handleType(e.target.value)}>
                 <option value={null}>Selecione</option>
@@ -149,7 +129,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
             </select>
           </div>
 
-          <div className={`input-block checkbox ${error.target === 'option' ? 'error' : ''}`}>
+          <div className={`input-block checkbox ${error && error.name === 'option' ? 'error' : ''}`}>
             <div className="check-option">
               <input type="checkbox" id="vegan-option"
                 disabled={type === 'vegan'}
@@ -175,7 +155,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
         <div className="input-block">
           <label htmlFor="address">Endereço*</label>
           <input name="address" id="address"
-            className={error.target === 'address' ? 'error' : ''}
+            className={error && error.name === 'address' ? 'error' : ''}
             value={address}
             onChange={e => setAddress(e.target.value)}>
           </input>
@@ -185,7 +165,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
           <div className="input-block">
             <label htmlFor="latitude">Latitude*</label>
             <input name="latitude" id="latitude"
-              className={error.target === 'coord' ? 'error' : ''} 
+              className={error && error.name === 'coord' ? 'error' : ''} 
               value={latitude}
               onChange={e => setLatitude(e.target.value)}>  
             </input>
@@ -193,7 +173,7 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
           <div className="input-block">
             <label htmlFor="longitude">Longitude*</label>
             <input name="longitude" id="longitude"
-              className={error.target === 'coord' ? 'error' : ''}  
+              className={error && error.name === 'coord' ? 'error' : ''}  
               value={longitude}
               onChange={e => setLongitude(e.target.value)}>
             </input>
@@ -234,8 +214,8 @@ function SignupBox({ selectedRestaurant, closePopup, user, pickCoordsOnMap, pinL
             <div className="icon icon--loading"></div>
             }
           </button>
-          <div className={error.msg ? 'error-sign error-visible' : 'error-sign'}>
-            {error.msg}
+          <div className={error && error.message ? 'error-sign error-visible' : 'error-sign'}>
+            {error ? error.message : null}
           </div>
         </div>
       </form>

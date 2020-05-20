@@ -83,3 +83,16 @@
     transform: rotate(360deg);
   }
 }
+
+.icon.icon--dark {
+  background-color: var(--dark-color)
+}
+
+.icon.icon--light {
+  background-color: var(--light-color)
+}
+
+.icon.icon--bigger {
+  width: 42px;
+  height: 42px;
+}

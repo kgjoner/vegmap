@@ -8,7 +8,8 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  mapModes
+  mapModes,
+  DISMISS_MAP_ERROR
 } from './actionTypes'
 import * as actions from './actions'
 import { initialState, mapReducer } from './reducer'
@@ -21,8 +22,8 @@ const mockGeolocation = {
       coords: mockCoords
     })))
 }
-
 global.navigator.geolocation = mockGeolocation;
+
 
 describe('Map Store', () => {
 
@@ -151,6 +152,31 @@ let store;
         const state = runActionsOnReducer(store.getActions(), mapReducer)
         expect(state).toEqual(expectedState)
       })
+    })
+  })
+
+
+/* ========================================================================================
+  Dismiss Map Error
+  ========================================================================================= */ 
+
+  describe('Dismiss Map Error', () => {
+
+    it('should create an action to dismiss the map error', () => {
+      const expectedAction = { type: DISMISS_MAP_ERROR }
+
+      expect(actions.dismissMapError()).toEqual(expectedAction)
+    })
+
+
+    it('should dismiss the error', () => {
+      const errorState = {
+        ...initialState,
+        error: mockError
+      }
+      const action = { type: DISMISS_MAP_ERROR }
+
+      expect(mapReducer(errorState, action)).toEqual(initialState)
     })
   })
 })

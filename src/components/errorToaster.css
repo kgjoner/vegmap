@@ -1,0 +1,47 @@
+.error-toaster {
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.error-toaster__container {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  border-radius: 4px;
+  padding: 10px 10px;
+  background-color: var(--danger-color);
+  display: flex;
+  justify-content: flex-end;
+  color: #fff;
+}
+
+.error-toaster--hidden {
+  display: none;
+}
+
+.error-toaster__container--toast {
+  animation: toast 0.6s
+}
+
+@keyframes toast {
+  0% {
+    top: 60px;
+    opacity: 0.2;
+  }
+  100%{
+    top: 0;
+    opacity: 1;
+  }
+}
+
+.error-toaster__btn {
+  background: none;
+  border: none;
+  margin-left: 15px;
+  color: var(--lighr-color);
+  opacity: 0.8;
+  cursor: pointer;
+}

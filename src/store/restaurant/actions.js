@@ -10,9 +10,12 @@ import {
   UPDATE_RESTAURANT_STARTED,
   UPDATE_RESTAURANT_SUCCESS,
   UPDATE_RESTAURANT_FAILURE,
+  LIKING_STARTED,
   ADD_LIKE, 
   REMOVE_LIKE, 
-  CHANGE_SELECTED_RESTAURANT
+  LIKING_FINISHED,
+  CHANGE_SELECTED_RESTAURANT,
+  DISMISS_RESTAURANT_ERROR
 } from './actionTypes'
 
 
@@ -95,25 +98,27 @@ export const updateRestaurant = ({ restaurant, user, receivedViaSocket }) => {
   }
 }
 
-export const likeRestaurant = ({ restaurant, user }) => {
+export const toggleRestaurantLike = ({ restaurant, user }) => {
   const payloadOfIDs = {
     restaurantID: restaurant._id,
     userID: user.userID
   }
+  const shouldUnlike = restaurant.likes.includes(user.userID)
 
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    dispatch({ type: LIKING_STARTED })
     dispatch({
-      type: ADD_LIKE,
+      type: shouldUnlike ? REMOVE_LIKE : ADD_LIKE,
       payload: payloadOfIDs
     })
 
-    return api.incrementRestaurantLikes({ restaurant, user }).then(
+    return api.manageRestaurantLikes({ restaurant, user, unlike: shouldUnlike }).then(
       null,
       () => dispatch({
-        type: REMOVE_LIKE,
+        type: shouldUnlike ? ADD_LIKE : REMOVE_LIKE,
         payload: payloadOfIDs
-      })
-    )
+      }))
+      .finally(() => dispatch({ type: LIKING_FINISHED }))
   }
 }
 
@@ -122,4 +127,8 @@ export const changeSelectedRestaurant = (payload) => {
     type: CHANGE_SELECTED_RESTAURANT,
     payload
   }
+}
+
+export const dismissRestaurantError = () => {
+  return { type: DISMISS_RESTAURANT_ERROR }
 }

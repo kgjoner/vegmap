@@ -5,7 +5,8 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  mapModes
+  mapModes,
+  DISMISS_MAP_ERROR
 } from './actionTypes'
 
 
@@ -29,13 +30,11 @@ export const mapReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         gettingUserLocation: true
       })
-    
     case GET_USER_LOCATION_SUCCESS:
       return Object.assign({}, state, {
         centerMapLocation: payload,
         gettingUserLocation: false
       })
-
     case GET_USER_LOCATION_FAILURE:
       return Object.assign({}, state, {
         error: payload,
@@ -46,10 +45,17 @@ export const mapReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         pinLocation: payload
       })
+
     case CHANGE_MAP_MODE:
       return Object.assign({}, state, {
         mapMode: payload
       })
+
+    case DISMISS_MAP_ERROR:
+      return Object.assign({}, state, {
+        error: initialState.error
+      })
+
     default:
       return state
   }

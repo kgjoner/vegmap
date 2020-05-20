@@ -8,9 +8,12 @@ import {
   UPDATE_RESTAURANT_STARTED,
   UPDATE_RESTAURANT_SUCCESS,
   UPDATE_RESTAURANT_FAILURE,
+  LIKING_STARTED,
   ADD_LIKE, 
   REMOVE_LIKE, 
-  CHANGE_SELECTED_RESTAURANT
+  LIKING_FINISHED,
+  CHANGE_SELECTED_RESTAURANT,
+  DISMISS_RESTAURANT_ERROR,
 } from './actionTypes'
 
 
@@ -19,6 +22,7 @@ export const initialState = {
   selectedRestaurant: {},
   getting: false,
   saving: false,
+  liking: false,
   error: null
 }
 
@@ -73,6 +77,10 @@ export const restaurant = (state = initialState, action) => {
         saving: false
       })
 
+    case LIKING_STARTED:
+      return Object.assign({}, state, {
+        liking: true
+      })
     case ADD_LIKE: {
       const { restaurantID, userID } = payload
       return Object.assign({}, state, {
@@ -102,10 +110,21 @@ export const restaurant = (state = initialState, action) => {
         })
       }) 
     }
+    case LIKING_FINISHED:
+      return Object.assign({}, state, {
+        liking: false
+      })
+
     case CHANGE_SELECTED_RESTAURANT:
       return Object.assign({}, state, {
         selectedRestaurant: {...payload}
       })
+
+    case DISMISS_RESTAURANT_ERROR:
+      return Object.assign({}, state, {
+        error: initialState.error
+      })
+
     default:
       return state
   }

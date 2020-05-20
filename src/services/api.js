@@ -33,11 +33,11 @@ export const saveRestaurant = ({ method, restaurant, user }) => {
   })
 }
 
-export const incrementRestaurantLikes = ({ restaurant, user }) => {
+export const manageRestaurantLikes = ({ restaurant, user, unlike }) => {
   const body = {
     username: restaurant.username,
     author: user,
-    action: 'like'
+    action: unlike ? 'unlike' : 'like'
   }
   return new Promise((resolve, reject) => {
     api.put('/restaurants', body)

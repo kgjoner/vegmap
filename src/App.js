@@ -10,6 +10,7 @@ import SearchBar from './components/SearchBar'
 import RestaurantCard from './components/RestaurantCard'
 import Maps from './components/Map'
 import Popup from './components/Popup'
+import ErrorToaster from './components/ErrorToaster'
 
 import './assets/css/global.css'
 import './assets/css/icon.css'
@@ -18,6 +19,7 @@ import './App.css'
 
 function App() {
   const restaurants = useSelector(state => state.restaurant.restaurants)
+  const isLoading = useSelector(state => state.restaurant.getting)
   const mapMode = useSelector(state => state.map.mapMode)
   const centerMapLocation = useSelector(state => state.map.centerMapLocation)
   const dispatch = useDispatch()
@@ -42,16 +44,22 @@ function App() {
         <div className={`container`}>
           <Presentation />
           <main>
-            <ul className="app__card-list">
-              {restaurants.map(restaurant => (
-                <RestaurantCard key={restaurant._id} 
-                  restaurant={restaurant} />
-              ))}
-            </ul>
+            {isLoading ?
+              <div className="app__loading">
+                <div className="icon icon--loading icon--light icon--bigger"></div>
+              </div> :
+              <ul className="app__card-list">
+                {restaurants.map(restaurant => (
+                  <RestaurantCard key={restaurant._id} 
+                    restaurant={restaurant} />
+                ))}
+              </ul>
+            }
           </main>
         </div> : null
       }
       <Popup />
+      <ErrorToaster />
     </div>
   )
 }

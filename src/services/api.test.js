@@ -68,10 +68,10 @@ describe('Api Calls', () => {
   })
 
 
-  describe('Increment Restaurant Likes', () => {
+  describe('Manage Restaurant Likes', () => {
     const payload = {
       restaurant: mockRestaurant,
-      user: mockUser
+      user: mockUser,
     }
 
     it('should format the payload to send it as the HTTP body and return the restaurant liked', () => {
@@ -85,7 +85,7 @@ describe('Api Calls', () => {
         action: 'like'
       }
   
-      return api.incrementRestaurantLikes(payload).then(data => {
+      return api.manageRestaurantLikes(payload).then(data => {
         expect(putMock).toHaveBeenCalledWith('/restaurants', expectedBody)
         expect(data).toEqual(mockRestaurantLiked)
       })
@@ -97,7 +97,7 @@ describe('Api Calls', () => {
         throw mockError
       }))
   
-      return expect(api.incrementRestaurantLikes(payload)).rejects.toEqual(mockError)
+      return expect(api.manageRestaurantLikes(payload)).rejects.toEqual(mockError)
     })
   })
 

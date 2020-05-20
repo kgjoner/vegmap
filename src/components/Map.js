@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import GoogleMapReact from 'google-map-react'
 import Marker from './utils/Marker'
 import Pin from './utils/Pin'
-import SearchBar from './SearchBar'
 import RestaurantCard from './RestaurantCard'
 import { changeSelectedRestaurant } from '../store/restaurant/actions'
 import { setCenterMapLocation, setPinLocation, changeMapMode } from '../store/map/actions'
@@ -110,7 +109,7 @@ class Maps extends Component {
         }
         { Object.keys(this.props.selectedRestaurant).length > 0 ?
           <RestaurantCard variant='float'
-            restaurant={{...this.props.selectedRestaurant}} />
+            restaurant={this.props.restaurants.find(r => r._id === this.props.selectedRestaurant._id)} />
           : null
         }
       </div>

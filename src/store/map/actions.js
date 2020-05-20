@@ -4,7 +4,8 @@ import {
   CHANGE_MAP_MODE,
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
-  GET_USER_LOCATION_FAILURE
+  GET_USER_LOCATION_FAILURE,
+  DISMISS_MAP_ERROR
 } from './actionTypes'
 
 
@@ -54,4 +55,8 @@ export const changeMapMode = (payload) => {
     type: CHANGE_MAP_MODE,
     payload
   }
+}
+
+export const dismissMapError = () => {
+  return { type: DISMISS_MAP_ERROR }
 }

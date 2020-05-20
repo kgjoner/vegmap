@@ -6,7 +6,7 @@ import { user } from './user/reducer'
 import { mapReducer } from './map/reducer'
 import { popup } from './popup/reducer'
 
-const reducers = combineReducers({
+export const reducers = combineReducers({
   restaurant,
   user,
   map: mapReducer,

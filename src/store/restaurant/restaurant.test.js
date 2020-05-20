@@ -13,9 +13,12 @@ import {
   UPDATE_RESTAURANT_STARTED,
   UPDATE_RESTAURANT_SUCCESS,
   UPDATE_RESTAURANT_FAILURE,
+  LIKING_STARTED,
   ADD_LIKE, 
   REMOVE_LIKE, 
-  CHANGE_SELECTED_RESTAURANT
+  LIKING_FINISHED,
+  CHANGE_SELECTED_RESTAURANT,
+  DISMISS_RESTAURANT_ERROR
 } from './actionTypes'
 import * as actions from './actions'
 import { initialState, restaurant } from './reducer'
@@ -32,7 +35,7 @@ import {
 const mockStore = configureMockStore([thunk])
 const getMock = jest.spyOn(api, 'getRestaurants')
 const saveMock = jest.spyOn(api, 'saveRestaurant')
-const likeMock = jest.spyOn(api, 'incrementRestaurantLikes')
+const likeMock = jest.spyOn(api, 'manageRestaurantLikes')
 
 
 
@@ -320,19 +323,21 @@ describe('Restaurant Store', () => {
     })
 
     it('should increment the restaurant likes', () => {
-      likeMock.mockResolvedValueOnce(true)
+      likeMock.mockResolvedValue(true)
       const expectedActions = [
+        { type: LIKING_STARTED },
         {
           type: ADD_LIKE,
           payload: actionPayload
-        }
+        },
+        { type: LIKING_FINISHED }
       ]
       const expectedState = {
         ...initialState,
         restaurants: [mockRestaurantLiked]
       }
 
-      return store.dispatch(actions.likeRestaurant(payload)).then(() => {
+      return store.dispatch(actions.toggleRestaurantLike(payload)).then(() => {
         expect(store.getActions()).toEqual(expectedActions)
         const state = runActionsOnReducer(store.getActions(), restaurant, store.getState())
         expect(state).toEqual(expectedState)  
@@ -341,23 +346,68 @@ describe('Restaurant Store', () => {
 
 
     it('should take the like back if the api return an error', () => {
-      likeMock.mockRejectedValueOnce(mockError)
-      const expectedActions = [
-        {
-          type: ADD_LIKE,
-          payload: actionPayload
-        }, {
-          type: REMOVE_LIKE,
-          payload: actionPayload
-        }
-      ]
+      likeMock.mockRejectedValue(mockError)
+      const expectedAction = {
+        type: REMOVE_LIKE,
+        payload: actionPayload
+      }
       const expectedState = {
         ...initialState,
         restaurants: [mockRestaurant]
       }
   
-      return store.dispatch(actions.likeRestaurant(payload)).then(() => {
+      return store.dispatch(actions.toggleRestaurantLike(payload)).then(() => {
+        expect(store.getActions()).toContainEqual(expectedAction)
+        const state = runActionsOnReducer(store.getActions(), restaurant, store.getState())
+        expect(state).toEqual(expectedState)
+      })
+    })
+
+
+    it('should decrement the restaurant likes if user already liked the target restaurant', () => {
+      likeMock.mockResolvedValue(true)
+      payload = {
+        ...payload,
+        restaurant: mockRestaurantLiked
+      }
+      const expectedActions = [
+        { type: LIKING_STARTED },
+        {
+          type: REMOVE_LIKE,
+          payload: actionPayload
+        },
+        { type: LIKING_FINISHED }
+      ]
+      const expectedState = {
+        ...initialState,
+        restaurants: [mockRestaurant]
+      }
+
+      return store.dispatch(actions.toggleRestaurantLike(payload)).then(() => {
         expect(store.getActions()).toEqual(expectedActions)
+        const state = runActionsOnReducer(store.getActions(), restaurant, store.getState())
+        expect(state).toEqual(expectedState)  
+      })
+    })
+
+
+    it('should put the like back if the api return an error', () => {
+      likeMock.mockRejectedValue(mockError)
+      payload = {
+        ...payload,
+        restaurant: mockRestaurantLiked
+      }
+      const expectedAction = {
+        type: ADD_LIKE,
+        payload: actionPayload
+      }
+      const expectedState = {
+        ...initialState,
+        restaurants: [mockRestaurantLiked]
+      }
+  
+      return store.dispatch(actions.toggleRestaurantLike(payload)).then(() => {
+        expect(store.getActions()).toContainEqual(expectedAction)
         const state = runActionsOnReducer(store.getActions(), restaurant, store.getState())
         expect(state).toEqual(expectedState)
       })
@@ -391,6 +441,31 @@ describe('Restaurant Store', () => {
         selectedRestaurant: mockRestaurant
       }
       expect(restaurant(undefined, action)).toEqual(expectedState)
+    })
+  })
+
+
+/* ========================================================================================
+  Dismiss Restaurant Error
+  ========================================================================================= */ 
+
+  describe('Dismiss Restaurant Error', () => {
+
+    it('should create an action to dismiss the restaurant error', () => {
+      const expectedAction = { type: DISMISS_RESTAURANT_ERROR }
+
+      expect(actions.dismissRestaurantError()).toEqual(expectedAction)
+    })
+
+
+    it('should dismiss the error', () => {
+      const errorState = {
+        ...initialState,
+        error: mockError
+      }
+      const action = { type: DISMISS_RESTAURANT_ERROR }
+
+      expect(restaurant(errorState, action)).toEqual(initialState)
     })
   })
 })

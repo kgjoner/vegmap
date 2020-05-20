@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { likeRestaurant, changeSelectedRestaurant } from '../store/restaurant/actions'
+import { toggleRestaurantLike, changeSelectedRestaurant } from '../store/restaurant/actions'
 import { openPopup } from '../store/popup/actions'
 import { popups } from '../store/popup/actionTypes'
+import { mapModes } from '../store/map/actionTypes'
 
 import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
-  const [isWaiting, setIsWaiting] = useState(false)
 
   const user = useSelector(state => state.user.user)
+  const isWaiting = useSelector(state => state.restaurant.liking)
+  const isOnMap = useSelector(state => state.map.mapMode !== mapModes.HIDDEN)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -36,9 +38,8 @@ function RestaurantCard({ restaurant, variant }) {
   }
 
   function like() {
-    if(!user || isWaiting || restaurant.likes.indexOf(user.userID) !== -1) return
-    setIsWaiting(true)
-    dispatch(likeRestaurant({ restaurant, user }))
+    if(!user || isWaiting) return
+    dispatch(toggleRestaurantLike({ restaurant, user }))
   }
 
   function editRestaurant() {
@@ -54,7 +55,7 @@ function RestaurantCard({ restaurant, variant }) {
         { restaurant.option.vegetarian ? 
           <div className="restaurant-card__flag restaurant-card__flag--vegetarian"></div> : null }
       </div>
-      { user ? 
+      { user && !isOnMap ? 
         <button className="restaurant-card__config" onClick={() => setShowMenu(true)}>
           <div className="icon icon--elipsis"></div>
         </button> : null

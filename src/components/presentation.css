@@ -64,10 +64,6 @@
   cursor: pointer;
 }
 
-.presentation__btn--facebook {
-  background-color: #2258BD;
-}
-
 .presentation__user {
   font-size: 0.9em;
   color: var(--dark-color);

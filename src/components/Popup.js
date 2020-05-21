@@ -5,6 +5,7 @@ import { changeSelectedRestaurant } from '../store/restaurant/actions'
 import { popups } from '../store/popup/actionTypes'
 
 import SignupBox from './SignupBox'
+import AskForLogging from './AskForLogging'
 import './popup.css'
 
 function Popup() {
@@ -25,6 +26,9 @@ function Popup() {
       <div className="popup__bg" onMouseDown={e => close(e)}>
         { popup === popups.SIGNUP ?
           <SignupBox /> : null
+        }
+        { popup === popups.ASK_FOR_LOGGING ?
+          <AskForLogging /> : null
         }
       </div> 
     </div>

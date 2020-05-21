@@ -1,0 +1,48 @@
+.ask-for-logging {
+  padding: 40px;
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  /* animation: popup 0.6s; */
+  width: 400px;
+  /* height: 200px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ask-for-logging__message {
+  color: var(--dark-color);
+  line-height: 180%;
+  width: 320px;
+}
+
+.ask-for-logging__symbol {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  padding: 0 20px 10px 20px;
+  margin-bottom: 20px;
+}
+
+.ask-for-logging__symbol::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--light-color);
+  animation: grow 0.5s ease-in-out;
+}
+
+@keyframes grow {
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 100%;
+  }
+}

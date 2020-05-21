@@ -4,5 +4,6 @@ export const CLOSE_POPUP = 'CLOSE_POPUP'
 
 export const popups = {
     NONE: 'NONE',
-    SIGNUP: 'SIGNUP'
+    SIGNUP: 'SIGNUP',
+    ASK_FOR_LOGGING: 'ASK_FOR_LOGGING'
 }

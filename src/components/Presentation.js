@@ -1,12 +1,11 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../store/user/actions'
 import { changeMapMode } from '../store/map/actions'
 import { openPopup } from '../store/popup/actions'
 import { mapModes } from '../store/map/actionTypes';
 import { popups } from '../store/popup/actionTypes'
 
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import LoginButton from './utils/LoginButton'
 
 import logo from "../assets/img/logo.svg"
 import logotype from "../assets/img/logotype.svg"
@@ -16,12 +15,6 @@ import "./presentation.css"
 function Presentation() {
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
-
-  function responseFacebook(response) {
-    if(response.name) {
-      dispatch(setUser(response))
-    }
-  }
 
   return (
     <aside className="presentation">
@@ -53,17 +46,7 @@ function Presentation() {
         </button> 
         <p className="presentation__user">como <strong>{user.name}</strong></p>
       </div> :
-      <FacebookLogin
-        appId="837570083385264"
-        autoLoad
-        fields="name,email,picture"
-        callback={responseFacebook} 
-        render={renderProps => (
-          <button className="presentation__btn presentation__btn--facebook"
-            onClick={renderProps.onClick}>
-            Login com Facebook
-          </button>
-        )}/>
+      <LoginButton />
       }
       <div className="map-btn__container">
         <button className="map-btn" 

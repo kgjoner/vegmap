@@ -16,6 +16,7 @@
   display: flex;
   justify-content: flex-end;
   color: #fff;
+  z-index: 10;
 }
 
 .error-toaster--hidden {

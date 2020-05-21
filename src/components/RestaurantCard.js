@@ -9,6 +9,7 @@ import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
   const user = useSelector(state => state.user.user)
   const isWaiting = useSelector(state => state.restaurant.liking)
@@ -34,11 +35,18 @@ function RestaurantCard({ restaurant, variant }) {
     coordsEl.select();
     coordsEl.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    alert('Coordenadas Copiadas!')
+    setShowAlert(true)
+    setTimeout(() => {
+      setShowAlert(false)
+    }, 1000)
   }
 
   function like() {
-    if(!user || isWaiting) return
+    if(isWaiting) return
+    if(!user) {
+      dispatch(openPopup(popups.ASK_FOR_LOGGING))
+      return
+    }
     dispatch(toggleRestaurantLike({ restaurant, user }))
   }
 
@@ -104,7 +112,7 @@ function RestaurantCard({ restaurant, variant }) {
           <button className="restaurant-card__like-btn"
             onClick={() => like()}>
             <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
-              'icon icon--chef' : 'icon icon--chef-filled'}></div>
+              'icon icon--star' : 'icon icon--star-filled'}></div>
           </button>
         </div>
       </div>
@@ -120,6 +128,9 @@ function RestaurantCard({ restaurant, variant }) {
         <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 
           defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}></input>
       </footer>
+      <div className={`restaurant-card__alert ${showAlert ? 'restaurant-card__alert--appear' : ''}`}>
+        copiadas!
+      </div>
     </li>
   )
 }

@@ -141,6 +141,21 @@
   justify-content: flex-start;
 }
 
+.restaurant-card__link {
+  background-color: var(--dark-color);
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.restaurant-card__link:hover {
+  background-color: var(--light-color);
+}
+
 .restaurant-card__link + .restaurant-card__link {
   margin-left: 8px;
 }
@@ -215,20 +230,39 @@
   margin-left: 5px;
 }
 
-.restaurant-card__link {
+.restaurant-card__alert {
+  position: absolute;
+  right: 60px;
+  bottom: 50px;
   background-color: var(--dark-color);
-  height: 25px;
-  width: 25px;
+  color: #fff;
+  padding: 3px 5px;
   border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  display: none;
 }
 
-.restaurant-card__link:hover {
-  background-color: var(--light-color);
+.restaurant-card__alert--appear {
+  display: block;
+  animation: appear 1s ease-in-out;
 }
+
+@keyframes appear {
+  0%{
+    opacity: 0.2;
+    bottom: 30px;
+  }
+  50%{
+    opacity: 1;
+    bottom: 50px;
+  }
+  80%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0.2;
+  }
+}
+
 
 .vegan header .icon-box {
   background: var(--primary-color);

@@ -38,12 +38,12 @@
   height: 15px;
 }
 
-.icon--chef {
+.icon--star {
   mask-image: url('../img/star.svg');
   background-color: var(--primary-color);
 }
 
-.icon--chef-filled {
+.icon--star-filled {
   mask-image: url('../img/star-filled.svg');
   background-color: var(--primary-color);
 }
@@ -95,4 +95,50 @@
 .icon.icon--bigger {
   width: 42px;
   height: 42px;
+}
+
+.icon--jump {
+  animation: jump 0.6s ease-in-out;
+}
+
+.icon--jump-delay1 {
+  animation: jumpInverseRotate 0.6s ease-in-out 0.1s;
+}
+
+.icon--jump-delay2 {
+  animation: jump 0.6s ease-in-out 0.3s;
+}
+
+@keyframes jump {
+  0%{
+    position: relative;
+    bottom: 0;
+  }
+  50%{
+    position: relative;
+    bottom: 10px;
+    transform: rotate(-5deg);
+  }
+  100%{
+    position: relative;
+    bottom: 0;
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes jumpInverseRotate {
+  0%{
+    position: relative;
+    bottom: 0;
+  }
+  50%{
+    position: relative;
+    bottom: 10px;
+    transform: rotate(10deg);
+  }
+  100%{
+    position: relative;
+    bottom: 0;
+    transform: rotate(0deg);
+  }
 }

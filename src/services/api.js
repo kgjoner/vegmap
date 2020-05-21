@@ -49,7 +49,7 @@ export const manageRestaurantLikes = ({ restaurant, user, unlike }) => {
 }
 
 
-export const submitFormToNetlify = (form) => {
+export const submitFormToNetlify = ({reason, comment, restaurant, user}) => {
   if(!form.reason) {
     return Promise.reject({name: 'reason', message: 'Informe o motivo.'})
   }
@@ -60,7 +60,10 @@ export const submitFormToNetlify = (form) => {
     }
     axios.post("/", encode({
         "form-name": "Denounce",
-        ...form
+        reason,
+        restaurant: `nome: ${restaurant.name}, tag: ${restuarant.username}`,
+        user: `nome: ${user.name}, email: ${user.email}, id: ${user.userID}`,
+        comment,
         }),
         axiosConfig)
       .then(resp => resolve(resp))

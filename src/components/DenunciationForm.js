@@ -5,7 +5,7 @@ import { closePopup } from '../store/popup/actions'
 
 import './denunciationForm.css'
 
-function DenunciationForm() {
+function DenunciationForm({ restaurant }) {
   const [reason, setReason] = useState('')
   const [comment, setComment] = useState('')
   const [error, setError] = useState(null)
@@ -19,7 +19,7 @@ function DenunciationForm() {
     e.preventDefault()
     setError(null)
     setIsLoading(true)
-    submitFormToNetlify({ reason, comment, user }).then(
+    submitFormToNetlify({ reason, comment, restaurant, user }).then(
       () => setIsDone(true),
       err => setError(err)
     ).finally(() => setIsLoading(false))
@@ -34,11 +34,11 @@ function DenunciationForm() {
           onClick={() => dispatch(closePopup())}>Ok</button>
       </div> :
 
-      <form className="denunciation-form__form" name="Denounce" 
+      <form className="denunciation-form__form" name="denounce" 
         onSubmit={handleSubmit} method="post" 
         data-netlify="true" data-netlify-honeypot="bot-field">
 
-          <input type="hidden" name="form-name" value="Denounce" />
+          <input type="hidden" name="form-name" value="denounce" />
 
           <div className="input-block">
             <label htmlFor="reason">Motivo</label>

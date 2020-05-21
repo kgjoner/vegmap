@@ -38,6 +38,8 @@ function DenunciationForm() {
         onSubmit={handleSubmit} method="post" 
         data-netlify="true" data-netlify-honeypot="bot-field">
 
+          <input type="hidden" name="form-name" value="Denounce" />
+
           <div className="input-block">
             <label htmlFor="reason">Motivo</label>
             <select name="reason" id="reason"

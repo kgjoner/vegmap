@@ -55,6 +55,11 @@ function RestaurantCard({ restaurant, variant }) {
     dispatch(openPopup(popups.SIGNUP))
   }
 
+  function denounce() {
+    dispatch(changeSelectedRestaurant(restaurant))
+    dispatch(openPopup(popups.DENUNCIATION_FORM))
+  }
+
   return (
     <li className={`restaurant-card ${restaurant.type} ${variant ? `restaurant-card--${variant}` : ''}`}>
       <div className="restaurant-card__flags">
@@ -74,7 +79,7 @@ function RestaurantCard({ restaurant, variant }) {
               editar
           </li>
           <li className="restaurant-card__menu-item"
-            onClick={() => dispatch(openPopup(popups.DENUNCIATION_FORM))}>
+            onClick={() => denounce()}>
               denunciar
           </li>
       </ul>

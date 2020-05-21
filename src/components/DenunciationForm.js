@@ -1,33 +1,30 @@
 import React, {useState} from 'react'
-import { submitFormToNetlify } from '../services/api'
 import { useSelector, useDispatch } from 'react-redux'
 import { closePopup } from '../store/popup/actions'
 
 import './denunciationForm.css'
+import { denounceRestaurant } from '../store/restaurant/actions'
 
-function DenunciationForm({ restaurant }) {
+function DenunciationForm() {
   const [reason, setReason] = useState('')
   const [comment, setComment] = useState('')
-  const [error, setError] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isDone, setIsDone] = useState(false)
+  const [wasDispatched, setWasDispatched] = useState(false)
 
   const user = useSelector(state => state.user.user)
+  const restaurant = useSelector(state => state.restaurant.selectedRestaurant)
+  const isLoading = useSelector(state => state.restaurant.denouncing)
+  const error = useSelector(state => state.restaurant.error)
   const dispatch = useDispatch()
 
   function handleSubmit(e) {
     e.preventDefault()
-    setError(null)
-    setIsLoading(true)
-    submitFormToNetlify({ reason, comment, restaurant, user }).then(
-      () => setIsDone(true),
-      err => setError(err)
-    ).finally(() => setIsLoading(false))
+    dispatch(denounceRestaurant({ reason, comment, restaurant, user }))
+    setWasDispatched(true)
   }
 
   return (
     <div className="denunciation-form">
-      {isDone ?
+      {wasDispatched && !isLoading && !error ?
       <div className="denunciation-form__done">
         Recebemos sua denúncia e iremos avaliá-la. Obrigado.
         <button className="denunciation-form__btn"
@@ -35,7 +32,7 @@ function DenunciationForm({ restaurant }) {
       </div> :
 
       <form className="denunciation-form__form" name="denounce" 
-        onSubmit={handleSubmit} method="post" 
+        onSubmit={handleSubmit} 
         data-netlify="true" data-netlify-honeypot="bot-field">
 
           <input type="hidden" name="form-name" value="denounce" />

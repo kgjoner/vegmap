@@ -59,14 +59,17 @@ export const submitFormToNetlify = ({reason, comment, restaurant, user}) => {
       header: { "Content-Type": "application/x-www-form-urlencoded" }
     }
     axios.post("/", encode({
-        "form-name": "Denounce",
+        "form-name": "denounce",
         reason,
         restaurant: `nome: ${restaurant.name}, tag: ${restaurant.username}`,
         user: `nome: ${user.name}, email: ${user.email}, id: ${user.userID}`,
         comment,
         }),
         axiosConfig)
-      .then(resp => resolve(resp))
+      .then(resp => {
+        console.log(resp)
+        resolve(resp)
+      })
       .catch(err => reject(err))
   })
   

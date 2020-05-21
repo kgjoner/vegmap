@@ -14,6 +14,9 @@ import {
   LIKING_FINISHED,
   CHANGE_SELECTED_RESTAURANT,
   DISMISS_RESTAURANT_ERROR,
+  DENOUNCE_RESTAURANT_STARTED,
+  DENOUNCE_RESTAURANT_SUCCESS,
+  DENOUNCE_RESTAURANT_FAILURE,
 } from './actionTypes'
 
 
@@ -23,6 +26,7 @@ export const initialState = {
   getting: false,
   saving: false,
   liking: false,
+  denouncing: false,
   error: null
 }
 
@@ -75,6 +79,21 @@ export const restaurant = (state = initialState, action) => {
           return restaurant
         }),
         saving: false
+      })
+
+    case DENOUNCE_RESTAURANT_STARTED:
+      return Object.assign({}, state, {
+        denouncing: true,
+        error: null
+      })
+    case DENOUNCE_RESTAURANT_SUCCESS:
+      return Object.assign({}, state, {
+        denouncing: false
+      })
+    case DENOUNCE_RESTAURANT_FAILURE:
+      return Object.assign({}, state, {
+        denouncing: false,
+        error: payload
       })
 
     case LIKING_STARTED:

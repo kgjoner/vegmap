@@ -15,7 +15,10 @@ import {
   REMOVE_LIKE, 
   LIKING_FINISHED,
   CHANGE_SELECTED_RESTAURANT,
-  DISMISS_RESTAURANT_ERROR
+  DISMISS_RESTAURANT_ERROR,
+  DENOUNCE_RESTAURANT_STARTED,
+  DENOUNCE_RESTAURANT_SUCCESS,
+  DENOUNCE_RESTAURANT_FAILURE
 } from './actionTypes'
 
 
@@ -105,7 +108,7 @@ export const toggleRestaurantLike = ({ restaurant, user }) => {
   }
   const shouldUnlike = restaurant.likes.includes(user.userID)
 
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch({ type: LIKING_STARTED })
     dispatch({
       type: shouldUnlike ? REMOVE_LIKE : ADD_LIKE,
@@ -119,6 +122,20 @@ export const toggleRestaurantLike = ({ restaurant, user }) => {
         payload: payloadOfIDs
       }))
       .finally(() => dispatch({ type: LIKING_FINISHED }))
+  }
+}
+
+export const denounceRestaurant = (payload) => {
+  return (dispatch) => {
+    dispatch({ type: DENOUNCE_RESTAURANT_STARTED })
+
+    return api.submitFormToNetlify(payload).then(
+      () => dispatch({ type: DENOUNCE_RESTAURANT_SUCCESS }),
+      err => dispatch({
+        type: DENOUNCE_RESTAURANT_FAILURE,
+        payload: err
+      })
+    )
   }
 }
 

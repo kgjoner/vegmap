@@ -15,7 +15,7 @@ function Popup() {
 
   function close(e) {
     if(!e || e.target === document.querySelector('.popup__bg')) {
-      if(popup === popups.SIGNUP) {
+      if(popup === popups.SIGNUP || popup === popups.DENUNCIATION_FORM) {
         dispatch(changeSelectedRestaurant(null))
       }
       dispatch(closePopup())

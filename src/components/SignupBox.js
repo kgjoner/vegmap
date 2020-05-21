@@ -122,7 +122,7 @@ function SignupBox() {
               className={error && error.name === 'type' ? 'error' : ''}
               value={type}
               onChange={e => handleType(e.target.value)}>
-                <option value={null}>Selecione</option>
+                <option value="">-- Selecione --</option>
                 <option value="vegan">Vegano Exclusivo</option>
                 <option value="vegetarian">Vegetariano</option>
                 <option value="default">Carnista</option>

@@ -70,10 +70,13 @@ function RestaurantCard({ restaurant, variant }) {
       }
       <ul className={`restaurant-card__menu ${showMenu ? 'restaurant-card__menu--visible' : ''}`}>
           <li className="restaurant-card__menu-item" 
-            onClick={e => editRestaurant()}>
+            onClick={() => editRestaurant()}>
               editar
           </li>
-          <li className="restaurant-card__menu-item">denunciar</li>
+          <li className="restaurant-card__menu-item"
+            onClick={() => dispatch(openPopup(popups.DENUNCIATION_FORM))}>
+              denunciar
+          </li>
       </ul>
       <header className="restaurant-card__header">
       { restaurant.pictureURL ?

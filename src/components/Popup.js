@@ -6,6 +6,7 @@ import { popups } from '../store/popup/actionTypes'
 
 import SignupBox from './SignupBox'
 import AskForLogging from './AskForLogging'
+import DenunciationForm from './DenunciationForm'
 import './popup.css'
 
 function Popup() {
@@ -29,6 +30,9 @@ function Popup() {
         }
         { popup === popups.ASK_FOR_LOGGING ?
           <AskForLogging /> : null
+        }
+        { popup === popups.DENUNCIATION_FORM ?
+          <DenunciationForm /> : null
         }
       </div> 
     </div>

@@ -15,6 +15,7 @@ export const getRestaurants = (params) => {
   })
 }
 
+
 export const saveRestaurant = ({ method, restaurant, user }) => {
   try {
     checkWhetherRestaurantInputDataExist(restaurant)
@@ -33,6 +34,7 @@ export const saveRestaurant = ({ method, restaurant, user }) => {
   })
 }
 
+
 export const manageRestaurantLikes = ({ restaurant, user, unlike }) => {
   const body = {
     username: restaurant.username,
@@ -44,4 +46,30 @@ export const manageRestaurantLikes = ({ restaurant, user, unlike }) => {
       .then(resp => resolve(resp.data))
       .catch(err => reject(err))
   })
+}
+
+
+export const submitFormToNetlify = (form) => {
+  if(!form.reason) {
+    return Promise.reject({name: 'reason', message: 'Informe o motivo.'})
+  }
+  
+  return new Promise((resolve, reject) => {
+    const axiosConfig = {
+      header: { "Content-Type": "application/x-www-form-urlencoded" }
+    }
+    axios.post("/", encode({
+        "form-name": "Denounce",
+        ...form
+        }),
+        axiosConfig)
+      .then(resp => resolve(resp))
+      .catch(err => reject(err))
+  })
+  
+  function encode(data) {
+    return Object.keys(data).map(key => {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+    }).join("&");
+  }
 }

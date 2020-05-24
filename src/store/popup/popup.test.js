@@ -12,6 +12,11 @@ describe('Popup Store', () => {
   it('should return the initial state', () => {
     expect(popup(undefined, {})).toEqual(initialState)
   })
+  
+
+/* ========================================================================================
+  Open Popup
+  ========================================================================================= */ 
 
   it('should create an action to open a popup', () => {
     const payload = popups.SIGNUP
@@ -32,6 +37,11 @@ describe('Popup Store', () => {
     
     expect(popup(undefined, action).popup).toEqual(expectedPopup)
   })
+
+
+/* ========================================================================================
+  Close Popup
+  ========================================================================================= */ 
 
   it('should create an action to close the popup', () => {
     const expectedAction = { type: CLOSE_POPUP }

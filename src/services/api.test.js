@@ -1,4 +1,5 @@
 import * as api from './api'
+import axios from 'axios'
 import {
   mockRestaurantInputData,
   mockRestaurant,
@@ -12,12 +13,17 @@ import {
 const getMock = jest.spyOn(api.api, 'get')
 const postMock = jest.spyOn(api.api, 'post')
 const putMock = jest.spyOn(api.api, 'put')
+const submitMock = jest.spyOn(axios, 'post')
 
 describe('Api Calls', () => {
 
+/* ========================================================================================
+  Get Restaurants
+  ========================================================================================= */ 
+
   describe('Get Restaurants', () => {
     it('should return an array of restaurants', () => {
-      getMock.mockResolvedValueOnce({
+      getMock.mockResolvedValue({
         data: mockRestaurants
       })
   
@@ -34,6 +40,10 @@ describe('Api Calls', () => {
   })
 
 
+/* ========================================================================================
+  Save Restaurant
+  ========================================================================================= */ 
+
   describe('Save Restaurant', () => {
     const payload = {
       method: 'post',
@@ -42,7 +52,7 @@ describe('Api Calls', () => {
     }
 
     it('should format the payload to send it as the HTTP body and return the restaurant added', () => {
-      postMock.mockResolvedValueOnce({
+      postMock.mockResolvedValue({
         data: mockRestaurant
       })
       
@@ -68,6 +78,10 @@ describe('Api Calls', () => {
   })
 
 
+/* ========================================================================================
+  Manage Restaurant Likes
+  ========================================================================================= */ 
+
   describe('Manage Restaurant Likes', () => {
     const payload = {
       restaurant: mockRestaurant,
@@ -75,7 +89,7 @@ describe('Api Calls', () => {
     }
 
     it('should format the payload to send it as the HTTP body and return the restaurant liked', () => {
-      putMock.mockResolvedValueOnce({
+      putMock.mockResolvedValue({
         data: mockRestaurantLiked
       })
       
@@ -98,6 +112,46 @@ describe('Api Calls', () => {
       }))
   
       return expect(api.manageRestaurantLikes(payload)).rejects.toEqual(mockError)
+    })
+  })
+
+
+/* ========================================================================================
+  Submit Form to Netlify
+  ========================================================================================= */ 
+
+  describe('Submit Form to Netlify', () => {
+    const payload = {
+      reason: 'restaurant does not exist',
+      comment: 'test',
+      restaurant: mockRestaurant,
+      user: mockUser
+    }
+
+    it('should sent the message', () => {
+      submitMock.mockResolvedValue(true)
+  
+      return expect(api.submitFormToNetlify(payload)).resolves.toEqual(true)
+    })
+    
+
+    it('should return the error message if message could not be sent', () => {
+      submitMock.mockImplementation(() => new Promise(() => {
+        throw mockError
+      }))
+  
+      return expect(api.submitFormToNetlify(payload)).rejects.toEqual(mockError)
+    })
+
+
+    it('should return an error if no reason was passed as payload', () => {
+      payload.reason = null
+      const expectedError = {
+        name: 'reason',
+        message: 'Informe o motivo.'
+      }
+
+      return expect(api.submitFormToNetlify(payload)).rejects.toEqual(expectedError)
     })
   })
 

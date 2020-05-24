@@ -31,6 +31,11 @@ describe('Map Store', () => {
     expect(mapReducer(undefined, {})).toEqual(initialState)
   })
 
+
+/* ========================================================================================
+  Set Center Map Location
+  ========================================================================================= */ 
+
   it('should create an action to set the center map location', () => {
     const payload = mockCoords
     const expectedAction = {
@@ -51,6 +56,10 @@ describe('Map Store', () => {
     expect(mapReducer(undefined, action).centerMapLocation).toEqual(expectedLocation)
   })
 
+
+/* ========================================================================================
+  Set Pin Location
+  ========================================================================================= */
 
   it('should create an action to set the pin location', () => {
     const payload = mockCoords
@@ -73,6 +82,10 @@ describe('Map Store', () => {
   })
 
 
+/* ========================================================================================
+  Change Map Mode
+  ========================================================================================= */
+
   it('should create an action to change the map mode', () => {
     const payload = mapModes.RESTAURANTS
     const expectedAction = {
@@ -94,6 +107,8 @@ describe('Map Store', () => {
   })
 
 let store;
+
+
 /* ========================================================================================
   Get User Location
   ========================================================================================= */ 

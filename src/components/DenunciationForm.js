@@ -44,9 +44,18 @@ function DenunciationForm() {
               value={reason}
               onChange={e => setReason(e.target.value)}>
                 <option value="">-- Selecione --</option>
-                <option value="does_not_exist">Restaurante não existe</option>
-                <option value="offensive">Conteúdo ofensivo</option>
-                <option value="other">Outro</option>
+                <option value="restaurante não existe">
+                  Restaurante não existe
+                </option>
+                <option value="não há opção vegana nem vegetariana">
+                  Não há opção vegana nem vegetariana
+                </option>
+                <option value="conteúdo ofensivo">
+                  Conteúdo ofensivo
+                </option>
+                <option value="outro">
+                  Outro
+                </option>
             </select>
           </div>
           

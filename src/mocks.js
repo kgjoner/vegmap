@@ -116,7 +116,7 @@ export const mockRestaurants = [
 ]
 
 export const mockError = {
-  message: '501: Invalid params.'
+  message: 'Invalid params.'
 }
 
 export const mockCoords = {

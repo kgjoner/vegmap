@@ -18,7 +18,10 @@ import {
   REMOVE_LIKE, 
   LIKING_FINISHED,
   CHANGE_SELECTED_RESTAURANT,
-  DISMISS_RESTAURANT_ERROR
+  DISMISS_RESTAURANT_ERROR,
+  DENOUNCE_RESTAURANT_STARTED,
+  DENOUNCE_RESTAURANT_SUCCESS,
+  DENOUNCE_RESTAURANT_FAILURE
 } from './actionTypes'
 import * as actions from './actions'
 import { initialState, restaurant } from './reducer'
@@ -36,7 +39,20 @@ const mockStore = configureMockStore([thunk])
 const getMock = jest.spyOn(api, 'getRestaurants')
 const saveMock = jest.spyOn(api, 'saveRestaurant')
 const likeMock = jest.spyOn(api, 'manageRestaurantLikes')
+const submitMock = jest.spyOn(api, 'submitFormToNetlify')
 
+
+/* ========================================================================================
+  TABLE OF CONTENTS (you can ctrl + F the section)
+
+  1. Get Restaurants
+  2. Add Restaurant
+  3. Update Restaurant
+  4. Like Restaurant
+  5. Denounce Restaurant
+  6. Select a Restaurant
+  7. Dismiss Restaurant Error
+  ========================================================================================= */ 
 
 
 describe('Restaurant Store', () => {
@@ -49,7 +65,7 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Get Restaurants
+  1. Get Restaurants
   ========================================================================================= */ 
 
   describe('Get Restaurants', () => {
@@ -117,7 +133,7 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Add Restaurant
+  2. Add Restaurant
   ========================================================================================= */ 
 
   describe('Add Restaurant', () => {
@@ -199,7 +215,7 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Update Restaurant
+  3. Update Restaurant
   ========================================================================================= */ 
 
   describe('Update Restaurant', () => {
@@ -302,7 +318,7 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Like Restaurant
+  4. Like Restaurant
   ========================================================================================= */ 
 
   describe('Like Restaurant', () => {
@@ -416,7 +432,69 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Select a Restaurant
+  5. Denounce Restaurant
+  ========================================================================================= */ 
+
+  describe('Denounce Restaurant', () => {
+    const payload = {
+      reason: 'restaurant does not exist',
+      comment: 'test',
+      restaurant: mockRestaurant,
+      user: mockUser
+    }
+
+    beforeEach(() => {
+      jest.clearAllMocks();
+      store = mockStore(initialState)
+    })
+
+    it('should dispatch the action to announce it started denouncing the restaurant', () => {
+      submitMock.mockResolvedValue()
+      const expectedActions = [
+        { type: DENOUNCE_RESTAURANT_STARTED }
+      ]
+
+      store.dispatch(actions.denounceRestaurant(payload))
+      expect(store.getActions()).toEqual(expectedActions)  
+    })
+
+  
+    it('should make an api call and then return the state as it was', () => {
+      submitMock.mockResolvedValueOnce(mockRestaurants)
+      const expectedAction = { type: DENOUNCE_RESTAURANT_SUCCESS }
+
+      return store.dispatch(actions.denounceRestaurant(payload)).then(() => {
+        expect(submitMock).toHaveBeenCalledTimes(1)
+        expect(store.getActions()).toContainEqual(expectedAction)
+        const state = runActionsOnReducer(store.getActions(), restaurant)
+        expect(state).toEqual(initialState)
+      })
+    })
+
+
+    it('should set the error if the denunciation could not be delivered', () => {
+      submitMock.mockRejectedValueOnce(mockError)
+      const expectedAction =  {
+          type: DENOUNCE_RESTAURANT_FAILURE,
+          payload: mockError
+        }
+      const expectedState = {
+        ...initialState,
+        error: mockError
+      }
+  
+      return store.dispatch(actions.denounceRestaurant(payload)).then(() => {
+        expect(store.getActions()).toContainEqual(expectedAction)
+        const state = runActionsOnReducer(store.getActions(), restaurant)
+        expect(state).toEqual(expectedState)  
+      })
+    })
+
+  })
+
+
+/* ========================================================================================
+  6. Select a Restaurant
   ========================================================================================= */ 
 
   describe('Select a Restaurant', () => {
@@ -446,7 +524,7 @@ describe('Restaurant Store', () => {
 
 
 /* ========================================================================================
-  Dismiss Restaurant Error
+  7. Dismiss Restaurant Error
   ========================================================================================= */ 
 
   describe('Dismiss Restaurant Error', () => {

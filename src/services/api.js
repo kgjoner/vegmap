@@ -66,10 +66,7 @@ export const submitFormToNetlify = ({reason, comment, restaurant, user}) => {
         comment,
         }),
         axiosConfig)
-      .then(resp => {
-        console.log(resp)
-        resolve(resp)
-      })
+      .then(resp => resolve(resp))
       .catch(err => reject(err))
   })
   

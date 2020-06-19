@@ -1,0 +1,33 @@
+.button {
+  border: 0;
+  background-color: var(--light-color);
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.5s;
+  display: flex;
+  justify-content: center;
+}
+
+.button--full-width {
+  width: 100%;
+}
+
+.button--thick {
+  padding: 15px 20px;
+}
+
+.button--primary {
+  background-color:#28bd6b;
+}
+
+.button--primary:hover {
+  background-color: #1ead5f;
+}
+
+.button--login {
+  background-color: #2258BD;
+}

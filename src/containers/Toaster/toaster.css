@@ -1,0 +1,32 @@
+.toaster {
+  position: fixed;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.toaster__container {
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
+.toaster--hidden {
+  display: none;
+}
+
+.toaster__container--toast {
+  animation: toast 0.6s
+}
+
+@keyframes toast {
+  0% {
+    top: 60px;
+    opacity: 0.2;
+  }
+  100%{
+    top: 0;
+    opacity: 1;
+  }
+}

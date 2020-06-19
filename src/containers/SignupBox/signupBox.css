@@ -1,0 +1,79 @@
+.signup {
+  width: 670px;
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 30px 20px;
+  overflow-y: scroll;
+  max-height: calc(100vh - 30px);
+}
+
+.signup__title {
+  font-size: 24px;
+  display: block;
+  color: #333;
+}
+
+.signup__form {
+  margin-top: 50px;
+}
+
+.signup__group {
+  display: flex;
+  align-items: center;
+}
+
+.signup__group + .signup__group {
+  margin-top: 30px;
+}
+
+.signup__group > * + *,
+.signup__submit-block > * + * {
+  margin-left: 20px;
+}
+
+.signup__block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  bottom: 0px;
+}
+
+.signup__submit-block {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.signup__submit-block .error-sign {
+  width: 100%;
+  color: #fff;
+  border-radius: 4px;
+  padding: 10px 10px;
+  margin-left: 20px;
+  background-color: var(--danger-color);
+  position: relative;
+  visibility: hidden;
+}
+
+.signup__submit-block .error-sign.error-visible {
+  visibility: visible;
+  animation: error-shake 0.4s;
+}
+
+@keyframes error-shake {
+  0%{
+    left: 0;
+  }
+  35% {
+    left: 10px;
+  }
+  80% {
+    left: -8px;
+  }
+  100% {
+    left: 0
+  }
+}

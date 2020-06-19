@@ -18,7 +18,8 @@ import {
   DISMISS_RESTAURANT_ERROR,
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
-  DENOUNCE_RESTAURANT_FAILURE
+  DENOUNCE_RESTAURANT_FAILURE,
+  DISMISS_RESTAURANT_SUCCESS
 } from './actionTypes'
 
 
@@ -148,4 +149,8 @@ export const changeSelectedRestaurant = (payload) => {
 
 export const dismissRestaurantError = () => {
   return { type: DISMISS_RESTAURANT_ERROR }
+}
+
+export const dismissRestaurantSuccess = () => {
+  return { type: DISMISS_RESTAURANT_SUCCESS }
 }

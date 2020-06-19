@@ -2,13 +2,13 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import * as api  from '../../services/api'
-import runActionsOnReducer from '../../utils/runActions'
+import { runActionsOnReducer } from '../../utils/testStore'
 import {
   GET_RESTAURANTS_STARTED, 
   GET_RESTAURANTS_SUCCESS, 
   GET_RESTAURANTS_FAILURE,
   ADD_RESTAURANT_STARTED, 
-  ADD_RESTAURANT_SUCCESS, 
+  ADD_RESTAURANT_SUCCESS,
   ADD_RESTAURANT_FAILURE,
   UPDATE_RESTAURANT_STARTED,
   UPDATE_RESTAURANT_SUCCESS,
@@ -166,7 +166,8 @@ describe('Restaurant Store', () => {
       }
       const expectedState = {
         ...initialState,
-        restaurants: [mockRestaurant]
+        restaurants: [mockRestaurant],
+        success: 'Restaurante adicionado!'
       }
 
       return store.dispatch(actions.addRestaurant(payload)).then(() => {
@@ -269,7 +270,8 @@ describe('Restaurant Store', () => {
       }
       const expectedState = {
         ...initialState,
-        restaurants: [...mockRestaurants, modifiedMockRestaurant]
+        restaurants: [...mockRestaurants, modifiedMockRestaurant],
+        success: 'Restaurante alterado!'
       }
 
       return store.dispatch(actions.updateRestaurant(payload)).then(() => {
@@ -467,7 +469,7 @@ describe('Restaurant Store', () => {
         expect(submitMock).toHaveBeenCalledTimes(1)
         expect(store.getActions()).toContainEqual(expectedAction)
         const state = runActionsOnReducer(store.getActions(), restaurant)
-        expect(state).toEqual(initialState)
+        expect(state.success).toBe('Denúncia recebida!')
       })
     })
 

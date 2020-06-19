@@ -5,12 +5,12 @@ import { addRestaurant, updateRestaurant } from './store/restaurant/actions'
 import { getUserLocation } from './store/map/actions'
 import { mapModes } from './store/map/actionTypes'
 
-import Presentation from './components/Presentation'
-import SearchBar from './components/SearchBar'
-import RestaurantCard from './components/RestaurantCard'
-import Maps from './components/Map'
-import Popup from './components/Popup'
-import ErrorToaster from './components/ErrorToaster'
+import Maps from './containers/Maps'
+import Presentation from './containers/Presentation'
+import RestaurantCard from './containers/RestaurantCard'
+import SearchBar from './containers/SearchBar'
+import Popup from './containers/Popup'
+import Toaster from './containers/Toaster/Toaster'
 
 import './assets/css/global.css'
 import './assets/css/icon.css'
@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserLocation())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     subscribeToNewRestaurant(restaurant => addRestaurant({ restaurant, receivedViaSocket: true }))
@@ -41,7 +41,7 @@ function App() {
       }
       <SearchBar />
       { mapMode === mapModes.HIDDEN ? 
-        <div className={`container`}>
+        <div className="container">
           <Presentation />
           <main>
             {isLoading ?
@@ -59,7 +59,7 @@ function App() {
         </div> : null
       }
       <Popup />
-      <ErrorToaster />
+      <Toaster />
     </div>
   )
 }

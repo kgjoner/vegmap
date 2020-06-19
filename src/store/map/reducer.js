@@ -11,8 +11,8 @@ import {
 
 
 export const initialState = {
-  centerMapLocation: [],
-  pinLocation: [],
+  centerMapLocation: {},
+  pinLocation: {},
   mapMode: mapModes.HIDDEN,
   gettingUserLocation: false,
   error: null

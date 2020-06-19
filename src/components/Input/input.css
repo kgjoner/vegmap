@@ -1,0 +1,45 @@
+.input {
+  margin-top: 0;
+  width: 100%;
+}
+
+.input__label {
+  color: #acacac;
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+}
+
+.input__container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.input__field {
+  width: 100%;
+  height: 32px;
+  font-size: 14px;
+  color: #666;
+  border: 0;
+  border-bottom: 1px solid #eee;
+}
+
+.input__field:focus,
+.input__field:focus + .input__prepend  {
+  border-color: #1ead5f;
+  box-shadow: 0 2px 0 #1ead5e52;
+  transition: 0.5s;
+}
+
+.input__field--error,
+.input__field--error + .input__prepend {
+  border-color: var(--danger-color-variant);
+  box-shadow: 0 2px 0 rgba(235, 101, 101, 0.3);
+}
+
+.input__prepend {
+  border-bottom: 1px solid #eee;
+  color: #aaa;
+  padding-right: 5px;
+  padding-top: 5px;
+}

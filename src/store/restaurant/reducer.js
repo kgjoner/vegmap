@@ -17,6 +17,7 @@ import {
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
   DENOUNCE_RESTAURANT_FAILURE,
+  DISMISS_RESTAURANT_SUCCESS,
 } from './actionTypes'
 
 
@@ -27,6 +28,7 @@ export const initialState = {
   saving: false,
   liking: false,
   denouncing: false,
+  success: null,
   error: null
 }
 
@@ -61,7 +63,8 @@ export const restaurant = (state = initialState, action) => {
           ...state.restaurants,
           payload
         ],
-        saving: false
+        saving: false,
+        success: 'Restaurante adicionado!'
       })
     case ADD_RESTAURANT_FAILURE:
     case UPDATE_RESTAURANT_FAILURE:
@@ -78,7 +81,8 @@ export const restaurant = (state = initialState, action) => {
           }
           return restaurant
         }),
-        saving: false
+        saving: false,
+        success: 'Restaurante alterado!'
       })
 
     case DENOUNCE_RESTAURANT_STARTED:
@@ -88,7 +92,8 @@ export const restaurant = (state = initialState, action) => {
       })
     case DENOUNCE_RESTAURANT_SUCCESS:
       return Object.assign({}, state, {
-        denouncing: false
+        denouncing: false,
+        success: 'Denúncia recebida!'
       })
     case DENOUNCE_RESTAURANT_FAILURE:
       return Object.assign({}, state, {
@@ -142,6 +147,11 @@ export const restaurant = (state = initialState, action) => {
     case DISMISS_RESTAURANT_ERROR:
       return Object.assign({}, state, {
         error: initialState.error
+      })
+
+    case DISMISS_RESTAURANT_SUCCESS:
+      return Object.assign({}, state, {
+        success: initialState.success
       })
 
     default:

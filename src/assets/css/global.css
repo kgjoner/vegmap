@@ -11,9 +11,7 @@
 :root {
   --primary-color: #28bd6b;
   --secondary-color: #F5B25F;
-  /* --secondary-color: #DEB887; */
   --light-color: #99AEBB;
-  /* --light-color: #afaeae; */
   --dark-color: #636363;
   --danger-color: rgb(216, 125, 125);
   --danger-color-variant: rgb(235, 101, 101);
@@ -22,7 +20,6 @@
 html, body, #root {
   height: 100%;
 }
-
 
 body {
   -webkit-font-smoothing: antialised;
@@ -65,29 +62,4 @@ body, input, button {
 
 .vegetarian .icon-box, .icon-box--vegetarian {
   background: var(--secondary-color);
-}
-
-.map-btn {
-  padding: 5px 20px;
-  border-radius: 4px;
-  background-color: var(--light-color);
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-}
-
-.map-btn__container {
-  align-self: flex-end;
-  flex-grow: 2;
-  display: flex;
-  align-items: flex-end;
-  padding-bottom: 50px;
-}
-
-.map-btn--apart {
-  position: absolute;
-  z-index: 2;
-  bottom: 20px;
-  left: 20px;
-  box-shadow: 1.5px 1.5px 5px rgba(0,0,0,0.5);
 }

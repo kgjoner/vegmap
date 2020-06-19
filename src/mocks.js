@@ -1,3 +1,16 @@
+import { initialState as initialMap } from './store/map/reducer'
+import { initialState as initialPopup } from './store/popup/reducer'
+import { initialState as initialRestaurant } from './store/restaurant/reducer'
+import { initialState as initialUser } from './store/user/reducer'
+
+
+export const mockInitialState = {
+  map: initialMap,
+  popup: initialPopup,
+  restaurant: initialRestaurant,
+  user: initialUser
+}
+
 export const mockUser = {
   name: 'Vicente Promonte',
   userID: '1112345',
@@ -38,7 +51,7 @@ export const mockRestaurant = {
     'sorvete',
     'açaí'
   ],
-  options: {
+  option: {
     vegan: true,
     vegetarian: true,
   },
@@ -66,7 +79,7 @@ export const mockRestaurantLiked = {
     'sorvete',
     'açaí'
   ],
-  options: {
+  option: {
     vegan: true,
     vegetarian: true,
   },
@@ -96,7 +109,7 @@ export const mockRestaurants = [
       'salada',
       'porções'
     ],
-    options: {
+    option: {
       vegan: true,
       vegetarian: false,
     },

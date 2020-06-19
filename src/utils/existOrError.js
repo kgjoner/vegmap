@@ -12,7 +12,7 @@ export function checkWhetherRestaurantInputDataExist(restaurant) {
     message: 'Informe o nome do restaurante.'
   })
   existOrError(type, {
-    name: 'type',
+    name: 'restaurant-type',
     message: 'Informe o tipo do restaurante.'
   })
   existOrError(option.vegan || option.vegetarian, {

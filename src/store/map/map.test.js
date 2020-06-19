@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import runActionsOnReducer from '../../utils/runActions'
+import { runActionsOnReducer } from '../../utils/testStore'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -149,9 +149,9 @@ let store;
 
     it('should set the error if user location could not be gotten', () => {
       mockGeolocation.getCurrentPosition = jest.fn()
-        .mockImplementation((success, failure) => Promise.reject(failure(mockError)))
+        .mockImplementation((success, failure) => Promise.resolve(failure(mockError)))
 
-      const expectedAction = { 
+      const expectedAction = {
         type: GET_USER_LOCATION_FAILURE,
         payload: mockError
       }

@@ -1,0 +1,285 @@
+.restaurant-card {
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 16px;
+  padding-bottom: 0;
+  border: 2px solid var(--light-color);
+  position: relative;
+  list-style: none;
+}
+
+.restaurant-card--float {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  z-index: 2;
+  width: 350px;
+}
+
+.restaurant-card--invisible {
+  display: none;
+}
+
+.restaurant-card__flags {
+  position: absolute;
+  top: 0;
+  right: 40px;
+  display: flex;
+}
+
+.restaurant-card__flag {
+  height: 20px;
+  width: 15px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 70%, 0 100%);
+}
+
+.restaurant-card__flag + .restaurant-card__flag {
+  margin-left: 5px;
+}
+
+.restaurant-card__flag--vegan {
+  background-color: var(--primary-color);
+}
+
+.restaurant-card__flag--vegetarian {
+  background-color: var(--secondary-color);
+}
+
+.restaurant-card__config {
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.restaurant-card__menu {
+  visibility: hidden;
+  background-color: #fff;
+  padding: 10px;
+  position: absolute;
+  left: calc(100% - 13px);
+  top: 10px;
+  z-index: 2;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.restaurant-card__menu-item {
+  font-size: 14px;
+  list-style: none;
+  color: var(--dark-color);
+  cursor:pointer;
+}
+
+.restaurant-card__menu-item + .restaurant-card__menu-item {
+  margin-top: 8px;
+}
+
+.restaurant-card__header {
+  display: flex;
+  align-items: center;
+}
+
+.restaurant-card__picture  {
+  width: 54px;
+  height: 54px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.restaurant-card__picture--icon {
+  background: var(--light-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vegan .restaurant-card__picture--icon {
+  background: var(--primary-color)
+}
+
+.vegetarian .restaurant-card__picture--icon {
+  background: var(--secondary-color)
+}
+
+.restaurant-card .icon--leaf {
+  height: 25px;
+  width: 25px;
+}
+
+.restaurant-card__name {
+  display: block;
+  font-size: 16px;
+  color: #333;
+}
+
+.restaurant-card__foods {
+  font-size: 13px;
+  color: #999;
+  margin-top: 2px;
+}
+
+.restaurant-card__body {
+  margin: 10px 0;
+  padding-right: 4px;
+  height: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.restaurant-card__links {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.restaurant-card__link {
+  background-color: var(--dark-color);
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.restaurant-card__link:hover {
+  background-color: var(--light-color);
+}
+
+.restaurant-card__link + .restaurant-card__link {
+  margin-left: 8px;
+}
+
+.restaurant-card__like-info {
+  color: var(--primary-color);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.restaurant-card__like-btn {
+  background: none;
+  border: none;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.restaurant-card__footer {
+  background-color: var(--light-color);
+  width: calc(100% + 32px);
+  height: 44px;
+  position: relative;
+  left: -16px;
+  padding-left: 16px;
+  padding-top: 10px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+  overflow: hidden;
+}
+
+.restaurant-card__address {
+  color: #fdfdfdcb;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.restaurant-card__coords {
+  position: absolute;
+  right: 20px;
+  top: 8px;
+}
+
+.restaurant-card__coords {
+  color: var(--dark-color);
+  background-color: rgb(223, 223, 223);
+  border-radius: 4px;
+  width: 25px;
+  height: 25px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.5s;
+  font-weight: bold;
+}
+
+.restaurant-card__coords:hover {
+  width: 155px;
+}
+
+.restaurant-card__btn-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 150px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+}
+
+.restaurant-card__btn-container .icon {
+  margin-left: 5px;
+}
+
+.restaurant-card__alert {
+  position: absolute;
+  right: 60px;
+  bottom: 50px;
+  background-color: var(--dark-color);
+  color: #fff;
+  padding: 3px 5px;
+  border-radius: 4px;
+  display: none;
+}
+
+.restaurant-card__alert--appear {
+  display: block;
+  animation: appear 1s ease-in-out;
+}
+
+@keyframes appear {
+  0%{
+    opacity: 0.2;
+    bottom: 30px;
+  }
+  50%{
+    opacity: 1;
+    bottom: 50px;
+  }
+  80%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0.2;
+  }
+}
+
+
+.vegan header .icon-box {
+  background: var(--primary-color);
+}
+
+.vegan {
+  border-color: var(--primary-color);
+}
+
+.vegan a:hover,
+.vegan footer {
+  background-color: var(--primary-color);
+}
+
+.vegetarian header .icon-box {
+  background: var(--secondary-color);
+}
+
+.vegetarian {
+  border-color: var(--secondary-color);
+}
+
+.vegetarian a:hover,
+.vegetarian footer {
+  background-color: var(--secondary-color);
+}

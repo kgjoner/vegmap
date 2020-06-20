@@ -21,7 +21,9 @@ import {
   DISMISS_RESTAURANT_ERROR,
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
-  DENOUNCE_RESTAURANT_FAILURE
+  DENOUNCE_RESTAURANT_FAILURE,
+  DISMISS_RESTAURANT_SUCCESS,
+  SET_SUCCESS_NOTIFICATION
 } from './actionTypes'
 import * as actions from './actions'
 import { initialState, restaurant } from './reducer'
@@ -31,7 +33,8 @@ import {
   mockRestaurants,
   mockError,
   mockUser,
-  mockRestaurantInputData
+  mockRestaurantInputData,
+  mockSuccess
 } from '../../mocks'
 
 
@@ -546,6 +549,57 @@ describe('Restaurant Store', () => {
       const action = { type: DISMISS_RESTAURANT_ERROR }
 
       expect(restaurant(errorState, action)).toEqual(initialState)
+    })
+  })
+
+
+/* ========================================================================================
+  8. Dismiss Restaurant Success
+  ========================================================================================= */ 
+
+  describe('Dismiss Restaurant Success', () => {
+
+    it('should create an action to dismiss the restaurant success', () => {
+      const expectedAction = { type: DISMISS_RESTAURANT_SUCCESS }
+
+      expect(actions.dismissRestaurantSuccess()).toEqual(expectedAction)
+    })
+
+
+    it('should dismiss the sucess', () => {
+      const successState = {
+        ...initialState,
+        sucess: mockSuccess
+      }
+      const action = { type: DISMISS_RESTAURANT_SUCCESS }
+
+      expect(restaurant(successState, action)).toEqual(initialState)
+    })
+  })
+
+
+/* ========================================================================================
+  9. Set Success Notification
+  ========================================================================================= */ 
+
+  describe('Set Success Notification', () => {
+    const action = { 
+      type: SET_SUCCESS_NOTIFICATION,
+      payload: mockSuccess
+    }
+
+    it('should create an action to set a restaurant success', () => {
+      expect(actions.setSuccessNotification(mockSuccess)).toEqual(action)
+    })
+
+
+    it('should dismiss the sucess', () => {
+      const successState = {
+        ...initialState,
+        sucess: mockSuccess
+      }
+
+      expect(restaurant(initialState, action)).toEqual(successState)
     })
   })
 })

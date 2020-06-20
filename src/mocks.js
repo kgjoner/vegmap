@@ -129,8 +129,10 @@ export const mockRestaurants = [
 ]
 
 export const mockError = {
-  message: 'Invalid params.'
+  message: 'Parâmetros inválidos.'
 }
+
+export const mockSuccess = 'Ação realizada com sucesso!'
 
 export const mockCoords = {
   latitude: -27.802,

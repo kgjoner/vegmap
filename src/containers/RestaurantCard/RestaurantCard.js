@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleRestaurantLike, changeSelectedRestaurant } from '../../store/restaurant/actions'
+import { toggleRestaurantLike, changeSelectedRestaurant, setSuccessNotification } from '../../store/restaurant/actions'
 import { openPopup } from '../../store/popup/actions'
 import { popups } from '../../store/popup/actionTypes'
 import { mapModes } from '../../store/map/actionTypes'
@@ -9,7 +9,6 @@ import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
 
   const user = useSelector(state => state.user.user)
   const isWaiting = useSelector(state => state.restaurant.liking)
@@ -35,10 +34,7 @@ function RestaurantCard({ restaurant, variant }) {
     coordsEl.select();
     coordsEl.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    setShowAlert(true)
-    setTimeout(() => {
-      setShowAlert(false)
-    }, 1000)
+    dispatch(setSuccessNotification('Coordenadas copiadas!'))
   }
 
   function like() {
@@ -158,13 +154,6 @@ function RestaurantCard({ restaurant, variant }) {
         <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 
           defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}></input>
       </footer>
-
-      <div className={`restaurant-card__alert 
-        ${showAlert ? 'restaurant-card__alert--appear' : ''}`}
-        style={{ visibility: showAlert ? 'visible' : 'hidden' }}
-        role="alert">
-        copiadas!
-      </div>
     </li>
   )
 }

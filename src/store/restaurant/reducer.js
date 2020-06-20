@@ -19,6 +19,7 @@ import {
   DENOUNCE_RESTAURANT_FAILURE,
   DISMISS_RESTAURANT_SUCCESS,
   SET_SUCCESS_NOTIFICATION,
+  SET_ERROR_NOTIFICATION,
 } from './actionTypes'
 
 
@@ -143,6 +144,11 @@ export const restaurant = (state = initialState, action) => {
     case CHANGE_SELECTED_RESTAURANT:
       return Object.assign({}, state, {
         selectedRestaurant: {...payload}
+      })
+
+    case SET_ERROR_NOTIFICATION:
+      return Object.assign({}, state, {
+        error: payload
       })
 
     case SET_SUCCESS_NOTIFICATION:

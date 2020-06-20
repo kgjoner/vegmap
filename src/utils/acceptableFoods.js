@@ -6,7 +6,7 @@ function getAllAcceptableFoods() {
 
 function turnFoodIntoAcceptableForm(food) {
   food = food.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f -]/g, "")
-  return foodTable[food]
+  return foodTable[food] || ''
 }
 
 const foodTable = {

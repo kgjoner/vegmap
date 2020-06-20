@@ -20,7 +20,8 @@ import {
   DENOUNCE_RESTAURANT_SUCCESS,
   DENOUNCE_RESTAURANT_FAILURE,
   DISMISS_RESTAURANT_SUCCESS,
-  SET_SUCCESS_NOTIFICATION
+  SET_SUCCESS_NOTIFICATION,
+  SET_ERROR_NOTIFICATION
 } from './actionTypes'
 
 
@@ -144,6 +145,13 @@ export const denounceRestaurant = (payload) => {
 export const changeSelectedRestaurant = (payload) => {
   return {
     type: CHANGE_SELECTED_RESTAURANT,
+    payload
+  }
+}
+
+export const setErrorNotification = (payload) => {
+  return {
+    type: SET_ERROR_NOTIFICATION,
     payload
   }
 }

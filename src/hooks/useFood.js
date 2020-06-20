@@ -1,11 +1,14 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { getAllAcceptableFoods, turnFoodIntoAcceptableForm } from '../utils/acceptableFoods'
+import { setErrorNotification } from '../store/restaurant/actions'
 
 
 function useFood(initialValue) {
   const [savedFoods, setSavedFoods] = useState(initialValue)
   const [foodOnTyping, setFoodOnTyping] = useState('')
   const [foodHint, setFoodHint] = useState('')
+  const dispatch = useDispatch()
 
   const listOfAcceptableFoods = getAllAcceptableFoods()
 
@@ -56,8 +59,7 @@ function useFood(initialValue) {
 
     if(e.key === 'Enter') {
       e.preventDefault()
-      const addedFood = shouldHintOverrideTyped() ? foodHint : foodOnTyping
-      addFoodToChain(addedFood)
+      addFoodToChain()
       if(onEnter) onEnter()
     }
 
@@ -72,31 +74,34 @@ function useFood(initialValue) {
 
 
   function handleBlur() {
-    const addedFood = shouldHintOverrideTyped() ? foodHint : foodOnTyping
-    addFoodToChain(addedFood)
-  }
-
-
-  //I may unify the two next functions to call "turnFood..." only once 
-  //because "foodHint" is already in an acceptable form
-
-  function shouldHintOverrideTyped() {
-    return foodHint && (
-      foodOnTyping.match(/\s+$/) ||
-      !turnFoodIntoAcceptableForm(foodOnTyping)
-    )
+    if(!foodOnTyping) return
+    addFoodToChain()
   }
 
 
   function addFoodToChain(food) {
-    food = turnFoodIntoAcceptableForm(food)
-    const newChain = [...savedFoods]
+    let foodToAdd;
     if(food) {
-      newChain.push(food)
+      foodToAdd = turnFoodIntoAcceptableForm(food)
+    } else {
+      if(foodHint && foodOnTyping.match(/\s+$/)) {
+        //To avoid adding a shorter version if there is a larger one, as café x café colonial
+        foodToAdd = foodHint
+      } else {
+        foodToAdd = turnFoodIntoAcceptableForm(foodOnTyping) || foodHint
+      }
     }
-    setSavedFoods(newChain)
     setFoodHint('')
     setFoodOnTyping('')
+
+    if(!foodToAdd) {
+      dispatch(setErrorNotification({ message: 'Comida não listada.' }))
+      return
+    }
+
+    const newChain = [...savedFoods]
+    newChain.push(foodToAdd)
+    setSavedFoods(newChain)
   }
 
 

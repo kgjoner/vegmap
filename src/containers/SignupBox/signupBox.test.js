@@ -16,7 +16,12 @@ describe('SignupBox Component', () => {
   })
 
   it('should render SignupBox component', () => {
-    const { queryByText, queryByLabelText, queryAllByRole } = renderWithStore(<SignupBox />, store)
+    const { 
+      queryByText, 
+      queryByLabelText, 
+      queryAllByRole, 
+      queryByRole 
+    } = renderWithStore(<SignupBox />, store)
     
     expect(queryByText(/cadastro/i)).toBeTruthy()
     expect(queryByLabelText(/nome/i)).toBeTruthy()

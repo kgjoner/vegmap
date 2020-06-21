@@ -13,7 +13,7 @@ import {
 } from './actionTypes'
 import * as actions from './actions'
 import { initialState, mapReducer } from './reducer'
-import { mockCoords, mockError } from '../../mocks'
+import { mockCoords, mockError, mockInitialState } from '../../mocks'
 
 const mockStore = configureMockStore([thunk])
 const mockGeolocation = {
@@ -31,19 +31,23 @@ describe('Map Store', () => {
     expect(mapReducer(undefined, {})).toEqual(initialState)
   })
 
+  let store;
 
 /* ========================================================================================
   Set Center Map Location
   ========================================================================================= */ 
 
   it('should create an action to set the center map location', () => {
+    store = mockStore(mockInitialState)
     const payload = mockCoords
     const expectedAction = {
       type: SET_CENTER_MAP_LOCATION,
       payload
     }
 
-    expect(actions.setCenterMapLocation(payload)).toEqual(expectedAction)
+    store.dispatch(actions.setCenterMapLocation(payload))
+    expect(store.getActions()).toContainEqual(expectedAction)
+    
   })
 
   it('should set the center map location', () => {
@@ -106,8 +110,6 @@ describe('Map Store', () => {
     expect(mapReducer(undefined, action).mapMode).toEqual(expectedMode)
   })
 
-let store;
-
 
 /* ========================================================================================
   Get User Location
@@ -116,7 +118,7 @@ let store;
   describe('Get User Location', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      store = mockStore(initialState)
+      store = mockStore(mockInitialState)
     })
 
     it('should dispatch the action to announce it started getting the user location', () => {

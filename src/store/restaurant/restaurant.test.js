@@ -34,7 +34,9 @@ import {
   mockError,
   mockUser,
   mockRestaurantInputData,
-  mockSuccess
+  mockSuccess,
+  mockInitialState,
+  mockCoords
 } from '../../mocks'
 
 
@@ -55,6 +57,8 @@ const submitMock = jest.spyOn(api, 'submitFormToNetlify')
   5. Denounce Restaurant
   6. Select a Restaurant
   7. Dismiss Restaurant Error
+  8. Dismiss Restaurant Success
+  9. Set Success Notification
   ========================================================================================= */ 
 
 
@@ -74,7 +78,10 @@ describe('Restaurant Store', () => {
   describe('Get Restaurants', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      store = mockStore(initialState)
+      store = mockStore({
+        ...mockInitialState,
+        map: {...mockInitialState.map, centerMapLocation: mockCoords}
+      })
     })
 
     it('should dispatch the action to announce it started getting the restaurants', () => {
@@ -94,7 +101,10 @@ describe('Restaurant Store', () => {
         { type: GET_RESTAURANTS_STARTED },
         {
           type: GET_RESTAURANTS_SUCCESS,
-          payload: mockRestaurants
+          payload: {
+            data: mockRestaurants,
+            params: initialState.lastParams
+          }
         }
       ]
       const expectedState = {
@@ -566,10 +576,10 @@ describe('Restaurant Store', () => {
     })
 
 
-    it('should dismiss the sucess', () => {
+    it('should dismiss the success', () => {
       const successState = {
         ...initialState,
-        sucess: mockSuccess
+        success: mockSuccess
       }
       const action = { type: DISMISS_RESTAURANT_SUCCESS }
 
@@ -596,7 +606,7 @@ describe('Restaurant Store', () => {
     it('should dismiss the sucess', () => {
       const successState = {
         ...initialState,
-        sucess: mockSuccess
+        success: mockSuccess
       }
 
       expect(restaurant(initialState, action)).toEqual(successState)

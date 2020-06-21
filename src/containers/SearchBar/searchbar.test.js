@@ -32,7 +32,7 @@ describe('SearchBar Component', () => {
     expect(queryByLabelText(/vegano/i)).not.toBeChecked()
     expect(queryByLabelText(/vegetariano/i)).not.toBeChecked()
     expect(queryByText(/buscar/i)).toBeTruthy()
-    expect(mockGet).not.toHaveBeenCalled()
+    expect(mockGet).toHaveBeenCalledTimes(1)
   })
 
   it('should dispatch an action automatically if there is a location', () => {
@@ -42,8 +42,6 @@ describe('SearchBar Component', () => {
     renderWithStore(<SearchBar />, store)
 
     const expectedPayload = {
-      latitude: mockCoords.latitude,
-      longitude: mockCoords.longitude,
       foods: '',
       vegan: true,
       vegetarian: true
@@ -56,8 +54,6 @@ describe('SearchBar Component', () => {
     const { queryByLabelText } = renderWithStore(<SearchBar />, store)
     const veganRadio = queryByLabelText(/vegano/i)
     const expectedPayload = {
-      latitude: mockCoords.latitude,
-      longitude: mockCoords.longitude,
       foods: '',
       vegan: true,
       vegetarian: false
@@ -77,8 +73,6 @@ describe('SearchBar Component', () => {
     fireEvent.click(queryByText(/buscar/i))
 
     const expectedPayload = {
-      latitude: mockCoords.latitude,
-      longitude: mockCoords.longitude,
       foods: '',
       vegan: true,
       vegetarian: true

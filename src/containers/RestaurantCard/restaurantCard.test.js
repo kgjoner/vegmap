@@ -15,6 +15,7 @@ import RestaurantCard from './RestaurantCard'
 let store = getMockStore()
 const toggleRestaurantLike = jest.spyOn(restaurantActions, 'toggleRestaurantLike')
 const changeSelectedRestaurant = jest.spyOn(restaurantActions, 'changeSelectedRestaurant')
+const setSuccessNotification = jest.spyOn(restaurantActions, 'setSuccessNotification')
 const openPopup  = jest.spyOn(popupActions, 'openPopup')
 
 
@@ -113,7 +114,7 @@ describe('RestaurantCard Component', () => {
     fireEvent.click(copyButton)
 
     expect(document.execCommand).toHaveBeenCalledWith('copy')
-    expect(queryByRole('alert')).toBeVisible()
+    expect(setSuccessNotification).toHaveBeenCalledTimes(1)
 
   })
 })

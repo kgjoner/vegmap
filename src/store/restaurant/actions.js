@@ -1,5 +1,6 @@
 import * as api from '../../services/api'
 import { closePopup } from '../popup/actions'
+import { connect, disconnect } from '../../services/socket'
 import {
   GET_RESTAURANTS_STARTED, 
   GET_RESTAURANTS_SUCCESS, 
@@ -26,16 +27,30 @@ import {
 
 
 export const getRestaurants = (payload) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const location = getState().map.centerMapLocation
+    if(!Object.keys(location).length) {
+      return dispatch({ type: 'NO_TYPE' })
+    }
+
+    const params = payload || getState().restaurant.lastParams
+
     dispatch({
       type: GET_RESTAURANTS_STARTED
     })
 
-    return api.getRestaurants(payload).then(
-      (data) => dispatch({
-        type: GET_RESTAURANTS_SUCCESS,
-        payload: data
-      }),
+    return api.getRestaurants({...params, ...location}).then(
+      (data) => {
+        dispatch({
+          type: GET_RESTAURANTS_SUCCESS,
+          payload: {
+            data,
+            params
+          }
+        })
+        disconnect()
+        connect({...params, ...location})
+      },
       (err) => dispatch({
         type: GET_RESTAURANTS_FAILURE,
         payload: err

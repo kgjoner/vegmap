@@ -44,7 +44,7 @@ function useFood(initialValue) {
   }
 
 
-  function handleKeyInput(e, onEnter) {
+  function handleKeyInput(e) {
     if (e.key === 'Tab' && foodHint) {
       e.preventDefault()
       addFoodToChain(foodHint)
@@ -58,9 +58,9 @@ function useFood(initialValue) {
     }
 
     if(e.key === 'Enter') {
-      e.preventDefault()
-      addFoodToChain()
-      if(onEnter) onEnter()
+      if(foodOnTyping) {
+        addFoodToChain()
+      }
     }
 
     if(e.key === 'Backspace' && foodOnTyping.length === 0) {

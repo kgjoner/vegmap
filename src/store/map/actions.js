@@ -1,3 +1,4 @@
+import { getRestaurants } from '../restaurant/actions'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -7,6 +8,7 @@ import {
   GET_USER_LOCATION_FAILURE,
   DISMISS_MAP_ERROR
 } from './actionTypes'
+
 
 
 export const getUserLocation = () => {
@@ -22,6 +24,7 @@ export const getUserLocation = () => {
           type: GET_USER_LOCATION_SUCCESS,
           payload: { latitude, longitude }
         })
+        dispatch(getRestaurants())
       },
       (err) => {
         dispatch({
@@ -37,9 +40,12 @@ export const getUserLocation = () => {
 }
 
 export const setCenterMapLocation = (payload) => {
-  return {
-    type: SET_CENTER_MAP_LOCATION,
-    payload
+  return dispatch => {
+    dispatch({
+      type: SET_CENTER_MAP_LOCATION,
+      payload
+    })
+    dispatch(getRestaurants())
   }
 }
 

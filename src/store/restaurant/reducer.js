@@ -26,6 +26,11 @@ import {
 export const initialState = {
   restaurants: [],
   selectedRestaurant: {},
+  lastParams: {
+    foods: '',
+    vegan: true,
+    vegetarian: true
+  },
   getting: false,
   saving: false,
   liking: false,
@@ -44,7 +49,8 @@ export const restaurant = (state = initialState, action) => {
       })
     case GET_RESTAURANTS_SUCCESS:
       return Object.assign({}, state, {
-        restaurants: [...payload],
+        restaurants: [...payload.data],
+        lastParams: {...payload.params},
         getting: false
       })
     case GET_RESTAURANTS_FAILURE:

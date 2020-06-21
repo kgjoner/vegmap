@@ -1,7 +1,7 @@
 import React from 'react'
 import "./foodInput.css"
 
-function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error, variant, onEnter }) {
+function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error, variant }) {
   return (
     <div className={`food-input
       ${variant? `food-input--${variant}` : ''}`} >
@@ -32,7 +32,7 @@ function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error,
             placeholder={variant === 'search' && savedFoods.length === 0 ? 'Pesquise por comidas...' : ''}
             value={foodOnTyping}
             onChange={e => handlers.change(e.target.value)}
-            onKeyDown={e => handlers.keyInput(e, onEnter)}
+            onKeyDown={e => handlers.keyInput(e)}
             onBlur={handlers.blur}>
           </input>
         </div>

@@ -48,12 +48,14 @@ function App() {
               <div className="app__loading">
                 <div className="icon icon--loading icon--light icon--bigger"></div>
               </div> :
-              <ul className="app__card-list">
-                {restaurants.map(restaurant => (
-                  <RestaurantCard key={restaurant._id} 
-                    restaurant={restaurant} />
-                ))}
-              </ul>
+              restaurants.length
+                ? <ul className="app__card-list">
+                    {restaurants.map(restaurant => (
+                      <RestaurantCard key={restaurant._id} 
+                        restaurant={restaurant} />
+                    ))}
+                  </ul>
+                : <p className="app__message">Nenhum restaurante encontrado.</p>
             }
           </main>
         </div> : null

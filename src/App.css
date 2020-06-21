@@ -32,6 +32,12 @@
   list-style: none;
 }
 
+.app__message {
+  margin-top: 200px;
+  text-align: center;
+  color: var(--dark-color);
+}
+
 @media (max-width: 1000px) {
   #app .container {
     flex-direction: column;

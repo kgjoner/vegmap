@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { connect, disconnect } from '../../services/socket'
 import { getRestaurants } from '../../store/restaurant/actions'
 import { mapModes } from '../../store/map/actionTypes'
 import useFood from '../../hooks/useFood'
@@ -13,40 +12,26 @@ function SearchBar() {
   const [query, foodOnTyping, foodHint, handlers] = useFood([])
   const [option, setOption] = useState({ vegan: true, vegetarian: true })
 
-  const location = useSelector(state => state.map.centerMapLocation)
   const isOnMap = useSelector(state => state.map.mapMode === mapModes.RESTAURANTS)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    document.getElementById('both').checked = true
-  }, [])
-
-  useEffect(() => {
     submitQuery()
-  }, [option, location])
+  }, [option])
 
   function submitQuery(e) {
     if(e) e.preventDefault()
-    if(!location || !location.latitude) return
     const params = {
-      ...location,
       foods: query.join(','), 
       ...option
     }
     dispatch(getRestaurants(params))
-    setupWebsocket(params)
   }
 
-  function setupWebsocket(params) {
-    disconnect()
-    connect(params)
-  }
-
-  function handleRadio(value, target) {
-    if(!value) return
+  function handleRadio(value) {
     const newOption = {
-      vegan: target !== 'vegetarian',
-      vegetarian: target !== 'vegan'
+      vegan: value !== 'vegetarian',
+      vegetarian: value !== 'vegan'
     }
     setOption(newOption)
   }
@@ -64,26 +49,31 @@ function SearchBar() {
           foodHint={foodHint}
           handlers={handlers}
           error={null}
-          onEnter={submitQuery}
         />
 
         <div className="search-bar__options">
           <label className="search-bar__option">
             Todos
-            <input className="search-bar__radio" type="radio" name="option" id="both"
-              onChange={e => handleRadio(e.target.checked, 'both')} />
+            <input className="search-bar__radio" type="radio" name="option" 
+              value="both"
+              checked={option.vegan && option.vegetarian}
+              onChange={e => handleRadio(e.target.value)} />
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
             Vegano
-            <input className="search-bar__radio" type="radio" name="option" id="vegan-radio"
-              onChange={e => handleRadio(e.target.checked, 'vegan')}/>
+            <input className="search-bar__radio" type="radio" name="option" 
+              value="vegan"
+              checked={option.vegan && !option.vegetarian}
+              onChange={e => handleRadio(e.target.value)}/>
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
             Vegetariano
-            <input className="search-bar__radio" type="radio" name="option" id="vegetarian-radio"
-              onChange={e => handleRadio(e.target.checked, 'vegetarian')}/>
+            <input className="search-bar__radio" type="radio" name="option" 
+              value="vegetarian"
+              checked={option.vegetarian && !option.vegan}
+              onChange={e => handleRadio(e.target.value)}/>
             <span className="search-bar__checkmark"></span>
           </label>
         </div>

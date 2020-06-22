@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closePopup } from '../../store/popup/actions'
 import { denounceRestaurant } from '../../store/restaurant/actions'
-import { denunciationReasons } from '../../constants'
+import { denunciationReasons, errorNames } from '../../constants'
 
 import Button from '../../components/Button'
 import Select from '../../components/Select'
@@ -53,7 +53,7 @@ function DenunciationForm() {
               label="Motivo"
               value={reason}
               setValue={setReason}
-              error={error}
+              error={error?.name === errorNames.EMPTY_FIELD.REASON}
               options={denunciationReasons}
             />
             

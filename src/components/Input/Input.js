@@ -12,7 +12,7 @@ function Input({ value, setValue, type = 'text', id, label, error, prepend }) {
       </label>
       <div className="input__container">
         <input id={id}
-          className={`input__field ${error && error.name === id ? 'input__field--error' : ''}`}
+          className={`input__field ${error ? 'input__field--error' : ''}`}
           type={type} 
           name={id} 
           value={value}

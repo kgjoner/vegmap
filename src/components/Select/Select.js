@@ -9,7 +9,7 @@ function Select({ value, setValue, options, id, label, error }) {
         {label}
       </label>
       <select name={id} id={id}
-        className={`select__field ${error && error.name === id ? 'select__field--error' : ''}`}
+        className={`select__field ${error ? 'select__field--error' : ''}`}
         value={value}
         onChange={e => setValue(e.target.value)}>
           <option value="">-- Selecione --</option>

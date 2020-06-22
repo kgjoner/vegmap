@@ -12,7 +12,7 @@ function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error,
       </label>
 
       <div className={`food-input__container 
-        ${error && error.name === 'foods' ? 'error' : ''}`}>  
+        ${error ? 'error' : ''}`}>  
 
         {savedFoods.length > 0 ?
           savedFoods.map((food, index) => (

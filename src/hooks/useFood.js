@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getAllAcceptableFoods, turnFoodIntoAcceptableForm } from '../utils/acceptableFoods'
 import { setErrorNotification } from '../store/restaurant/actions'
+import { errorNames } from '../constants'
 
 
 function useFood(initialValue) {
@@ -95,7 +96,10 @@ function useFood(initialValue) {
     setFoodOnTyping('')
 
     if(!foodToAdd) {
-      dispatch(setErrorNotification({ message: 'Comida não listada.' }))
+      dispatch(setErrorNotification({
+        name: errorNames.BAD_INPUT,
+        message: 'Comida não listada.' 
+      }))
       return
     }
 

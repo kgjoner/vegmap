@@ -12,6 +12,7 @@ import FoodInput from '../../components/FoodInput'
 import Button from '../../components/Button'
 import Notification from '../../components/Notification'
 import "./signupBox.css"
+import { errorNames } from '../../constants'
 
 function SignupBox() {
   const [name, setName] = useState('')
@@ -129,17 +130,17 @@ function SignupBox() {
             label="Nome*"
             value={name}
             setValue={setName}
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.NAME}
           />
           <Select id="restaurant-type"
             label="Tipo*"
             value={type}
             setValue={handleType}
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.TYPE}
             options={typeOptions}
           />
           <Checkbox id="option"
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.OPTION}
             options={options}
           />
         </div>
@@ -151,7 +152,7 @@ function SignupBox() {
             foodOnTyping={foodOnTyping}
             foodHint={foodHint}
             handlers={foodHandlers} 
-            error={error} />
+            error={error?.name === errorNames.EMPTY_FIELD.FOODS} />
         </div>
 
         <div className="signup__group">
@@ -159,7 +160,7 @@ function SignupBox() {
             label="Endereço*"
             value={address}
             setValue={setAddress}
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.ADDRESS}
           />
         </div>
 
@@ -168,13 +169,13 @@ function SignupBox() {
             label="Latitude*"
             value={latitude}
             setValue={setLatitude}
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.COORDS}
           />
           <Input id="longitude"
             label="Longitude*"
             value={longitude}
             setValue={setLongitude}
-            error={error}
+            error={error?.name === errorNames.EMPTY_FIELD.COORDS}
           />
           <div className="signup__block">
             <Button
@@ -188,20 +189,17 @@ function SignupBox() {
             label="Site Oficial*"
             value={website}
             setValue={setWebsite}
-            error={error}
           />
           <Input id="facebook"
             label="Facebook*"
             value={facebookUsername}
             setValue={setFacebookUsername}
-            error={error}
             prepend='/'
           />
           <Input id="instagram"
             label="Instagram*"
             value={instagramUsername}
             setValue={setInstagramUsername}
-            error={error}
             prepend="@"
           />
         </div>

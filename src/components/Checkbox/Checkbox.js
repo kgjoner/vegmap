@@ -1,10 +1,10 @@
 import React from 'react'
 import './checkbox.css'
 
-function Checkbox({ options, id, label, error }) {
+function Checkbox({ options, label, error }) {
   return (
     <div className={`checkbox 
-      ${error && error.name === id ? 'checkbox--error' : ''}`}>
+      ${error ? 'checkbox--error' : ''}`}>
       <label className="checkbox__label">
         {label}
       </label>

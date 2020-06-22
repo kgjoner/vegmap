@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { subscribeToNewRestaurant, subscribeToUpdateRestaurant } from './services/socket'
-import { addRestaurant, updateRestaurant } from './store/restaurant/actions'
 import { getUserLocation } from './store/map/actions'
 import { mapModes } from './store/map/actionTypes'
 
@@ -26,13 +24,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getUserLocation())
-  }, [dispatch])
-
-  useEffect(() => {
-    subscribeToNewRestaurant(restaurant => addRestaurant({ restaurant, receivedViaSocket: true }))
-    subscribeToUpdateRestaurant(restaurant => updateRestaurant({ restaurant, receivedViaSocket: true }))
-  }, [restaurants])
-  
+  }, [dispatch])  
 
   return (
     <div id="app">

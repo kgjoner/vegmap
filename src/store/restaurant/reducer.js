@@ -69,10 +69,10 @@ export const restaurant = (state = initialState, action) => {
       return Object.assign({}, state, {
         restaurants: [
           ...state.restaurants,
-          payload
+          payload.data
         ],
         saving: false,
-        success: 'Restaurante adicionado!'
+        success: payload.shouldNotificate ? 'Restaurante adicionado!' : state.success
       })
     case ADD_RESTAURANT_FAILURE:
     case UPDATE_RESTAURANT_FAILURE:
@@ -82,15 +82,16 @@ export const restaurant = (state = initialState, action) => {
       })
 
     case UPDATE_RESTAURANT_SUCCESS:
+      console.log('payload', payload)
       return Object.assign({}, state, {
         restaurants: state.restaurants.map(restaurant => {
-          if(restaurant._id === payload._id) {
-            return payload
+          if(restaurant._id === payload.data._id) {
+            return payload.data
           }
           return restaurant
         }),
         saving: false,
-        success: 'Restaurante alterado!'
+        success: payload.shouldNotificate ? 'Restaurante alterado!' : state.success
       })
 
     case DENOUNCE_RESTAURANT_STARTED:

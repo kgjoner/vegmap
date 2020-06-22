@@ -175,7 +175,10 @@ describe('Restaurant Store', () => {
       saveMock.mockResolvedValue(mockRestaurant)
       const expectedAction = {
         type: ADD_RESTAURANT_SUCCESS,
-        payload: mockRestaurant
+        payload: {
+          data: mockRestaurant,
+          shouldNotificate: true
+        }
       }
       const expectedState = {
         ...initialState,
@@ -219,7 +222,10 @@ describe('Restaurant Store', () => {
       }
       const expectedAction = {
         type: ADD_RESTAURANT_SUCCESS,
-        payload: mockRestaurant
+        payload: {
+          data: mockRestaurant,
+          shouldNotificate: false
+        }
       }
       
       expect(actions.addRestaurant(payloadViaSocket)).toEqual(expectedAction)
@@ -279,7 +285,10 @@ describe('Restaurant Store', () => {
       saveMock.mockResolvedValue(modifiedMockRestaurant)
       const expectedAction = {
         type: UPDATE_RESTAURANT_SUCCESS,
-        payload: modifiedMockRestaurant
+        payload: {
+          data: modifiedMockRestaurant,
+          shouldNotificate: true
+        }
       }
       const expectedState = {
         ...initialState,
@@ -323,7 +332,10 @@ describe('Restaurant Store', () => {
       }
       const expectedAction = {
         type: UPDATE_RESTAURANT_SUCCESS,
-        payload: modifiedMockRestaurant
+        payload: {
+          data: modifiedMockRestaurant,
+          shouldNotificate: false
+        }
       }
       
       expect(actions.updateRestaurant(payloadViaSocket)).toEqual(expectedAction)

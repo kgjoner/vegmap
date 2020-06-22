@@ -1,6 +1,6 @@
 import * as api from '../../services/api'
 import { closePopup } from '../popup/actions'
-import { connect, disconnect } from '../../services/socket'
+import { connect, disconnect, subscribeToNewRestaurant, subscribeToUpdateRestaurant } from '../../services/socket'
 import {
   GET_RESTAURANTS_STARTED, 
   GET_RESTAURANTS_SUCCESS, 
@@ -50,6 +50,12 @@ export const getRestaurants = (payload) => {
         })
         disconnect()
         connect({...params, ...location})
+        subscribeToNewRestaurant(restaurant => {
+          dispatch(addRestaurant({ restaurant, receivedViaSocket: true }))
+        })
+        subscribeToUpdateRestaurant(restaurant => {
+          dispatch(updateRestaurant({ restaurant, receivedViaSocket: true }))
+        })
       },
       (err) => dispatch({
         type: GET_RESTAURANTS_FAILURE,
@@ -63,7 +69,10 @@ export const addRestaurant = ({ restaurant, user, receivedViaSocket }) => {
   if(receivedViaSocket) {
     return {
       type: ADD_RESTAURANT_SUCCESS,
-      payload: restaurant
+      payload: {
+        data: restaurant,
+        shouldNotificate: false
+      }
     }
   }
   
@@ -76,7 +85,10 @@ export const addRestaurant = ({ restaurant, user, receivedViaSocket }) => {
       (data) => {
         dispatch({
           type: ADD_RESTAURANT_SUCCESS,
-          payload: data
+          payload: {
+            data,
+            shouldNotificate: true
+          }
         })
         dispatch(closePopup())
         dispatch(changeSelectedRestaurant(null))
@@ -93,7 +105,10 @@ export const updateRestaurant = ({ restaurant, user, receivedViaSocket }) => {
   if(receivedViaSocket) {
     return {
       type: UPDATE_RESTAURANT_SUCCESS,
-      payload: restaurant
+      payload: {
+        data: restaurant,
+        shouldNotificate: false
+      }
     }
   }
 
@@ -106,7 +121,10 @@ export const updateRestaurant = ({ restaurant, user, receivedViaSocket }) => {
       (data) => {
         dispatch({
           type: UPDATE_RESTAURANT_SUCCESS,
-          payload: data
+          payload: {
+            data,
+            shouldNotificate: true
+          }
         })
         dispatch(closePopup())
         dispatch(changeSelectedRestaurant(null))

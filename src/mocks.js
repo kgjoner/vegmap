@@ -45,7 +45,7 @@ export const mockRestaurantInputData = {
 export const mockRestaurant = {
   _id: '02',
   name: 'Il Gelato',
-  username: 'ilgelato',
+  tagname: 'ilgelato',
   type: 'vegetarian',
   foods: [
     'sorvete',
@@ -73,7 +73,7 @@ export const mockRestaurant = {
 export const mockRestaurantLiked = {
   _id: '02',
   name: 'Il Gelato',
-  username: 'ilgelato',
+  tagname: 'ilgelato',
   type: 'vegetarian',
   foods: [
     'sorvete',
@@ -102,7 +102,7 @@ export const mockRestaurants = [
   {
     _id: '01',
     name: 'Seu Vagem',
-    username: 'seuvagem',
+    tagname: 'seuvagem',
     type: 'vegan',
     foods: [
       'almoço',

@@ -257,7 +257,7 @@ describe('Restaurant Store', () => {
           'açaí',
           'bolo'
         ],
-        username: mockRestaurant.username
+        tagname: mockRestaurant.tagname
       },
       user: mockUser
     }

@@ -94,7 +94,7 @@ describe('Api Calls', () => {
       })
       
       const expectedBody = {
-        username: mockRestaurant.username,
+        tagname: mockRestaurant.tagname,
         author: mockUser,
         action: 'like'
       }

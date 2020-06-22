@@ -83,7 +83,7 @@ function SignupBox() {
       longitude,
     }
     if(Object.keys(selectedRestaurant).length > 0) {
-      restaurantInputData.username = selectedRestaurant.username
+      restaurantInputData.tagname = selectedRestaurant.tagname
       dispatch(updateRestaurant({ restaurant: restaurantInputData, user }))
     } else {
       dispatch(addRestaurant({ restaurant: restaurantInputData, user }))

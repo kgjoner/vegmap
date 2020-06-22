@@ -37,7 +37,7 @@ export const saveRestaurant = ({ method, restaurant, user }) => {
 
 export const manageRestaurantLikes = ({ restaurant, user, unlike }) => {
   const body = {
-    username: restaurant.username,
+    tagname: restaurant.tagname,
     author: user,
     action: unlike ? 'unlike' : 'like'
   }
@@ -61,7 +61,7 @@ export const submitFormToNetlify = ({reason, comment, restaurant, user}) => {
     axios.post("/", encode({
         "form-name": "denounce",
         reason,
-        restaurant: `nome: ${restaurant.name}, tag: ${restaurant.username}`,
+        restaurant: `nome: ${restaurant.name}, tag: ${restaurant.tagname}`,
         user: `nome: ${user.name}, email: ${user.email}, id: ${user.userID}`,
         comment,
         }),

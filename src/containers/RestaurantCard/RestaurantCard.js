@@ -103,7 +103,7 @@ function RestaurantCard({ restaurant, variant }) {
         }
         <div>
           <h3 className="restaurant-card__name">
-            {restaurant.name || restaurant.username}
+            {restaurant.name || restaurant.tagname}
           </h3>
           <span className="restaurant-card__foods">
             {restaurant.foods.length <= 3 ? restaurant.foods.join(', ')

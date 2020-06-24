@@ -9,6 +9,10 @@
   visibility: hidden;
 }
 
+.map--over-popup {
+  z-index: 99;
+}
+
 .map__btn-container {
   position: absolute;
   z-index: 2;

@@ -4,13 +4,12 @@
   left: -10px;
   width: 20px;
   overflow: hidden;
-  opacity: 0;
+  opacity: 1;
 }
 
 .pin--fall {
   transform-origin: bottom center;
   animation: fall 0.8s;
-  opacity: 1;
 }
 
 .pin .icon {

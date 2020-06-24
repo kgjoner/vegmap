@@ -117,8 +117,8 @@ function useFood(initialValue) {
       change: handleChange,
       keyInput: handleKeyInput,
       blur: handleBlur,
-      changeAll: setSavedFoods
-    }
+    },
+    setSavedFoods
   ]
 
 }

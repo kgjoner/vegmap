@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import useFood from '../../hooks/useFood'
+import usePrevious from '../../hooks/usePrevious'
 import { addRestaurant, updateRestaurant } from '../../store/restaurant/actions'
 import { setPinLocation, changeMapMode } from '../../store/map/actions'
 import { mapModes } from '../../store/map/actionTypes'
@@ -18,7 +19,7 @@ function SignupBox() {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
-  const [foods, foodOnTyping, foodHint, foodHandlers] = useFood([])
+  const [foods, foodOnTyping, foodHint, foodHandlers, setFoods] = useFood([])
   const [address, setAddress] = useState('')
   const [website, setWebsite] = useState('')
   const [facebookUsername, setFacebookUsername] = useState('')
@@ -33,6 +34,8 @@ function SignupBox() {
   const mapMode = useSelector(state => state.map.mapMode)
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
+
+  const previousMapMode = usePrevious(mapMode)
 
   const typeOptions = [
     {value: 'vegan', label: 'Vegano Exclusivo'},
@@ -58,7 +61,7 @@ function SignupBox() {
     if(Object.keys(selectedRestaurant).length > 0) {
       setName(selectedRestaurant.name)
       setType(selectedRestaurant.type)
-      foodHandlers.changeAll([...selectedRestaurant.foods])
+      setFoods([...selectedRestaurant.foods]) 
       setOption({...selectedRestaurant.option})
       setAddress(selectedRestaurant.address)
       setWebsite(selectedRestaurant.website)
@@ -67,7 +70,8 @@ function SignupBox() {
       setLatitude(selectedRestaurant.location.coordinates[1])
       setLongitude(selectedRestaurant.location.coordinates[0])
     }
-  }, [selectedRestaurant, foodHandlers])
+  }, [selectedRestaurant, setFoods])
+
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -91,23 +95,23 @@ function SignupBox() {
     }
   }
 
+
   function pickCoordsOnMap() {
-    document.querySelector('.popup__bg').style.visibility = 'hidden'
     dispatch(changeMapMode(mapModes.PICKING))
   }
 
+
   useEffect(() => {
-    if(mapMode === mapModes.PICKING
-      && pinLocation.latitude) {
+    if(mapMode === mapModes.PICKING 
+      && !pinLocation.latitude && latitude) {
+      dispatch(setPinLocation({ latitude, longitude }))
+    } else if(previousMapMode === mapModes.PICKING
+      && mapMode === mapModes.HIDDEN) {
       setLatitude(pinLocation.latitude)
       setLongitude(pinLocation.longitude)
-      setTimeout(() => {
-        dispatch(changeMapMode(mapModes.HIDDEN))
-        document.querySelector('.popup__bg').style.visibility = 'visible'
-        dispatch(setPinLocation({latitude: null, longitude: null }))
-      }, 1000)
+      dispatch(setPinLocation({ latitude: null, longitude: null }))
     }
-  }, [pinLocation, mapMode, dispatch])
+  }, [pinLocation, mapMode, latitude, longitude, previousMapMode, dispatch])
 
 
   function handleType(value) {

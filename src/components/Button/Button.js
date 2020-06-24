@@ -8,7 +8,10 @@ function Button({ text, onClick, isLoading, type = 'button', variant, fullWidth,
         ${variant ? `button--${variant}` : ''}
         ${fullWidth ? 'button--full-width': ''}
         ${thick ? 'button--thick' : ''}`}
-      onClick={onClick}>
+      onClick={e => {
+        e.target.blur()
+        if(onClick) onClick()
+      }}>
       { isLoading
         ? <div className="icon icon--loading"></div>
         : text

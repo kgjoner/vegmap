@@ -146,7 +146,8 @@
   text-decoration: none;
 }
 
-.restaurant-card__link:hover {
+.restaurant-card__link:hover,
+.restaurant-card__link:focus {
   background-color: var(--light-color);
 }
 
@@ -159,6 +160,15 @@
   font-size: 14px;
   display: flex;
   align-items: center;
+  padding: 0px 5px;
+}
+
+.restaurant-card__like-info:focus-within {
+  outline: 1.5px solid var(--dark-color);
+}
+
+.restaurant-card__like-info:active {
+  outline: none;
 }
 
 .restaurant-card__like-btn {
@@ -206,7 +216,8 @@
   font-weight: bold;
 }
 
-.restaurant-card__coords:hover {
+.restaurant-card__coords:hover,
+.restaurant-card__coords:focus {
   width: 155px;
 }
 
@@ -224,39 +235,6 @@
   margin-left: 5px;
 }
 
-.restaurant-card__alert {
-  position: absolute;
-  right: 60px;
-  bottom: 50px;
-  background-color: var(--dark-color);
-  color: #fff;
-  padding: 3px 5px;
-  border-radius: 4px;
-  display: none;
-}
-
-.restaurant-card__alert--appear {
-  display: block;
-  animation: appear 1s ease-in-out;
-}
-
-@keyframes appear {
-  0%{
-    opacity: 0.2;
-    bottom: 30px;
-  }
-  50%{
-    opacity: 1;
-    bottom: 50px;
-  }
-  80%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0.2;
-  }
-}
-
 
 .vegan header .icon-box {
   background: var(--primary-color);
@@ -267,6 +245,7 @@
 }
 
 .vegan a:hover,
+.vegan a:focus,
 .vegan footer {
   background-color: var(--primary-color);
 }
@@ -280,6 +259,7 @@
 }
 
 .vegetarian a:hover,
+.vegetarian a:focus,
 .vegetarian footer {
   background-color: var(--secondary-color);
 }

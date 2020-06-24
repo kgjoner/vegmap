@@ -14,3 +14,36 @@
   align-items: center;
   z-index: 98;
 }
+
+.popup__content {
+  position: relative;
+}
+
+.popup__close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.popup__close-btn:focus {
+  outline: 1.5px solid var(--dark-color);
+}
+
+.popup__close-btn:active {
+  outline: none;
+}
+
+.popup__content *::-webkit-scrollbar {
+  width: 5px;
+}
+
+.popup__content *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.popup__content *::-webkit-scrollbar-thumb {
+  background: var(--light-color-variant);
+  border-radius: 4px;
+}

@@ -69,6 +69,12 @@
   height: 17px;
 }
 
+.icon--cross {
+  mask-image: url('../img/cross.svg');
+  width: 13px;
+  height: 13px;
+}
+
 .icon--loading {
   mask-image: url('../img/loading.svg');
   background-color: #fff;
@@ -90,6 +96,10 @@
 
 .icon.icon--light {
   background-color: var(--light-color)
+}
+
+.icon.icon--text {
+  background-color: #acacac;
 }
 
 .icon.icon--bigger {

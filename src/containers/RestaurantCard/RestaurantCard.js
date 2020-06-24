@@ -38,6 +38,7 @@ function RestaurantCard({ restaurant, variant }) {
   }
 
   function like() {
+    document.querySelector('.restaurant-card__like-btn').blur()
     if(isWaiting) return
     if(!user) {
       dispatch(openPopup(popups.ASK_FOR_LOGGING))
@@ -133,7 +134,7 @@ function RestaurantCard({ restaurant, variant }) {
         <div className="restaurant-card__like-info">
           { restaurant.likes.length }
           <button className="restaurant-card__like-btn"
-            onClick={() => like()}
+            onClick={e => like(e.target)}
             aria-label="Favoritar este restaurante">
             <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
               'icon icon--star' : 'icon icon--star-filled'}></div>
@@ -152,7 +153,8 @@ function RestaurantCard({ restaurant, variant }) {
           </div>
         </button>
         <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 
-          defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}></input>
+          defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}
+          tabIndex="-1"></input>
       </footer>
     </li>
   )

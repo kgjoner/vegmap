@@ -28,7 +28,7 @@ function App() {
 
   return (
     <div id="app">
-      {centerMapLocation.latitude ?
+      {centerMapLocation.latitude && false ?
         <Maps />  : null
       }
       <SearchBar />

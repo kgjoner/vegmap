@@ -10,8 +10,10 @@
 
 :root {
   --primary-color: #28bd6b;
+  --primary-color-variant: #1ead5f;
   --secondary-color: #F5B25F;
   --light-color: #99AEBB;
+  --light-color-variant: #84929b;
   --dark-color: #636363;
   --danger-color: rgb(216, 125, 125);
   --danger-color-variant: rgb(235, 101, 101);

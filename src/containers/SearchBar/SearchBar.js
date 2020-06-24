@@ -28,10 +28,11 @@ function SearchBar() {
     dispatch(getRestaurants(params))
   }
 
-  function handleRadio(value) {
+  function handleRadio(target) {
+    target.blur()
     const newOption = {
-      vegan: value !== 'vegetarian',
-      vegetarian: value !== 'vegan'
+      vegan: target.value !== 'vegetarian',
+      vegetarian: target.value !== 'vegan'
     }
     setOption(newOption)
   }
@@ -57,7 +58,7 @@ function SearchBar() {
             <input className="search-bar__radio" type="radio" name="option" 
               value="both"
               checked={option.vegan && option.vegetarian}
-              onChange={e => handleRadio(e.target.value)} />
+              onChange={e => handleRadio(e.target)} />
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
@@ -65,7 +66,7 @@ function SearchBar() {
             <input className="search-bar__radio" type="radio" name="option" 
               value="vegan"
               checked={option.vegan && !option.vegetarian}
-              onChange={e => handleRadio(e.target.value)}/>
+              onChange={e => handleRadio(e.target)}/>
             <span className="search-bar__checkmark"></span>
           </label>
           <label className="search-bar__option">
@@ -73,7 +74,7 @@ function SearchBar() {
             <input className="search-bar__radio" type="radio" name="option" 
               value="vegetarian"
               checked={option.vegetarian && !option.vegan}
-              onChange={e => handleRadio(e.target.value)}/>
+              onChange={e => handleRadio(e.target)}/>
             <span className="search-bar__checkmark"></span>
           </label>
         </div>

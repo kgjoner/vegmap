@@ -12,6 +12,19 @@
   justify-content: center;
 }
 
+.button:hover,
+.button:focus {
+  background-color: var(--light-color-variant);
+}
+
+.button:focus {
+  outline: 1.5px solid var(--dark-color);
+}
+
+.button:active {
+  outline: none;
+}
+
 .button--full-width {
   width: 100%;
 }
@@ -21,13 +34,19 @@
 }
 
 .button--primary {
-  background-color:#28bd6b;
+  background-color: var(--primary-color);
 }
 
-.button--primary:hover {
-  background-color: #1ead5f;
+.button--primary:hover,
+.button--primary:focus {
+  background-color: var(--primary-color-variant);
 }
 
 .button--login {
+  background-color: #386ed1;
+}
+
+.button--login:hover,
+.button--login:focus {
   background-color: #2258BD;
 }

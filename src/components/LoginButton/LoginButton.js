@@ -20,7 +20,6 @@ function LoginButton({ fullWidth }) {
     <div className="login-btn" data-testid="login-btn">
       <FacebookLogin
         appId={process.env.REACT_APP_FacebookAppID}
-        autoLoad
         fields="name,email,picture"
         callback={responseFacebook} 
         render={renderProps => (

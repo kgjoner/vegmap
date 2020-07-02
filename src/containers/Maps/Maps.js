@@ -22,6 +22,7 @@ function Maps() {
   const restaurants = useSelector(state => state.restaurant.restaurants)
   const selectedRestaurant = useSelector(state => state.restaurant.selectedRestaurant)
   const [pinFalling, setPinFalling] = useState(false)
+  const [render, setRender] = useState(false)
   const center = useRef()
   const dispatch = useDispatch()
 
@@ -31,6 +32,7 @@ function Maps() {
         lat: centerMapLocation.latitude, 
         lng: centerMapLocation.longitude
       }
+      setRender(!render)
     }
   }, [centerMapLocation])
 
@@ -84,37 +86,42 @@ function Maps() {
       ${isPicking ? 'map--over-popup' : ''}`}
       role="region">
 
-      <GoogleMapReact
-        bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
-        defaultCenter={center.current}
-        defaultZoom={16}
-        onZoomAnimationEnd={handleZoomChanged}
-        onDragEnd={handleDrag}
-        onClick={handleClick}
-        onGoogleApiLoaded={({ map }) => {
-          mapRef.current = map;
-        }}
-        options={() => { 
-          return { minZoom: 12 } }}
-      >
-        {isPicking ? null :
-          restaurants.map((restaurant) => {
-          return (<Marker
-            key={restaurant._id} 
-            restaurant={restaurant}
-            lat={restaurant.location.coordinates[1]} 
-            lng={restaurant.location.coordinates[0]}
-            handleMarkerClick={handleMarkerClick}
-          />)
-        })}
-        {pinLocation?.latitude ? 
-          <Pin 
-            lat={pinLocation.latitude}
-            lng={pinLocation.longitude}
-            fall={pinFalling}
-          />
-          : null}
-      </GoogleMapReact>
+      {center.current ?
+        <GoogleMapReact
+          bootstrapURLKeys={{key: process.env.REACT_APP_GoogleApiKey}}
+          defaultCenter={center.current}
+          defaultZoom={16}
+          onZoomAnimationEnd={handleZoomChanged}
+          onDragEnd={handleDrag}
+          onClick={handleClick}
+          onGoogleApiLoaded={({ map }) => {
+            mapRef.current = map;
+          }}
+          options={() => { 
+            return { minZoom: 12 } }}
+        >
+          {isPicking ? null :
+            restaurants.map((restaurant) => {
+            return (<Marker
+              key={restaurant._id} 
+              restaurant={restaurant}
+              lat={restaurant.location.coordinates[1]} 
+              lng={restaurant.location.coordinates[0]}
+              handleMarkerClick={handleMarkerClick}
+            />)
+          })}
+          {pinLocation?.latitude ? 
+            <Pin 
+              lat={pinLocation.latitude}
+              lng={pinLocation.longitude}
+              fall={pinFalling}
+            />
+            : null}
+        </GoogleMapReact>
+
+        : <p>Sem Localização</p>
+      }
+
       { isPicking ? null :
         <div className="map__btn-container">
           <Button
@@ -122,6 +129,7 @@ function Maps() {
             onClick={hideMap} />
         </div>
       }
+
       { Object.keys(selectedRestaurant).length > 0 ?
         <RestaurantCard variant='float'
           restaurant={restaurants.find(r => r._id === selectedRestaurant._id)} />

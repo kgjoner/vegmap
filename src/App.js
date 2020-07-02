@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserLocation } from './store/map/actions'
 import { mapModes } from './constants/controlOptions'
@@ -19,16 +19,23 @@ function App() {
   const restaurants = useSelector(state => state.restaurant.restaurants)
   const isLoading = useSelector(state => state.restaurant.getting)
   const mapMode = useSelector(state => state.map.mapMode)
-  const centerMapLocation = useSelector(state => state.map.centerMapLocation)
+  const [userAskedForMapOnce, setUserAskedForMapOnce] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getUserLocation())
-  }, [dispatch])  
+  }, [dispatch])
+
+  useEffect(() => {
+    if(userAskedForMapOnce) return
+    if(mapMode !== mapModes.HIDDEN) {
+      setUserAskedForMapOnce(true)
+    }
+  }, [mapMode, userAskedForMapOnce])
 
   return (
     <div id="app">
-      {centerMapLocation.latitude ?
+      {userAskedForMapOnce ?
         <Maps />  : null
       }
       <SearchBar />

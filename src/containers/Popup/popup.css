@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
@@ -46,4 +46,16 @@
 .popup__content *::-webkit-scrollbar-thumb {
   background: var(--light-color-variant);
   border-radius: 4px;
+}
+
+@media(max-width: 1000px) {
+  .popup__bg:after {
+    content: '';
+    position: absolute;
+    top: calc(100vh - 0.5px);
+    left: 0;
+    height: 20vh;
+    width: 100%;
+    background-color: rgba(0,0,0,0.6);
+  }
 }

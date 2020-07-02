@@ -6,6 +6,7 @@
   padding: 30px 20px;
   overflow-y: scroll;
   max-height: calc(100vh - 30px);
+  max-width: calc(100vw - 45px);
 }
 
 .signup__title {
@@ -75,5 +76,20 @@
   }
   100% {
     left: 0
+  }
+}
+
+@media(max-width: 650px) {
+  .signup__group {
+    flex-direction: column;
+  }
+
+  .signup__group > * + * {
+    margin-top: 30px;
+    margin-left: 0px;
+  }
+
+  .signup__block {
+    justify-content: flex-start;
   }
 }

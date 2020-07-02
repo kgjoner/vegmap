@@ -10,12 +10,6 @@
   /* transition: 0.5s ease-in-out; */
 }
 
-@media(max-width: 1200px) {
-  .search-bar {
-    left: 430px;
-  }
-}
-
 .search-bar--map {
   position: absolute;
   z-index: 2;
@@ -23,6 +17,27 @@
   right: 80px;
   left: auto;
   /* width: 50%; */
+}
+
+@media(max-width: 1200px) {
+  .search-bar {
+    left: 430px;
+  }
+}
+
+@media(max-width: 1000px) {
+  .search-bar {
+    left: 30px;
+    width: calc(100% - 60px);
+    top: 680px;
+  }
+
+  .search-bar--map {
+    width: calc(100% - 20px);
+    right: 10px;
+    top: 10px;
+    left: auto;
+  }
 }
 
 .search-bar__container {

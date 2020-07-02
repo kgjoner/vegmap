@@ -98,3 +98,11 @@
   transform: scale(0.9);  
   background-color: #fdfdfddd;
 }
+
+@media(max-width: 1000px) {
+  .presentation {
+    min-height: auto;
+    height: 550px;
+    max-width: 440px;
+  }
+}

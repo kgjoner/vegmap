@@ -1,5 +1,6 @@
 .denunciation-form {
   width: 400px;
+  max-width: calc(100vw - 45px);
   padding: 30px 40px;
   background-color: #fdfdfd;
   border-radius: 4px;

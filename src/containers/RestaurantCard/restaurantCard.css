@@ -67,6 +67,18 @@
   flex-direction: column;
 }
 
+@media(max-width: 1000px) {
+  .restaurant-card__menu {
+    left: auto;
+    right: 30px;
+  }
+
+  .restaurant-card--float {
+    top: 100px;
+    left: 10px;
+  }
+}
+
 .restaurant-card__menu-item {
   font-size: 14px;
   list-style: none;

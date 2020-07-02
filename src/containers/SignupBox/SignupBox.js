@@ -4,7 +4,7 @@ import useFood from '../../hooks/useFood'
 import usePrevious from '../../hooks/usePrevious'
 import { addRestaurant, updateRestaurant } from '../../store/restaurant/actions'
 import { setPinLocation, changeMapMode } from '../../store/map/actions'
-import { mapModes } from '../../store/map/actionTypes'
+import { mapModes, errorNames } from '../../constants/controlOptions'
 
 import Input from '../../components/Input'
 import Select from '../../components/Select'
@@ -13,7 +13,6 @@ import FoodInput from '../../components/FoodInput'
 import Button from '../../components/Button'
 import Notification from '../../components/Notification'
 import "./signupBox.css"
-import { errorNames } from '../../constants'
 
 function SignupBox() {
   const [name, setName] = useState('')

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closePopup } from '../../store/popup/actions'
 import { changeSelectedRestaurant } from '../../store/restaurant/actions'
-import { popups } from '../../store/popup/actionTypes'
+import { popups } from '../../constants/controlOptions'
 
 import SignupBox from '../SignupBox'
 import AskForLogging from '../../components/AskForLogging'

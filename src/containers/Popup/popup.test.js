@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, fireEvent } from '@testing-library/react'
 import { renderWithStore, getMockStore } from '../../utils/testStore'
 import * as actions from '../../store/popup/actions';
-import { popups } from '../../store/popup/actionTypes';
+import { popups } from '../../constants/controlOptions';
 import '@testing-library/jest-dom/extend-expect'
 
 import Popup from './Popup'

@@ -1,4 +1,5 @@
 import { getRestaurants } from '../restaurant/actions'
+import { defaultLocation } from '../../constants/controlOptions'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -7,7 +8,7 @@ import {
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
   DISMISS_MAP_ERROR
-} from './actionTypes'
+} from '../../constants/actionTypes'
 
 
 
@@ -31,6 +32,7 @@ export const getUserLocation = () => {
           type: GET_USER_LOCATION_FAILURE,
           payload: err
         })
+        dispatch(setCenterMapLocation(defaultLocation))
       },
       {
         timeout: 30000,

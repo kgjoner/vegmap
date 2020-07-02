@@ -3,7 +3,7 @@ import { cleanup, fireEvent } from '@testing-library/react'
 import { getMockStore, renderWithStore, rerenderWithStore } from '../../utils/testStore'
 import * as popupActions from '../../store/popup/actions'
 import * as restaurantActions from '../../store/restaurant/actions'
-import { denunciationReasons } from '../../constants'
+import { denunciationReasons } from '../../constants/presentation'
 import { mockError, mockUser, mockRestaurant } from '../../mocks'
 import '@testing-library/jest-dom/extend-expect'
 
@@ -42,7 +42,7 @@ describe('DenunciationForm Component', () => {
     const select = queryByLabelText(/motivo/i)
     const textarea = queryByLabelText(/comentário/i)
 
-    const reason = denunciationReasons[0].value
+    const reason = denunciationReasons[0]
     const comment = 'Comentário de exemplo'
     fireEvent.change(select, {target: { value: reason }})
     fireEvent.change(textarea, {target: { value: comment }})

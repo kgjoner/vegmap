@@ -2,7 +2,7 @@ import React from 'react';
 import { cleanup, fireEvent } from '@testing-library/react'
 import { renderWithStore, getMockStore, rerenderWithStore } from '../../utils/testStore'
 import * as actions from '../../store/restaurant/actions';
-import { mapModes } from '../../store/map/actionTypes';
+import { mapModes } from '../../constants/controlOptions';
 import '@testing-library/jest-dom/extend-expect'
 
 import Maps from './Maps'

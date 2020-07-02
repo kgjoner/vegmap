@@ -1,6 +1,6 @@
 import {
   SET_USER
-} from './actionTypes'
+} from '../../constants/actionTypes'
 
 
 export const setUser = (payload) => {

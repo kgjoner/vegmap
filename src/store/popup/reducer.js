@@ -1,8 +1,8 @@
+import { popups } from '../../constants/controlOptions'
 import { 
   OPEN_POPUP,
-  CLOSE_POPUP,
-  popups
-} from "./actionTypes"
+  CLOSE_POPUP
+} from '../../constants/actionTypes'
 
 
 export const initialState = {

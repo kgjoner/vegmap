@@ -4,8 +4,7 @@ import { renderWithStore, getMockStore } from '../../utils/testStore'
 import * as mapActions from '../../store/map/actions'
 import * as popupActions from '../../store/popup/actions'
 import { mockUser } from '../../mocks'
-import { popups } from '../../store/popup/actionTypes';
-import { mapModes } from '../../store/map/actionTypes';
+import { popups, mapModes } from '../../constants/controlOptions';
 import '@testing-library/jest-dom/extend-expect'
 
 import Presentation from './Presentation'

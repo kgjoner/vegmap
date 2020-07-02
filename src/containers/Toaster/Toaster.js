@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { dismissRestaurantError, dismissRestaurantSuccess } from '../../store/restaurant/actions'
 import { dismissMapError } from '../../store/map/actions'
-import { popups } from '../../store/popup/actionTypes'
+import { popups } from '../../constants/controlOptions'
 
 import Notification from '../../components/Notification'
 import './toaster.css'
-import { useCallback } from 'react'
 
 
 function Toaster() {

@@ -24,7 +24,7 @@ import {
   DENOUNCE_RESTAURANT_FAILURE,
   DISMISS_RESTAURANT_SUCCESS,
   SET_SUCCESS_NOTIFICATION
-} from './actionTypes'
+} from '../../constants/actionTypes'
 import * as actions from './actions'
 import { initialState, restaurant } from './reducer'
 import { 

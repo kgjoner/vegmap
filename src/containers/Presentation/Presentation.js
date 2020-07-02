@@ -2,8 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { changeMapMode } from '../../store/map/actions'
 import { openPopup } from '../../store/popup/actions'
-import { mapModes } from '../../store/map/actionTypes';
-import { popups } from '../../store/popup/actionTypes'
+import { mapModes, popups } from '../../constants/controlOptions';
 
 import LoginButton from '../../components/LoginButton'
 import Button from '../../components/Button'

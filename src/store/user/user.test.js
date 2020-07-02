@@ -1,6 +1,6 @@
 import {
   SET_USER
-} from './actionTypes'
+} from '../../constants/actionTypes'
 import * as actions from './actions'
 import { initialState, user } from './reducer'
 import { mockUser } from '../../mocks'

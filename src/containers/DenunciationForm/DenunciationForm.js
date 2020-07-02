@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closePopup } from '../../store/popup/actions'
 import { denounceRestaurant } from '../../store/restaurant/actions'
-import { denunciationReasons, errorNames } from '../../constants'
+import { errorNames } from '../../constants/controlOptions'
+import { denunciationReasons } from '../../constants/presentation'
 
 import Button from '../../components/Button'
 import Select from '../../components/Select'
@@ -19,6 +20,8 @@ function DenunciationForm() {
   const isLoading = useSelector(state => state.restaurant.denouncing)
   const error = useSelector(state => state.restaurant.error)
   const dispatch = useDispatch()
+
+  const reasonsOptFormat = denunciationReasons.map(reason => ({ value: reason }))
 
   useEffect(() => {
     setWasDispatched(false)
@@ -54,7 +57,7 @@ function DenunciationForm() {
               value={reason}
               setValue={setReason}
               error={error?.name === errorNames.EMPTY_FIELD.REASON}
-              options={denunciationReasons}
+              options={reasonsOptFormat}
             />
             
             <div className="denunciation-form__group">

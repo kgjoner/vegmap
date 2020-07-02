@@ -23,7 +23,7 @@ import {
   DISMISS_RESTAURANT_SUCCESS,
   SET_SUCCESS_NOTIFICATION,
   SET_ERROR_NOTIFICATION
-} from './actionTypes'
+} from '../../constants/actionTypes'
 
 
 export const getRestaurants = (payload) => {

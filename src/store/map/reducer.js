@@ -1,3 +1,4 @@
+import { mapModes } from '../../constants/controlOptions'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -5,9 +6,8 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  mapModes,
   DISMISS_MAP_ERROR
-} from './actionTypes'
+} from '../../constants/actionTypes'
 
 
 export const initialState = {

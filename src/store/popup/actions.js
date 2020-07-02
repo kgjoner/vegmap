@@ -1,7 +1,7 @@
 import {
   OPEN_POPUP,
   CLOSE_POPUP
-} from "./actionTypes"
+} from '../../constants/actionTypes'
 
 
 export const openPopup = (payload) => {

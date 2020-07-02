@@ -1,4 +1,5 @@
-import { errorNames } from "../constants"
+import { errorNames } from '../constants/controlOptions'
+import { errorMessages } from '../constants/presentation'
 
 export function existOrError(value, err) {
   if(!value || (typeof value === 'string' && !value.trim())) throw err
@@ -11,36 +12,36 @@ export function checkWhetherRestaurantInputDataExist(restaurant) {
 
   existOrError(name, {
     name: errorNames.EMPTY_FIELD.NAME,
-    message: 'Informe o nome do restaurante.'
+    message: errorMessages.EMPTY_FIELD.NAME
   })
 
   existOrError(type, {
     name: errorNames.EMPTY_FIELD.TYPE,
-    message: 'Informe o tipo do restaurante.'
+    message: errorMessages.EMPTY_FIELD.TYPE
   })
 
   existOrError(option.vegan || option.vegetarian, {
     name: errorNames.EMPTY_FIELD.OPTION,
-    message: 'O restaurante deve atender ao menos uma das opções.'
+    message: errorMessages.EMPTY_FIELD.OPTION
   })
 
   existOrError(foods, {
     name: errorNames.EMPTY_FIELD.FOODS,
-    message: 'Informe as comidas servidas.'
+    message: errorMessages.EMPTY_FIELD.FOODS
   })
 
   existOrError(address, {
     name: errorNames.EMPTY_FIELD.ADDRESS,
-    message: 'Informe o endereço do restaurante.'
+    message: errorMessages.EMPTY_FIELD.ADDRESS
   })
 
   existOrError(latitude, {
     name: errorNames.EMPTY_FIELD.COORDS,
-    message: 'Informe as coordenadas do restaurante.'
+    message: errorMessages.EMPTY_FIELD.COORDS
   })
   
   existOrError(longitude, {
     name: errorNames.EMPTY_FIELD.COORDS,
-    message: 'Informe as coordenadas do restaurante.'
+    message: errorMessages.EMPTY_FIELD.COORDS
   })
 }

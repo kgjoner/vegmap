@@ -1,5 +1,7 @@
 import * as api from './api'
 import axios from 'axios'
+import { errorNames } from '../constants/controlOptions'
+import { errorMessages } from '../constants/presentation'
 import {
   mockRestaurantInputData,
   mockRestaurant,
@@ -14,6 +16,10 @@ const getMock = jest.spyOn(api.api, 'get')
 const postMock = jest.spyOn(api.api, 'post')
 const putMock = jest.spyOn(api.api, 'put')
 const submitMock = jest.spyOn(axios, 'post')
+const expectedError = {
+  name: errorNames.UNEXPECTED,
+  message: mockError.message
+}
 
 describe('Api Calls', () => {
 
@@ -35,7 +41,7 @@ describe('Api Calls', () => {
         throw mockError
       }))
   
-      return expect(api.getRestaurants(mockSearchParams)).rejects.toEqual(mockError)
+      return expect(api.getRestaurants(mockSearchParams)).rejects.toEqual(expectedError)
     })
   })
 
@@ -73,7 +79,7 @@ describe('Api Calls', () => {
         throw mockError
       }))
   
-      return expect(api.saveRestaurant(payload)).rejects.toEqual(mockError)
+      return expect(api.saveRestaurant(payload)).rejects.toEqual(expectedError)
     })
   })
 
@@ -111,7 +117,7 @@ describe('Api Calls', () => {
         throw mockError
       }))
   
-      return expect(api.manageRestaurantLikes(payload)).rejects.toEqual(mockError)
+      return expect(api.manageRestaurantLikes(payload)).rejects.toEqual(expectedError)
     })
   })
 
@@ -140,15 +146,15 @@ describe('Api Calls', () => {
         throw mockError
       }))
   
-      return expect(api.submitFormToNetlify(payload)).rejects.toEqual(mockError)
+      return expect(api.submitFormToNetlify(payload)).rejects.toEqual(expectedError)
     })
 
 
     it('should return an error if no reason was passed as payload', () => {
       payload.reason = null
       const expectedError = {
-        name: 'reason',
-        message: 'Informe o motivo.'
+        name: errorNames.EMPTY_FIELD.REASON,
+        message: errorMessages.EMPTY_FIELD.REASON
       }
 
       return expect(api.submitFormToNetlify(payload)).rejects.toEqual(expectedError)

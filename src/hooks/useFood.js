@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { getAllAcceptableFoods, turnFoodIntoAcceptableForm } from '../utils/acceptableFoods'
 import { setErrorNotification } from '../store/restaurant/actions'
-import { errorNames } from '../constants'
+import { errorNames } from '../constants/controlOptions'
 
 
 function useFood(initialValue) {

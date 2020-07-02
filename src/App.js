@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { getUserLocation } from './store/map/actions'
-import { mapModes } from './store/map/actionTypes'
+import { mapModes } from './constants/controlOptions'
 
 import Maps from './containers/Maps'
 import Presentation from './containers/Presentation'

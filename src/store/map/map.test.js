@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { runActionsOnReducer } from '../../utils/testStore'
+import { mapModes, defaultLocation } from '../../constants/controlOptions'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -8,9 +9,8 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  mapModes,
   DISMISS_MAP_ERROR
-} from './actionTypes'
+} from '../../constants/actionTypes'
 import * as actions from './actions'
 import { initialState, mapReducer } from './reducer'
 import { mockCoords, mockError, mockInitialState } from '../../mocks'
@@ -160,6 +160,7 @@ describe('Map Store', () => {
 
       const expectedState = {
         ...initialState,
+        centerMapLocation: defaultLocation,
         error: mockError
       }
 

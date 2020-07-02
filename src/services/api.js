@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { checkWhetherRestaurantInputDataExist } from '../utils/existOrError'
-import { errorNames } from '../constants'
+import { errorNames } from '../constants/controlOptions'
+import { errorMessages } from '../constants/presentation'
 
 export const api = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? 
@@ -54,7 +55,7 @@ export const submitFormToNetlify = ({reason, comment, restaurant, user}) => {
   if(!reason) {
     return Promise.reject({
       name: errorNames.EMPTY_FIELD.REASON, 
-      message: 'Informe o motivo.'
+      message: errorMessages.EMPTY_FIELD.REASON
     })
   }
   

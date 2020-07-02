@@ -1,3 +1,4 @@
+import { successMessages } from '../../constants/presentation'
 import {
   GET_RESTAURANTS_STARTED, 
   GET_RESTAURANTS_SUCCESS, 
@@ -19,8 +20,8 @@ import {
   DENOUNCE_RESTAURANT_FAILURE,
   DISMISS_RESTAURANT_SUCCESS,
   SET_SUCCESS_NOTIFICATION,
-  SET_ERROR_NOTIFICATION,
-} from './actionTypes'
+  SET_ERROR_NOTIFICATION
+} from '../../constants/actionTypes'
 
 
 export const initialState = {
@@ -72,7 +73,7 @@ export const restaurant = (state = initialState, action) => {
           payload.data
         ],
         saving: false,
-        success: payload.shouldNotificate ? 'Restaurante adicionado!' : state.success
+        success: payload.shouldNotificate ? successMessages.ADD_RESTAURANT : state.success
       })
     case ADD_RESTAURANT_FAILURE:
     case UPDATE_RESTAURANT_FAILURE:
@@ -82,7 +83,6 @@ export const restaurant = (state = initialState, action) => {
       })
 
     case UPDATE_RESTAURANT_SUCCESS:
-      console.log('payload', payload)
       return Object.assign({}, state, {
         restaurants: state.restaurants.map(restaurant => {
           if(restaurant._id === payload.data._id) {
@@ -91,7 +91,7 @@ export const restaurant = (state = initialState, action) => {
           return restaurant
         }),
         saving: false,
-        success: payload.shouldNotificate ? 'Restaurante alterado!' : state.success
+        success: payload.shouldNotificate ? successMessages.UPDATE_RESTAURANT : state.success
       })
 
     case DENOUNCE_RESTAURANT_STARTED:
@@ -102,7 +102,7 @@ export const restaurant = (state = initialState, action) => {
     case DENOUNCE_RESTAURANT_SUCCESS:
       return Object.assign({}, state, {
         denouncing: false,
-        success: 'Denúncia recebida!'
+        success: successMessages.DENUNCIATION
       })
     case DENOUNCE_RESTAURANT_FAILURE:
       return Object.assign({}, state, {

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleRestaurantLike, changeSelectedRestaurant, setSuccessNotification } from '../../store/restaurant/actions'
 import { openPopup } from '../../store/popup/actions'
-import { popups } from '../../store/popup/actionTypes'
-import { mapModes } from '../../store/map/actionTypes'
+import { popups, mapModes } from '../../constants/controlOptions'
+import { successMessages } from '../../constants/presentation'
 
 import "./restaurantCard.css"
 
@@ -34,7 +34,7 @@ function RestaurantCard({ restaurant, variant }) {
     coordsEl.select();
     coordsEl.setSelectionRange(0, 99999);
     document.execCommand("copy");
-    dispatch(setSuccessNotification('Coordenadas copiadas!'))
+    dispatch(setSuccessNotification(successMessages.COPY_COORDS))
   }
 
   function like() {

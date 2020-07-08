@@ -23,6 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "start-sw": "http-server ./build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.9.6"
+    "@babel/preset-env": "^7.9.6",
+    "http-server": "^0.12.3"
   }
 }

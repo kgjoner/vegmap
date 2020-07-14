@@ -29,7 +29,7 @@
   .search-bar {
     left: 30px;
     width: calc(100% - 60px);
-    top: 680px;
+    top: 630px;
   }
 
   .search-bar--map {
@@ -135,4 +135,26 @@
 
 .search-bar__btn:focus, .search-bar__btn:hover {
   background-color: var(--light-color-variant);
+}
+
+@media(max-width: 374px) {
+  .search-bar {
+    top: 600px;
+    flex-direction: column;
+  }
+
+  .search-bar__container {
+    flex-direction: column-reverse;
+  }
+
+  .search-bar__options {
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .search-bar__btn {
+    margin-top: 10px;
+    margin-left: 0;
+    width: 100%;
+  }
 }

@@ -28,14 +28,23 @@ function RestaurantCard({ restaurant, variant }) {
     }
   }, [showMenu, hideMenu])
 
-  function copyCoordinatesToClipboard(id) {
-    if(!id) return
-    const coordsEl = document.getElementById(`coords-${id}`)
-    coordsEl.select();
-    coordsEl.setSelectionRange(0, 99999);
-    document.execCommand("copy");
+
+  function copyCoordinatesToClipboard(coords) {
+    if(!coords) return
+    const textarea = document.createElement('textarea')
+    textarea.style.position = 'fixed'
+    textarea.value = [...coords].reverse().join(', ')
+    document.body.appendChild(textarea)
+
+    textarea.focus()
+    textarea.select()
+    textarea.setSelectionRange(0, 99999)
+    document.execCommand('copy')
+    document.body.removeChild(textarea)
+
     dispatch(setSuccessNotification(successMessages.COPY_COORDS))
   }
+
 
   function like() {
     document.querySelector('.restaurant-card__like-btn').blur()
@@ -95,7 +104,7 @@ function RestaurantCard({ restaurant, variant }) {
       
       <header className="restaurant-card__header">
         { restaurant.pictureURL ?
-          <img src={restaurant.pictureURL} className="restaurant-card__picture" 
+          <img src={restaurant.pictureURL.replace('http:', 'https:')} className="restaurant-card__picture" 
             alt={`Marca de ${restaurant.name}`}/> :
           <div className="restaurant-card__picture restaurant-card__picture--icon"
             role="figure">
@@ -116,7 +125,7 @@ function RestaurantCard({ restaurant, variant }) {
       <div className="restaurant-card__body">
         <div className="restaurant-card__links">
           { restaurant.website && 
-            <a href={`http://${restaurant.website}`} target="_blank"
+            <a href={`${restaurant.website}`} target="_blank"
               className="restaurant-card__link" rel="noopener noreferrer">
               <div className="icon icon--home"></div>
             </a> }
@@ -145,16 +154,13 @@ function RestaurantCard({ restaurant, variant }) {
       <footer className="restaurant-card__footer">
         <p className="restaurant-card__address">{restaurant.address}</p>
         <button className="restaurant-card__coords" 
-          onClick={e => copyCoordinatesToClipboard(restaurant._id)}
+          onClick={() => copyCoordinatesToClipboard(restaurant.location.coordinates)}
           aria-label="Copiar coordenadas">
           <div className="restaurant-card__btn-container">
             Copiar Coordenadas
             <div className="icon icon--pin"></div>
           </div>
         </button>
-        <input id={`coords-${restaurant._id}`} style={{opacity: 0, position: 'absolute'}} 
-          defaultValue={[...restaurant.location.coordinates].reverse().join(', ')}
-          tabIndex="-1"></input>
       </footer>
     </li>
   )

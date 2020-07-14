@@ -17,11 +17,16 @@
   display: flex;
   align-items: center;
   height: 80px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.logo__brand {
+  height: 50px;
 }
 
 .logo__logotype {
-  height: 100%;
-  margin-left: 15px;
+  margin-left: 5px;
   height: 60px;
 }
 
@@ -104,5 +109,15 @@
     min-height: auto;
     height: 550px;
     max-width: 440px;
+  }
+
+  .logo {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+  }
+
+  .logo__brand {
+    height: 50px;
   }
 }

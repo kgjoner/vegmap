@@ -4,10 +4,8 @@
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   overflow: hidden;
-  /* animation: popup 0.6s; */
   width: 400px;
   max-width: calc(100vw - 45px);
-  /* height: 200px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,7 +15,7 @@
 .ask-for-logging__message {
   color: var(--dark-color);
   line-height: 180%;
-  width: 320px;
+  margin-bottom: 20px;
 }
 
 .ask-for-logging__symbol {

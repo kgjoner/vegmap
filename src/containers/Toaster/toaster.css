@@ -1,16 +1,14 @@
 .toaster {
   position: fixed;
   bottom: 0;
+  right: 20px;
   height: 80px;
-  width: 100%;
   overflow: hidden;
   z-index: 100;
 }
 
 .toaster__container {
-  position: absolute;
-  top: 0;
-  right: 20px;
+  position: relative;  
   animation: recoil 0.6s;
 }
 

@@ -15,6 +15,7 @@
   left: 20px;
   z-index: 2;
   width: 350px;
+  max-width: calc(100% - 40px);
 }
 
 .restaurant-card--invisible {

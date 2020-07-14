@@ -19,7 +19,7 @@ function Presentation() {
   return (
     <aside className="presentation">
       <div className="logo">
-        <img src={logo} alt="logo" width="80"/>
+        <img src={logo} className="logo__brand" alt="logo" width="80"/>
         <img src={logotype} className="logo__logotype" alt="logotype"/>
       </div>
       

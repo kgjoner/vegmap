@@ -40,6 +40,7 @@
 @media (max-width: 1000px) {
   #app .container {
     flex-direction: column;
+    padding: 20px 30px;
   }
 
   #app main {

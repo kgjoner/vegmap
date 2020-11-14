@@ -1,3 +1,11 @@
+export const baseApiUrls = {
+  NO_SW: process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3030' 
+    : 'https://vegmap-backend.herokuapp.com',
+  WITH_SW: '/api',
+}
+
+
 export const mapModes = {
   HIDDEN: 'HIDDEN',
   RESTAURANTS: 'RESTAURANTS',

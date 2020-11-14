@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { getUserLocation } from './store/map/actions'
+// import { getUserLocation } from './store/map/actions'
+import { verifyConnection, setConnection, verifyServiceWorker } from './store/system/actions'
+import { getRestaurants } from './store/restaurant/actions'
 import { mapModes } from './constants/controlOptions'
 
 import Maps from './containers/Maps'
@@ -22,9 +24,21 @@ function App() {
   const [userAskedForMapOnce, setUserAskedForMapOnce] = useState(false)
   const dispatch = useDispatch()
 
+  
   useEffect(() => {
-    dispatch(getUserLocation())
+    dispatch(verifyConnection())
+    dispatch(verifyServiceWorker())
+    dispatch(getRestaurants())
+
+    window.addEventListener('offline', () => dispatch(setConnection(false)))
+    window.addEventListener('online', () => dispatch(setConnection(true)))
+
+    return () => {
+      window.removeEventListener('offline', () => dispatch(setConnection(false)))
+      window.removeEventListener('online', () => dispatch(setConnection(true)))
+    }
   }, [dispatch])
+
 
   useEffect(() => {
     if(userAskedForMapOnce) return
@@ -32,6 +46,7 @@ function App() {
       setUserAskedForMapOnce(true)
     }
   }, [mapMode, userAskedForMapOnce])
+  
 
   return (
     <div id="app">

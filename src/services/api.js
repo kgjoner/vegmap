@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { checkWhetherRestaurantInputDataExist } from '../utils/existOrError'
-import { errorNames } from '../constants/controlOptions'
+import { baseApiUrls, errorNames } from '../constants/controlOptions'
 import { errorMessages } from '../constants/presentation'
 
 export const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? 
-    'http://localhost:3030' : 'https://vegmap-backend.herokuapp.com'
+  baseURL: navigator.serviceWorker.controller
+    ? baseApiUrls.WITH_SW
+    : baseApiUrls.NO_SW
 })
 
 

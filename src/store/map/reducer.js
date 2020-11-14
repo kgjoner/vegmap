@@ -1,4 +1,4 @@
-import { mapModes } from '../../constants/controlOptions'
+import { mapModes, defaultLocation } from '../../constants/controlOptions'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -11,7 +11,7 @@ import {
 
 
 export const initialState = {
-  centerMapLocation: {},
+  centerMapLocation: { ...defaultLocation },
   pinLocation: {},
   mapMode: mapModes.HIDDEN,
   gettingUserLocation: false,

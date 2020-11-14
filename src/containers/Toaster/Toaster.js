@@ -6,6 +6,7 @@ import { popups } from '../../constants/controlOptions'
 
 import Notification from '../../components/Notification'
 import './toaster.css'
+import { dismissSystemMessage } from '../../store/system/actions'
 
 
 function Toaster() {
@@ -13,7 +14,7 @@ function Toaster() {
   const [toast, setToast] = useState(false)
   const timeout = useRef(null)
 
-  const success = useSelector(state => state.restaurant.success)
+  const success = useSelector(state => state.restaurant.success || state.system.message)
   const error = useSelector(state => state.restaurant.error || state.map.error)
   const wasAlreadyManaged = useSelector(state => {
     return state.popup.popup === popups.SIGNUP && state.restaurant.error
@@ -24,6 +25,7 @@ function Toaster() {
     dispatch(dismissRestaurantError())
     dispatch(dismissMapError())
     dispatch(dismissRestaurantSuccess())
+    dispatch(dismissSystemMessage())
   }, [dispatch])
 
   useEffect(() => {

@@ -5,12 +5,14 @@ import { restaurant } from './restaurant/reducer'
 import { user } from './user/reducer'
 import { mapReducer } from './map/reducer'
 import { popup } from './popup/reducer'
+import { system } from './system/reducer'
 
 export const reducers = combineReducers({
   restaurant,
   user,
   map: mapReducer,
-  popup
+  popup,
+  system,
 })
 
 export const store = createStore(reducers, applyMiddleware(thunk))

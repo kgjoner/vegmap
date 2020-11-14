@@ -23,3 +23,8 @@ export const successMessages = {
   DENUNCIATION: 'Denúncia recebida!',
   COPY_COORDS: 'Coordenadas copiadas!'
 }
+
+export const infoMessages = {
+  OFFLINE: 'Não há conexão. O app continuará funcionando no modo offline.',
+  ONLINE: 'Conexão restabelecida! O app volta a funcionar no modo online.'
+}

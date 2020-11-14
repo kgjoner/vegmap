@@ -35,7 +35,7 @@ export const getUserLocation = () => {
         dispatch(setCenterMapLocation(defaultLocation))
       },
       {
-        timeout: 30000,
+        timeout: 10000,
       }
     )
   }

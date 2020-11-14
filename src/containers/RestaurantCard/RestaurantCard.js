@@ -9,6 +9,7 @@ import "./restaurantCard.css"
 
 function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
+  const [imgError, setImgError] = useState(false)
 
   const user = useSelector(state => state.user.user)
   const isWaiting = useSelector(state => state.restaurant.liking)
@@ -103,13 +104,16 @@ function RestaurantCard({ restaurant, variant }) {
       </ul>
       
       <header className="restaurant-card__header">
-        { restaurant.pictureURL ?
-          <img src={restaurant.pictureURL.replace('http:', 'https:')} className="restaurant-card__picture" 
-            alt={`Marca de ${restaurant.name}`}/> :
-          <div className="restaurant-card__picture restaurant-card__picture--icon"
-            role="figure">
-            <div className="icon icon--leaf"></div>
-          </div>
+        { restaurant.pictureURL && !imgError
+          ? <img src={restaurant.pictureURL.replace('http:', 'https:')} 
+              className="restaurant-card__picture" 
+              alt={`Marca de ${restaurant.name}`}
+              onError={() => setImgError(true)}
+            /> 
+          : <div className="restaurant-card__picture restaurant-card__picture--icon"
+              role="figure">
+              <div className="icon icon--leaf"></div>
+            </div>
         }
         <div>
           <h3 className="restaurant-card__name">

@@ -15,8 +15,17 @@
   z-index: 98;
 }
 
+.popup__bg--transparent {
+  background-color: transparent;
+  pointer-events: none;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 30px;
+}
+
 .popup__content {
   position: relative;
+  pointer-events: all;
 }
 
 .popup__close-btn {

@@ -13,10 +13,11 @@ export const mapModes = {
 }
 
 export const popups = {
+  ASK_FOR_LOCATION: 'ASK_FOR_LOCATION',
+  ASK_FOR_LOGGING: 'ASK_FOR_LOGGING',
+  DENUNCIATION_FORM: 'DENUNCIATION_FORM',
   NONE: 'NONE',
   SIGNUP: 'SIGNUP',
-  ASK_FOR_LOGGING: 'ASK_FOR_LOGGING',
-  DENUNCIATION_FORM: 'DENUNCIATION_FORM'
 }
 
 export const errorNames = {

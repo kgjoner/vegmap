@@ -1,0 +1,43 @@
+.ask-for-location {
+  padding: 30px;
+  background: #fdfdfd;
+  box-shadow: 0 0 10px 4px var(--light-color);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 350px;
+  max-width: calc(100vw - 45px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  visibility: hidden;
+  animation: slideDown 0.6s 1s forwards;
+}
+
+@keyframes slideDown {
+  0%{
+    top: -100px;
+    visibility: visible;
+  }
+  100% {
+    top: 0;
+    visibility: visible;
+  }
+}
+
+.ask-for-location__message {
+  color: var(--dark-color);
+  line-height: 180%;
+  margin-bottom: 20px;
+}
+
+.ask-for-location__actions {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.ask-for-location__actions > * + * {
+  margin-left: 8px;
+}

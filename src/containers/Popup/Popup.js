@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { closePopup } from '../../store/popup/actions'
 import { changeSelectedRestaurant } from '../../store/restaurant/actions'
@@ -7,24 +7,36 @@ import { popups } from '../../constants/controlOptions'
 import SignupBox from '../SignupBox'
 import AskForLogging from '../../components/AskForLogging'
 import DenunciationForm from '../DenunciationForm'
+import AskForLocation from '../AskForLocation/AskForLocation'
 import './popup.css'
 
 
 function Popup() {
+  const [isAlertKind, setIsAlertKind] = useState(false)
   const popup = useSelector(state => state.popup.popup)
   const dispatch = useDispatch()
   const container = useRef()
 
+  const alertKinds = [
+    popups.ASK_FOR_LOCATION
+  ]
+
   const selectorsOfFocusableEls = `
-    a[href]:not([disabled]), 
-    button:not([disabled]), 
-    textarea:not([disabled]), 
-    input:not([disabled]):not([type="hidden"]), 
+    a[href]:not([disabled]),
+    button:not([disabled]),
+    textarea:not([disabled]),
+    input:not([disabled]):not([type="hidden"]),
     select:not([disabled])
   `
 
   useEffect(() => {
     if(popup === popups.NONE) return
+
+    if(alertKinds.includes(popup)) {
+      setIsAlertKind(true)
+    } else {
+      setIsAlertKind(false)
+    }
 
     const modalElement = container.current.firstElementChild
     const focusableElements = modalElement.querySelectorAll(selectorsOfFocusableEls)
@@ -52,8 +64,8 @@ function Popup() {
     } 
   }
 
-  function close(e) {
-    if(!e || e.target === container.current) {
+  function close(e, force) {
+    if((!e || e.target === container.current) && (!isAlertKind || force)) {
       if(popup === popups.SIGNUP || popup === popups.DENUNCIATION_FORM) {
         dispatch(changeSelectedRestaurant(null))
       }
@@ -63,10 +75,15 @@ function Popup() {
 
   return (
     <section className={`popup ${popup === popups.NONE ? 'popup--hidden' : ''}`}>
-      <div className="popup__bg" 
+      <div 
+        className={`
+          popup__bg 
+          ${isAlertKind ? 'popup__bg--transparent' : ''}
+        `}
         onMouseDown={e => close(e)}
         ref={container}
-        role="presentation">
+        role="presentation"
+      >
 
         <div className="popup__content">
 
@@ -79,12 +96,17 @@ function Popup() {
           { popup === popups.DENUNCIATION_FORM ?
             <DenunciationForm /> : null
           }
+          { popup === popups.ASK_FOR_LOCATION ?
+            <AskForLocation close={close} /> : null
+          }
 
-          { popup !== popups.NONE ?
-            <button className="popup__close-btn"
-              onClick={() => close()}>
-              <div className="icon icon--cross icon--text"></div>
-            </button> : null
+          { popup !== popups.NONE 
+            && popup !== popups.ASK_FOR_LOCATION 
+              ? <button className="popup__close-btn"
+                onClick={() => close()}>
+                  <div className="icon icon--cross icon--text"></div>
+                </button> 
+              : null
           }
         </div>
         

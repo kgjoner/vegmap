@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 // import { getUserLocation } from './store/map/actions'
 import { verifyConnection, setConnection, verifyServiceWorker } from './store/system/actions'
 import { getRestaurants } from './store/restaurant/actions'
-import { mapModes } from './constants/controlOptions'
+import { openPopup } from './store/popup/actions'
+import { mapModes, popups } from './constants/controlOptions'
 
 import Maps from './containers/Maps'
 import Presentation from './containers/Presentation'
@@ -29,6 +30,7 @@ function App() {
     dispatch(verifyConnection())
     dispatch(verifyServiceWorker())
     dispatch(getRestaurants())
+    dispatch(openPopup(popups.ASK_FOR_LOCATION))
 
     window.addEventListener('offline', () => dispatch(setConnection(false)))
     window.addEventListener('online', () => dispatch(setConnection(true)))

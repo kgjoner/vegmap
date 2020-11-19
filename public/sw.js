@@ -30,7 +30,6 @@ self.addEventListener('activate', e => {
       }))
     )
   )
-  // return self.clients.claim()
 })
 
 self.addEventListener('fetch', e => {
@@ -96,30 +95,6 @@ function fetchApi(request) {
 //   e.waitUntil(retryApiCalls())
 // });
 
-// if(workbox) console.log('tem!!!!')
-
-// workbox.setConfig({
-//   debug: true
-// });
-
-// workbox.routing.registerRoute(
-//   ({url, request, event}) => {
-//     console.log('matching!', url, request, event)
-//     return url.href.includes('/search')
-//   },
-//   ({url, event, params}) => {
-//     console.log('interceptou!', url, event, params)
-//     cacheApiResponse([{rest: 1, rest: 2}])
-//   }
-// )
-
-// workbox.routing.registerRoute(
-//   /\//,
-//   ({url}) => {
-//     console.log(url)
-//   }
-// )
-
 
 /* ====================================
   IndexedDB Methods
@@ -141,8 +116,6 @@ function openIndexedDB(onSuccess, onError = e => console.log('onerror', e.target
 
 
 function cacheApiResponse(response) {
-  console.log('cacheando', response)
-
   return new Promise((res, rej) => {
     openIndexedDB(e => {
       const db = e.target.result
@@ -161,7 +134,23 @@ function cacheApiResponse(response) {
 
 
 function getCachedApiResponse(request) {
-  // const { latitude, longitude, foods, vegan, vegetarian } = request.query
+  const coords = { 
+    latitude: request.url.match(/latitude=([^&]+)?/)[1],
+    longitude: request.url.match(/longitude=([^&]+)?/)[1]
+  }
+
+  let foods = request.url.match(/foods=([^&]+)?/)[1] || ''
+  foods = foods
+    .split(',')
+    .map(food => decodeURIComponent(food))
+
+  const vegan = request.url.match(/vegan=([^&]+)?/)[1]
+  const vegetarian = request.url.match(/vegetarian=([^&]+)?/)[1]
+  const option = {
+    vegan: vegan == 'false' && vegetarian == 'true' ? false : true,
+    vegetarian: vegetarian == 'false' && vegan == 'true' ? false : true
+  }
+
   return new Promise((res, rej) => {
     openIndexedDB(e => {
       const db = e.target.result
@@ -169,13 +158,61 @@ function getCachedApiResponse(request) {
       const restaurantsStore = transaction.objectStore('restaurants')
       const operation = restaurantsStore.getAll()
 
-      operation.onsuccess = e => res(e.target.result)
+      operation.onsuccess = e => {
+        const restaurants = e.target.result
+        const data = restaurants.filter(restaurant => {
+          const centerCoords = {
+            latitude: restaurant.location.coordinates[1],
+            longitude: restaurant.location.coordinates[0]
+          }
+          return calculateDistance(centerCoords, coords) < 5
+            && ( !foods[0] 
+              || restaurant.foods.some(food => foods.includes(food)) )
+            && ( (restaurant.option.vegan && option.vegan) 
+              || (restaurant.option.vegetarian && option.vegetarian) )
+          
+        })
+        res(data)
+      }
       operation.onerror = e => rej(e.target.error)
     })
   })
 }
 
 
-function cacheApiRequest(request) {
+// function cacheApiRequest(request) {
 
+// }
+
+
+/* ====================================
+  Utils
+======================================= */
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
 }
+
+function calculateDistance(
+  centerCoordinates,
+  pointCoordinates
+) {
+  const radius = 6371;
+
+  const { latitude: lat1, longitude: lon1 } = centerCoordinates;
+  const { latitude: lat2, longitude: lon2 } = pointCoordinates;
+
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const center = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = radius * center;
+
+  return distance;
+};

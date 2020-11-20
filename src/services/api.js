@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { checkWhetherRestaurantInputDataExist } from '../utils/existOrError'
-import { baseApiUrls, errorNames } from '../constants/controlOptions'
-import { errorMessages } from '../constants/presentation'
+import { baseApiUrls, errorNames } from '../constants/systemTypes'
+import { errorMessages } from '../constants/systemMessages'
 
 export const api = axios.create({
   baseURL: navigator.serviceWorker.controller

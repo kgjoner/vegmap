@@ -1,53 +1,48 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { dismissRestaurantError, dismissRestaurantSuccess } from '../../store/restaurant/actions'
-import { dismissMapError } from '../../store/map/actions'
-import { popups } from '../../constants/controlOptions'
+import { dismissNotification } from '../../store/notification/action'
 
 import Notification from '../../components/Notification'
 import './toaster.css'
-import { dismissSystemMessage } from '../../store/system/actions'
+import { notificationTypes, popups } from '../../constants/systemTypes'
 
 
 function Toaster() {
   const [notification, setNotification] = useState(null)
   const [toast, setToast] = useState(false)
-  const timeout = useRef(null)
+  const timeoutRef = useRef(null)
 
-  const success = useSelector(state => state.restaurant.success || state.system.message)
-  const error = useSelector(state => state.restaurant.error || state.map.error)
-  const wasAlreadyManaged = useSelector(state => {
-    return state.popup.popup === popups.SIGNUP && state.restaurant.error
-  })
+  const { type, message, timeout } = 
+    useSelector(state => state.notification)
+  const popup = useSelector(state => state.popup.popup)
   const dispatch = useDispatch()
 
+  const dontToast = type === notificationTypes.ERROR && popup === popups.SIGNUP
+
   const closeToaster = useCallback(() => {
-    dispatch(dismissRestaurantError())
-    dispatch(dismissMapError())
-    dispatch(dismissRestaurantSuccess())
-    dispatch(dismissSystemMessage())
+    dispatch(dismissNotification())
   }, [dispatch])
 
   useEffect(() => {
-    if(error && wasAlreadyManaged) return
-    if(success || error) {
-      clearTimeout(timeout.current)
+    if(dontToast) return
+    if(message) {
+      clearTimeout(timeoutRef.current)
       setNotification({
-        type: success ? 'success' : 'error',
-        message: success || error?.message
+        type,
+        message,
       })
       setToast(true)
     } else {
       setToast(false)
-      timeout.current = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         setNotification(null)
       }, 600)
     }
 
-    if(success) {
-      setTimeout(() => closeToaster(), 2000)
+    if(timeout) {
+      setTimeout(() => closeToaster(), timeout)
     }
-  }, [success, error, wasAlreadyManaged, closeToaster])
+  }, [message, type, timeout, dontToast, closeToaster])
 
   return (
     <section className={`toaster ${!notification ? 'toaster--hidden' : ''}`}>

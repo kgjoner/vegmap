@@ -59,20 +59,23 @@
   visibility: hidden;
 }
 
-.signup__submit-block .error-sign.error-visible {
-  visibility: visible;
-  animation: error-shake 0.4s;
+.error-shake {
+  position: relative;
+  animation: error-shake 0.5s;
 }
 
 @keyframes error-shake {
   0%{
     left: 0;
   }
-  35% {
+  20% {
     left: 10px;
   }
-  80% {
-    left: -8px;
+  55% {
+    left: -7px;
+  }
+  85% {
+    left: 4px;
   }
   100% {
     left: 0

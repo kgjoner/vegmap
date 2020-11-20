@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { toggleRestaurantLike, changeSelectedRestaurant, setSuccessNotification } from '../../store/restaurant/actions'
+import { toggleRestaurantLike, changeSelectedRestaurant } from '../../store/restaurant/actions'
 import { openPopup } from '../../store/popup/actions'
-import { popups, mapModes } from '../../constants/controlOptions'
-import { successMessages } from '../../constants/presentation'
+import { notify } from '../../store/notification/action'
+import { popups, mapModes, notificationTypes } from '../../constants/systemTypes'
+import { successMessages } from '../../constants/systemMessages'
 
 import "./restaurantCard.css"
 
@@ -43,7 +44,7 @@ function RestaurantCard({ restaurant, variant }) {
     document.execCommand('copy')
     document.body.removeChild(textarea)
 
-    dispatch(setSuccessNotification(successMessages.COPY_COORDS))
+    dispatch(notify(notificationTypes.SUCCESS, successMessages.COPY_COORDS))
   }
 
 

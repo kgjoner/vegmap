@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { verifyConnection, setConnection, verifyServiceWorker } from './store/system/actions'
 import { getRestaurants } from './store/restaurant/actions'
 import { openPopup } from './store/popup/actions'
-import { mapModes, popups } from './constants/controlOptions'
+import { mapModes, popups } from './constants/systemTypes'
 
 import Maps from './containers/Maps'
 import Presentation from './containers/Presentation'

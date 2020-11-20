@@ -1,4 +1,4 @@
-import { popups } from '../../constants/controlOptions'
+import { popups } from '../../constants/systemTypes'
 import { 
   OPEN_POPUP,
   CLOSE_POPUP

@@ -8,7 +8,7 @@ export const denunciationReasons = [
 export const errorMessages = {
   EMPTY_FIELD: {
     NAME: 'Informe o nome do restaurante.',
-    TYPE: 'Informe o tipo do restaurant.',
+    TYPE: 'Informe o tipo do restaurante.',
     OPTION: 'O restaurante deve atender ao menos uma das opções.',
     FOODS: 'Informe ao menos uma comida oferecida.',
     ADDRESS: 'Informe o endereço do restaurante.',

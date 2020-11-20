@@ -1,5 +1,5 @@
-import { errorNames } from '../constants/controlOptions'
-import { errorMessages } from '../constants/presentation'
+import { errorNames } from '../constants/systemTypes'
+import { errorMessages } from '../constants/systemMessages'
 
 export function existOrError(value, err) {
   if(!value || (typeof value === 'string' && !value.trim())) throw err

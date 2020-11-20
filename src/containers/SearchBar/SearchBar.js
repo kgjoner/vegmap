@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRestaurants } from '../../store/restaurant/actions'
-import { mapModes } from '../../constants/controlOptions'
+import { mapModes } from '../../constants/systemTypes'
 import useFood from '../../hooks/useFood'
 
 import FoodInput from '../../components/FoodInput'

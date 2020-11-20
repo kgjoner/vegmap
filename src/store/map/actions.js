@@ -1,5 +1,6 @@
+import { defaultLocation, notificationTypes } from '../../constants/systemTypes'
 import { getRestaurants } from '../restaurant/actions'
-import { defaultLocation } from '../../constants/controlOptions'
+import { notify } from '../notification/action'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -7,7 +8,6 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  DISMISS_MAP_ERROR
 } from '../../constants/actionTypes'
 
 
@@ -28,10 +28,8 @@ export const getUserLocation = () => {
         dispatch(getRestaurants())
       },
       (err) => {
-        dispatch({
-          type: GET_USER_LOCATION_FAILURE,
-          payload: err
-        })
+        dispatch({ type: GET_USER_LOCATION_FAILURE })
+        dispatch(notify(notificationTypes.ERROR, err.message, null, err.name))
         dispatch(setCenterMapLocation(defaultLocation))
       },
       {
@@ -63,8 +61,4 @@ export const changeMapMode = (payload) => {
     type: CHANGE_MAP_MODE,
     payload
   }
-}
-
-export const dismissMapError = () => {
-  return { type: DISMISS_MAP_ERROR }
 }

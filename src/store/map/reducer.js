@@ -1,4 +1,4 @@
-import { mapModes, defaultLocation } from '../../constants/controlOptions'
+import { mapModes, defaultLocation } from '../../constants/systemTypes'
 import {
   SET_CENTER_MAP_LOCATION,
   SET_PIN_LOCATION,
@@ -6,7 +6,6 @@ import {
   GET_USER_LOCATION_STARTED,
   GET_USER_LOCATION_SUCCESS,
   GET_USER_LOCATION_FAILURE,
-  DISMISS_MAP_ERROR
 } from '../../constants/actionTypes'
 
 
@@ -15,7 +14,6 @@ export const initialState = {
   pinLocation: {},
   mapMode: mapModes.HIDDEN,
   gettingUserLocation: false,
-  error: null
 }
 
 export const mapReducer = (state = initialState, action) => {
@@ -37,7 +35,6 @@ export const mapReducer = (state = initialState, action) => {
       })
     case GET_USER_LOCATION_FAILURE:
       return Object.assign({}, state, {
-        error: payload,
         gettingUserLocation: false
       })
 
@@ -49,11 +46,6 @@ export const mapReducer = (state = initialState, action) => {
     case CHANGE_MAP_MODE:
       return Object.assign({}, state, {
         mapMode: payload
-      })
-
-    case DISMISS_MAP_ERROR:
-      return Object.assign({}, state, {
-        error: initialState.error
       })
 
     default:

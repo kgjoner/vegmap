@@ -7,7 +7,7 @@ import Button from '../../components/Button'
 import RestaurantCard from '../RestaurantCard'
 import { changeSelectedRestaurant } from '../../store/restaurant/actions'
 import { setCenterMapLocation, setPinLocation, changeMapMode } from '../../store/map/actions'
-import { mapModes } from '../../constants/controlOptions'
+import { mapModes } from '../../constants/systemTypes'
 
 import './maps.css'
 import { useSelector, useDispatch } from 'react-redux'

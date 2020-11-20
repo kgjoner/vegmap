@@ -5,11 +5,16 @@ export const baseApiUrls = {
   WITH_SW: '/api',
 }
 
-
 export const mapModes = {
   HIDDEN: 'HIDDEN',
   RESTAURANTS: 'RESTAURANTS',
   PICKING: 'PICKING'
+}
+
+export const notificationTypes = {
+  ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS',
+  INFO: 'INFO'
 }
 
 export const popups = {

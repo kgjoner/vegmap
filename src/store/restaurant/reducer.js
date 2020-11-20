@@ -1,4 +1,3 @@
-import { successMessages } from '../../constants/presentation'
 import {
   GET_RESTAURANTS_STARTED, 
   GET_RESTAURANTS_SUCCESS, 
@@ -14,13 +13,9 @@ import {
   REMOVE_LIKE, 
   LIKING_FINISHED,
   CHANGE_SELECTED_RESTAURANT,
-  DISMISS_RESTAURANT_ERROR,
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
   DENOUNCE_RESTAURANT_FAILURE,
-  DISMISS_RESTAURANT_SUCCESS,
-  SET_SUCCESS_NOTIFICATION,
-  SET_ERROR_NOTIFICATION
 } from '../../constants/actionTypes'
 
 
@@ -36,8 +31,6 @@ export const initialState = {
   saving: false,
   liking: false,
   denouncing: false,
-  success: null,
-  error: null
 }
 
 export const restaurant = (state = initialState, action) => {
@@ -45,8 +38,7 @@ export const restaurant = (state = initialState, action) => {
   switch(type) {
     case GET_RESTAURANTS_STARTED:
       return Object.assign({}, state, {
-        getting: true,
-        error: null
+        getting: true
       })
     case GET_RESTAURANTS_SUCCESS:
       return Object.assign({}, state, {
@@ -56,15 +48,13 @@ export const restaurant = (state = initialState, action) => {
       })
     case GET_RESTAURANTS_FAILURE:
       return Object.assign({}, state, {
-        error: payload,
         getting: false
       })
 
     case ADD_RESTAURANT_STARTED:
     case UPDATE_RESTAURANT_STARTED:
       return Object.assign({}, state, {
-        saving: true,
-        error: null
+        saving: true
       })
     case ADD_RESTAURANT_SUCCESS:
       return Object.assign({}, state, {
@@ -73,13 +63,11 @@ export const restaurant = (state = initialState, action) => {
           payload.data
         ],
         saving: false,
-        success: payload.shouldNotificate ? successMessages.ADD_RESTAURANT : state.success
       })
     case ADD_RESTAURANT_FAILURE:
     case UPDATE_RESTAURANT_FAILURE:
       return Object.assign({}, state, {
-        saving: false,
-        error: payload
+        saving: false
       })
 
     case UPDATE_RESTAURANT_SUCCESS:
@@ -91,23 +79,19 @@ export const restaurant = (state = initialState, action) => {
           return restaurant
         }),
         saving: false,
-        success: payload.shouldNotificate ? successMessages.UPDATE_RESTAURANT : state.success
       })
 
     case DENOUNCE_RESTAURANT_STARTED:
       return Object.assign({}, state, {
-        denouncing: true,
-        error: null
+        denouncing: true
       })
     case DENOUNCE_RESTAURANT_SUCCESS:
       return Object.assign({}, state, {
-        denouncing: false,
-        success: successMessages.DENUNCIATION
+        denouncing: false
       })
     case DENOUNCE_RESTAURANT_FAILURE:
       return Object.assign({}, state, {
-        denouncing: false,
-        error: payload
+        denouncing: false
       })
 
     case LIKING_STARTED:
@@ -151,26 +135,6 @@ export const restaurant = (state = initialState, action) => {
     case CHANGE_SELECTED_RESTAURANT:
       return Object.assign({}, state, {
         selectedRestaurant: {...payload}
-      })
-
-    case SET_ERROR_NOTIFICATION:
-      return Object.assign({}, state, {
-        error: payload
-      })
-
-    case SET_SUCCESS_NOTIFICATION:
-      return Object.assign({}, state, {
-        success: payload
-      })
-
-    case DISMISS_RESTAURANT_ERROR:
-      return Object.assign({}, state, {
-        error: initialState.error
-      })
-
-    case DISMISS_RESTAURANT_SUCCESS:
-      return Object.assign({}, state, {
-        success: initialState.success
       })
 
     default:

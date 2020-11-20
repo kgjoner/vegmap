@@ -4,7 +4,7 @@ import useFood from '../../hooks/useFood'
 import usePrevious from '../../hooks/usePrevious'
 import { addRestaurant, updateRestaurant } from '../../store/restaurant/actions'
 import { setPinLocation, changeMapMode } from '../../store/map/actions'
-import { mapModes, errorNames } from '../../constants/controlOptions'
+import { mapModes, errorNames, notificationTypes } from '../../constants/systemTypes'
 
 import Input from '../../components/Input'
 import Select from '../../components/Select'
@@ -25,10 +25,17 @@ function SignupBox() {
   const [instagramUsername, setInstagramUsername] = useState('')
   const [latitude, setLatitude] = useState('')
   const [longitude, setLongitude] = useState('')
+  const [shakeError, setShakeError] = useState(false)
 
   const selectedRestaurant = useSelector(state => state.restaurant.selectedRestaurant)
   const isLoading = useSelector(state => state.restaurant.saving)
-  const error = useSelector(state => state.restaurant.error)
+  const error = useSelector(state => {
+    if(state.notification.type === notificationTypes.ERROR) {
+      return state.notification
+    } else {
+      return null
+    }
+  })
   const pinLocation = useSelector(state => state.map.pinLocation)
   const mapMode = useSelector(state => state.map.mapMode)
   const user = useSelector(state => state.user.user)
@@ -71,6 +78,15 @@ function SignupBox() {
     }
   }, [selectedRestaurant, setFoods])
 
+
+  useEffect(() => {
+    if(error) {
+      setShakeError(true)
+      setTimeout(() => {
+        setShakeError(false)
+      }, 800)
+    }
+  }, [error])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -214,10 +230,13 @@ function SignupBox() {
             isLoading={isLoading}
             thick
           />
-          <Notification 
-            type={error ? 'error' : null}
-            message={error ? error.message : ''}
-          />
+          <div className={shakeError ? 'error-shake' : ''}>
+            <Notification
+              
+              type={error ? 'error' : null}
+              message={error ? error.message : ''}
+            />
+          </div>
         </div>
 
       </form>

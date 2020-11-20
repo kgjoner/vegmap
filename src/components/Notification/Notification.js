@@ -4,7 +4,7 @@ import './notification.css'
 function Notification({ message, type, action, actionText }) {
   return (
     <div className={`notification 
-      ${type ? `notification--${type}` : 'notification--hidden'}`}
+      ${type ? `notification--${type.toLowerCase()}` : 'notification--hidden'}`}
       data-testid="notification"
       role="alert">
 

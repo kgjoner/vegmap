@@ -1,5 +1,7 @@
+import { notify } from '../notification/action'
+import { infoMessages } from '../../constants/systemMessages'
+import { notificationTypes } from '../../constants/systemTypes'
 import {
-  DISMISS_SYSTEM_MESSAGE,
   SET_CONNECTION_STATE, 
   SET_SW_EXISTENCE,
 } from '../../constants/actionTypes'
@@ -13,16 +15,23 @@ export const verifyConnection = () => {
     isConnected = false
   }
 
-  return {
-    type: SET_CONNECTION_STATE,
-    payload: isConnected
+  return (dispatch, getState) => {
+    dispatchNotifyIfNecessary(dispatch, isConnected, getState().system)
+    dispatch({
+      type: SET_CONNECTION_STATE,
+      payload: isConnected
+    })
+
   }
 }
 
 export const setConnection = (payload) => {
-  return {
-    type: SET_CONNECTION_STATE,
-    payload
+  return (dispatch, getState) => {
+    dispatchNotifyIfNecessary(dispatch, payload, getState().system)
+    dispatch({
+      type: SET_CONNECTION_STATE,
+      payload
+    })
   }
 }
 
@@ -34,8 +43,10 @@ export const verifyServiceWorker = () => {
   }
 }
 
-export const dismissSystemMessage = () => {
-  return {
-    type: DISMISS_SYSTEM_MESSAGE
-  }
+function dispatchNotifyIfNecessary(dispatch, isConnected, previousState) {
+  if ( (isConnected && previousState.isConnected === false)
+    || (!isConnected && previousState.isConnected) ) {
+      const message = isConnected ? infoMessages.ONLINE : infoMessages.OFFLINE
+      dispatch(notify(notificationTypes.INFO, message, 10000))
+    }
 }

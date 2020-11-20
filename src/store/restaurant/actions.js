@@ -1,5 +1,8 @@
 import * as api from '../../services/api'
 import { closePopup } from '../popup/actions'
+import { notify } from '../notification/action'
+import { notificationTypes } from '../../constants/systemTypes'
+import { successMessages } from '../../constants/systemMessages'
 import { connect, disconnect, subscribeToNewRestaurant, subscribeToUpdateRestaurant } from '../../services/socket'
 import {
   GET_RESTAURANTS_STARTED, 
@@ -16,13 +19,9 @@ import {
   REMOVE_LIKE, 
   LIKING_FINISHED,
   CHANGE_SELECTED_RESTAURANT,
-  DISMISS_RESTAURANT_ERROR,
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
-  DENOUNCE_RESTAURANT_FAILURE,
-  DISMISS_RESTAURANT_SUCCESS,
-  SET_SUCCESS_NOTIFICATION,
-  SET_ERROR_NOTIFICATION
+  DENOUNCE_RESTAURANT_FAILURE
 } from '../../constants/actionTypes'
 
 
@@ -57,21 +56,21 @@ export const getRestaurants = (payload) => {
           dispatch(updateRestaurant({ restaurant, receivedViaSocket: true }))
         })
       },
-      (err) => dispatch({
-        type: GET_RESTAURANTS_FAILURE,
-        payload: err
-      })
+      (err) => {
+        dispatch({ type: GET_RESTAURANTS_FAILURE })
+        dispatch(notify(notificationTypes.ERROR, err.message, null, err.name))
+      }
     )
   }
 }
+
 
 export const addRestaurant = ({ restaurant, user, receivedViaSocket }) => {
   if(receivedViaSocket) {
     return {
       type: ADD_RESTAURANT_SUCCESS,
       payload: {
-        data: restaurant,
-        shouldNotificate: false
+        data: restaurant
       }
     }
   }
@@ -85,29 +84,27 @@ export const addRestaurant = ({ restaurant, user, receivedViaSocket }) => {
       (data) => {
         dispatch({
           type: ADD_RESTAURANT_SUCCESS,
-          payload: {
-            data,
-            shouldNotificate: true
-          }
+          payload: { data }
         })
         dispatch(closePopup())
         dispatch(changeSelectedRestaurant(null))
+        dispatch(notify(notificationTypes.SUCCESS, successMessages.ADD_RESTAURANT))
       },
-      (err) => dispatch({
-        type: ADD_RESTAURANT_FAILURE,
-        payload: err
-      })
+      (err) => {
+        dispatch({ type: ADD_RESTAURANT_FAILURE })
+        dispatch(notify(notificationTypes.ERROR, err.message, null, err.name))
+      }
     )
   }
 }
+
 
 export const updateRestaurant = ({ restaurant, user, receivedViaSocket }) => {
   if(receivedViaSocket) {
     return {
       type: UPDATE_RESTAURANT_SUCCESS,
       payload: {
-        data: restaurant,
-        shouldNotificate: false
+        data: restaurant
       }
     }
   }
@@ -122,20 +119,21 @@ export const updateRestaurant = ({ restaurant, user, receivedViaSocket }) => {
         dispatch({
           type: UPDATE_RESTAURANT_SUCCESS,
           payload: {
-            data,
-            shouldNotificate: true
+            data
           }
         })
         dispatch(closePopup())
         dispatch(changeSelectedRestaurant(null))
+        dispatch(notify(notificationTypes.SUCCESS, successMessages.UPDATE_RESTAURANT))
       },
-      (err) => dispatch({
-        type: UPDATE_RESTAURANT_FAILURE,
-        payload: err
-      })
+      (err) => {
+        dispatch({ type: UPDATE_RESTAURANT_FAILURE })
+        dispatch(notify(notificationTypes.ERROR, err.message, null, err.name))
+      }
     )
   }
 }
+
 
 export const toggleRestaurantLike = ({ restaurant, user }) => {
   const payloadOfIDs = {
@@ -166,11 +164,14 @@ export const denounceRestaurant = (payload) => {
     dispatch({ type: DENOUNCE_RESTAURANT_STARTED })
 
     return api.submitFormToNetlify(payload).then(
-      () => dispatch({ type: DENOUNCE_RESTAURANT_SUCCESS }),
-      err => dispatch({
-        type: DENOUNCE_RESTAURANT_FAILURE,
-        payload: err
-      })
+      () => {
+        dispatch({ type: DENOUNCE_RESTAURANT_SUCCESS })
+        dispatch(notify(notificationTypes.SUCCESS, successMessages.DENUNCIATION))
+      },
+      err => {
+        dispatch({ type: DENOUNCE_RESTAURANT_FAILURE })
+        dispatch(notify(notificationTypes.ERROR, err.message, null, err.name))
+      }
     )
   }
 }
@@ -180,26 +181,4 @@ export const changeSelectedRestaurant = (payload) => {
     type: CHANGE_SELECTED_RESTAURANT,
     payload
   }
-}
-
-export const setErrorNotification = (payload) => {
-  return {
-    type: SET_ERROR_NOTIFICATION,
-    payload
-  }
-}
-
-export const setSuccessNotification = (payload) => {
-  return {
-    type: SET_SUCCESS_NOTIFICATION,
-    payload
-  }
-}
-
-export const dismissRestaurantError = () => {
-  return { type: DISMISS_RESTAURANT_ERROR }
-}
-
-export const dismissRestaurantSuccess = () => {
-  return { type: DISMISS_RESTAURANT_SUCCESS }
 }

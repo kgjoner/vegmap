@@ -5,15 +5,17 @@ import { changeSelectedRestaurant } from '../../store/restaurant/actions'
 import { popups } from '../../constants/systemTypes'
 
 import SignupBox from '../SignupBox'
-import AskForLogging from '../../components/AskForLogging'
 import DenunciationForm from '../DenunciationForm'
 import AskForLocation from '../AskForLocation/AskForLocation'
+import MessageModal from '../../components/MessageModal'
+import AskForLogging from '../../components/AskForLogging'
 import './popup.css'
 
 
 function Popup() {
   const [isAlertKind, setIsAlertKind] = useState(false)
   const popup = useSelector(state => state.popup.popup)
+  const content = useSelector(state => state.popup.content)
   const dispatch = useDispatch()
   const container = useRef()
 
@@ -98,6 +100,13 @@ function Popup() {
           }
           { popup === popups.ASK_FOR_LOCATION ?
             <AskForLocation close={close} /> : null
+          }
+          {
+            popup === popups.MESSAGE_MODAL 
+              ? <MessageModal close={close}>
+                  {content}
+                </MessageModal>
+              : null
           }
 
           { popup !== popups.NONE 

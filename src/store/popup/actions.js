@@ -4,10 +4,13 @@ import {
 } from '../../constants/actionTypes'
 
 
-export const openPopup = (payload) => {
+export const openPopup = (popup, content = null) => {
   return {
     type: OPEN_POPUP,
-    payload
+    payload: {
+      popup,
+      content
+    }
   }
 }
 

@@ -6,15 +6,18 @@ import {
 
 
 export const initialState = {
-  popup: popups.NONE
+  popup: popups.NONE,
+  content: null
 }
 
 export const popup = (state = initialState, action) => {
   const { type, payload } = action
   switch(type) {
     case OPEN_POPUP:
+      const { popup, content } = payload
       return Object.assign({}, state, {
-        popup: payload
+        popup,
+        content
       })
     
     case CLOSE_POPUP:

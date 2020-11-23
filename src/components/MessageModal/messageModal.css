@@ -1,0 +1,19 @@
+.message-modal {
+  padding: 40px;
+  background: #fdfdfd;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 450px;
+  max-width: calc(100vw - 45px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-modal__text {
+  color: var(--dark-color);
+  line-height: 180%;
+  margin-bottom: 20px;
+}

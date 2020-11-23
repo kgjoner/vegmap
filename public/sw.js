@@ -165,7 +165,8 @@ function getCachedApiResponse(request) {
             latitude: restaurant.location.coordinates[1],
             longitude: restaurant.location.coordinates[0]
           }
-          return calculateDistance(centerCoords, coords) < 5
+          return ( calculateDistance(centerCoords, coords) < 5
+              || true ) //distance filter is disabled for now
             && ( !foods[0] 
               || restaurant.foods.some(food => foods.includes(food)) )
             && ( (restaurant.option.vegan && option.vegan) 

@@ -14,7 +14,20 @@ import "./presentation.css"
 
 function Presentation() {
   const user = useSelector(state => state.user.user)
+  const isConnected = useSelector(state => state.system.isConnected)
   const dispatch = useDispatch()
+
+  function handleGoToMap() {
+    if(isConnected) {
+      dispatch(changeMapMode(mapModes.RESTAURANTS))
+    } else {
+      dispatch(openPopup(popups.MESSAGE_MODAL, (
+        <p className="message-modal__text">
+          Não é possível acessar o mapa no modo offline.
+        </p>
+      )))
+    }
+  }
 
   return (
     <aside className="presentation">
@@ -45,13 +58,15 @@ function Presentation() {
           onClick={() => dispatch(openPopup(popups.SIGNUP))} />
         <p className="presentation__user">como <strong>{user.name}</strong></p>
       </div> :
-      <LoginButton />
+      isConnected 
+        ? <LoginButton />
+        : null
       }
 
       <div className="presentation__btn-container">
         <Button
           text="Ir para o mapa"
-          onClick={() => dispatch(changeMapMode(mapModes.RESTAURANTS))} />
+          onClick={handleGoToMap} />
       </div>
       
       <div className="presentation__footer">

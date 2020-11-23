@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import Button from '../../components/Button'
+import { persistPermission } from '../../services/localStorage'
 import { getUserLocation } from '../../store/map/actions'
 import './askForLocation.css'
 
@@ -8,8 +9,9 @@ import './askForLocation.css'
 function AskForLocation({ close }) {
   const dispatch = useDispatch()
 
-  function getLocation() {
-    dispatch(getUserLocation())
+  function handlePermission(permission) {
+    if(permission) dispatch(getUserLocation())
+    persistPermission(permission)
     close(null, true)
   }
 
@@ -22,13 +24,13 @@ function AskForLocation({ close }) {
       <div className="ask-for-location__actions">
         <Button 
           text="Permitir"
-          onClick={getLocation}
+          onClick={() => handlePermission(true)}
           fullWidth
         />
         <Button 
           text="Negar"
           fullWidth
-          onClick={() => close(null, true)}
+          onClick={() => handlePermission(false)}
         />
       </div>
     </div>

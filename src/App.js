@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 // import { getUserLocation } from './store/map/actions'
 import { verifyConnection, setConnection, verifyServiceWorker } from './store/system/actions'
 import { getRestaurants } from './store/restaurant/actions'
+import { getUserLocation } from './store/map/actions'
 import { openPopup } from './store/popup/actions'
 import { mapModes, popups } from './constants/systemTypes'
+import { getPermission } from './services/localStorage'
 
 import Maps from './containers/Maps'
 import Presentation from './containers/Presentation'
@@ -29,8 +31,15 @@ function App() {
   useEffect(() => {
     dispatch(verifyConnection())
     dispatch(verifyServiceWorker())
-    dispatch(getRestaurants())
-    dispatch(openPopup(popups.ASK_FOR_LOCATION))
+
+    const permission = getPermission()
+    if(permission) {
+      dispatch(getUserLocation())
+    } else if(permission === false) {
+      dispatch(getRestaurants())
+    } else {
+      dispatch(openPopup(popups.ASK_FOR_LOCATION))
+    }
 
     window.addEventListener('offline', () => dispatch(setConnection(false)))
     window.addEventListener('online', () => dispatch(setConnection(true)))

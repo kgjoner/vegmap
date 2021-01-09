@@ -28,15 +28,6 @@ function SearchBar() {
     dispatch(getRestaurants(params))
   }
 
-  function handleRadio(target) {
-    target.blur()
-    const newOption = {
-      vegan: target.value !== 'vegetarian',
-      vegetarian: target.value !== 'vegan'
-    }
-    setOption(newOption)
-  }
-
   return (
     <form className={`search-bar 
       ${isOnMap? 'search-bar--map' : ''}`}
@@ -51,39 +42,12 @@ function SearchBar() {
           handlers={handlers}
           error={null}
         />
-
-        <div className="search-bar__options">
-          <label className="search-bar__option">
-            Todos
-            <input className="search-bar__radio" type="radio" name="option" 
-              value="both"
-              checked={option.vegan && option.vegetarian}
-              onChange={e => handleRadio(e.target)} />
-            <span className="search-bar__checkmark"></span>
-          </label>
-          <label className="search-bar__option">
-            Vegano
-            <input className="search-bar__radio" type="radio" name="option" 
-              value="vegan"
-              checked={option.vegan && !option.vegetarian}
-              onChange={e => handleRadio(e.target)}/>
-            <span className="search-bar__checkmark"></span>
-          </label>
-          <label className="search-bar__option">
-            Vegetariano
-            <input className="search-bar__radio" type="radio" name="option" 
-              value="vegetarian"
-              checked={option.vegetarian && !option.vegan}
-              onChange={e => handleRadio(e.target)}/>
-            <span className="search-bar__checkmark"></span>
-          </label>
-        </div>
+        <button className="search-bar__btn"
+          type="submit">
+          Buscar
+        </button>
       </div>
 
-      <button className="search-bar__btn"
-        type="submit">
-        Buscar
-      </button>
 
     </form>
   )

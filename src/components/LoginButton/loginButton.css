@@ -9,6 +9,7 @@
   height: 62px;
   border-radius: 80px 5px;
   background-color: var(--dark-color);
+  border: 2px solid var(--dark-color);
 
   display: flex;
   justify-content: center;

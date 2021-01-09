@@ -26,3 +26,8 @@
 .map div:not(.restaurant-card__links) > a[target="_blank"] {
   display: none !important;
 }
+
+/* remove a botão de tela cheia */
+.gm-fullscreen-control {
+  display: none;
+}

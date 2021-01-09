@@ -5,6 +5,7 @@ import { mapModes } from './constants/systemTypes'
 
 import Maps from './containers/Maps'
 import Presentation from './containers/Presentation'
+import MapButton from './containers/MapButton';
 import RestaurantCard from './containers/RestaurantCard'
 import SearchBar from './containers/SearchBar'
 import Popup from './containers/Popup'
@@ -51,10 +52,13 @@ function App() {
       {userAskedForMapOnce ?
         <Maps />  : null
       }
-      <SearchBar />
+      <div className="app__header">
+        <SearchBar />
+        <MapButton />
+      </div>
+      <Presentation />
       { mapMode === mapModes.HIDDEN ? 
         <div className="container">
-          <Presentation />
           <main>
             {isLoading ?
               <div className="app__loading">

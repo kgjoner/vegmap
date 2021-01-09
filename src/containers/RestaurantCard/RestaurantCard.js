@@ -72,14 +72,15 @@ function RestaurantCard({ restaurant, variant }) {
     <li className={`restaurant-card ${restaurant.type} 
       ${variant ? `restaurant-card--${variant}` : ''}`}>
 
-      <div className="restaurant-card__flags" role="list">
-        { restaurant.option.vegan && 
-          <div className="restaurant-card__flag restaurant-card__flag--vegan" 
-            role="listitem"></div> }
-        { restaurant.option.vegetarian && 
-          <div className="restaurant-card__flag restaurant-card__flag--vegetarian"
-            role="listitem"></div> }
-      </div>
+      <div className={
+        'restaurant-card__option' +
+        (restaurant.option.vegetarian && restaurant.option.vegan
+          ? ' restaurant-card__option--both'
+          : restaurant.option.vegan 
+            ? ' restaurant-card__option--vegan'
+            : ' restaurant-card__option--vegetarian') +
+        (restaurant.type !== 'default' ? ' restaurant-card--exclusive' : '')
+      }></div>
 
       { user && !isOnMap ? 
         <button className="restaurant-card__config" 
@@ -145,18 +146,28 @@ function RestaurantCard({ restaurant, variant }) {
               <div className="icon icon--instagram"></div>
             </a> }
         </div>
-        <div className="restaurant-card__like-info">
-          { restaurant.likes.length }
-          <button className="restaurant-card__like-btn"
-            onClick={e => like(e.target)}
-            aria-label="Favoritar este restaurante">
-            <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
-              'icon icon--star' : 'icon icon--star-filled'}></div>
-          </button>
+        <div className="restaurant-card__column">
+          <div className="restaurant-card__action-info">
+            <button className="restaurant-card__like-btn"
+              onClick={e => like(e.target)}
+              aria-label="Favoritar este restaurante">
+              <div className={!user || (user && restaurant.likes.indexOf(user.userID) === -1) ? 
+                'icon icon--star' : 'icon icon--star-filled'}></div>
+            </button>
+            { restaurant.likes.length }
+          </div>
+          <div className="restaurant-card__action-info">
+            <button className="restaurant-card__like-btn" 
+              onClick={() => copyCoordinatesToClipboard(restaurant.location.coordinates)}
+              aria-label="Copiar coordenadas">
+              <div className="icon icon--pin"></div>
+            </button>
+            { restaurant.address.split('- ')[1] }
+          </div>
         </div>
       </div>
 
-      <footer className="restaurant-card__footer">
+      {/* <footer className="restaurant-card__footer">
         <p className="restaurant-card__address">{restaurant.address}</p>
         <button className="restaurant-card__coords" 
           onClick={() => copyCoordinatesToClipboard(restaurant.location.coordinates)}
@@ -166,7 +177,7 @@ function RestaurantCard({ restaurant, variant }) {
             <div className="icon icon--pin"></div>
           </div>
         </button>
-      </footer>
+      </footer> */}
     </li>
   )
 }

@@ -1,0 +1,21 @@
+.map-button {
+  width: 50px;
+  height: 50px;
+  background-color: var(--box-color);
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  position: relative;
+  margin-left: 80px;
+}
+
+.map-button__label {
+  position: absolute;
+  left: -45px;
+  color: var(--dark-color);
+  font-weight: bold;
+}

@@ -7,13 +7,29 @@
   flex-direction: row;
   align-items: flex-start;
   max-width: 1200px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
+  padding-left: 370px;
+  padding-top: 30px;
   /* padding: 60px 30px; */
 }
 
 #app main {
   flex: 1;
   margin-left: 30px;
+}
+
+.app__header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 95;
 }
 
 .app__loading {

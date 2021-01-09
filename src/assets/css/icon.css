@@ -40,12 +40,10 @@
 
 .icon--star {
   mask-image: url('../img/star.svg');
-  background-color: var(--primary-color);
 }
 
 .icon--star-filled {
   mask-image: url('../img/star-filled.svg');
-  background-color: var(--primary-color);
 }
 
 .icon--home {
@@ -73,6 +71,12 @@
   mask-image: url('../img/cross.svg');
   width: 13px;
   height: 13px;
+}
+
+.icon--map {
+  mask-image: url('../img/map.svg');
+  width: 20px;
+  height: 20px;
 }
 
 .icon--loading {

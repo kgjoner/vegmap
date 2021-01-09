@@ -24,7 +24,7 @@ function LoginButton({ fullWidth }) {
         callback={responseFacebook} 
         render={renderProps => (
           <Button variant="login"
-            text="Login com Facebook"
+            text="Login"
             onClick={renderProps.onClick}
             fullWidth={fullWidth} />
         )}/>

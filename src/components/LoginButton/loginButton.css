@@ -1,3 +1,25 @@
 .login-btn {
   width: 100%;
+  position: absolute;
+  bottom: 50px;
+}
+
+.login-btn button {
+  width: 150px;
+  height: 62px;
+  border-radius: 80px 5px;
+  background-color: var(--dark-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 20px;
+  font-weight: normal;
+
+  transform: rotate(-15deg);
+}
+
+.login-btn button:hover {
+  background-color: var(--primary-color-variant);
 }

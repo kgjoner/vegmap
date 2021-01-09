@@ -11,10 +11,12 @@
 :root {
   --primary-color: #28bd6b;
   --primary-color-variant: #1ead5f;
-  --secondary-color: #F5B25F;
+  --secondary-color: #00ADFF;
+  --box-color: #C8D66B;
   --light-color: #99AEBB;
   --light-color-variant: #84929b;
-  --dark-color: #636363;
+  --dark-color: #025700;
+  --dark-rgb: 2,87,0;
   --danger-color: rgb(216, 125, 125);
   --danger-color-variant: rgb(235, 101, 101);
 }
@@ -35,18 +37,19 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../img/floripa-map.jpg');
-  background-size: cover;
-  background-position: 50% 50%;
+  background: #fafafa;
+  /* background-image: url('../img/floripa-map.jpg'); */
+  /* background-size: cover;
+  background-position: 50% 50%; */
   filter: blur(3px);
   z-index: -1;
 }
 
-@media(max-width: 1000px) {
+/* @media(max-width: 1000px) {
   body::before {
     background-image: url('../img/floripa-map-960.jpg');
   }
-}
+} */
 
 body::after {
   content: '';

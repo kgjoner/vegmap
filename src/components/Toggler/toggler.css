@@ -1,0 +1,30 @@
+.toggler {
+  width: 47px;
+  height: 28px;
+  border: 2px solid var(--dark-color);
+  border-radius: 14px;
+  background-color: transparent;
+  position: relative;
+}
+
+.toggler__pin {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--dark-color);
+  position: absolute;
+  top: 1px;
+}
+
+.toggler--off .toggler__pin {
+  left: 2px;
+}
+
+.toggler--on .toggler__pin {
+  right: 2px;
+}
+
+.toggler--on {
+  /* background-color: rgba(var(--dark-rgb), 0.4); */
+  background-color: var(--primary-color);
+}

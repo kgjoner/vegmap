@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRestaurants } from '../../store/restaurant/actions'
 import { mapModes } from '../../constants/systemTypes'
@@ -10,22 +10,14 @@ import './searchBar.css'
 
 function SearchBar() {
   const [query, foodOnTyping, foodHint, handlers] = useFood([])
-  const [option, setOption] = useState({ vegan: true, vegetarian: true })
 
   const isOnMap = useSelector(state => state.map.mapMode === mapModes.RESTAURANTS)
   const dispatch = useDispatch()
 
-  useEffect(() => {
-    submitQuery()
-  }, [option])
-
   function submitQuery(e) {
     if(e) e.preventDefault()
-    const params = {
-      foods: query.join(','), 
-      ...option
-    }
-    dispatch(getRestaurants(params))
+    const foodsString = query.join(',')
+    dispatch(getRestaurants(foodsString))
   }
 
   return (

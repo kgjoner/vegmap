@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { openPopup } from '../../store/popup/actions'
 import { setPermission } from '../../store/system/actions'
+import { setDietOption } from '../../store/restaurant/actions';
+import { openPopup } from '../../store/popup/actions'
 import { popups } from '../../constants/systemTypes';
 
 import LoginButton from '../../components/LoginButton'
@@ -13,11 +14,10 @@ import Toggler from '../../components/Toggler/Toggler';
 
 
 function Presentation() {
-  const [option, setOption] = useState({ vegan: true, vegetarian: true })
-
   const user = useSelector(state => state.user.user)
   const isConnected = useSelector(state => state.system.isConnected)
   const isLocationOn = useSelector(state => state.system.locationPermission)
+  const dietOption = useSelector(state => state.restaurant.dietOption)
   const dispatch = useDispatch()
 
   function handleRadio(target) {
@@ -26,7 +26,7 @@ function Presentation() {
       vegan: target.value !== 'vegetarian',
       vegetarian: target.value !== 'vegan'
     }
-    setOption(newOption)
+    dispatch(setDietOption(newOption))
   }
 
   return (
@@ -52,7 +52,7 @@ function Presentation() {
             vegetariana
             <input className="presentation__radio" type="radio" name="option" 
               value="vegetarian"
-              checked={option.vegetarian && !option.vegan}
+              checked={dietOption.vegetarian && !dietOption.vegan}
               onChange={e => handleRadio(e.target)}/>
             <span className="presentation__checkmark"></span>
           </label>
@@ -60,7 +60,7 @@ function Presentation() {
             vegana
             <input className="presentation__radio" type="radio" name="option" 
               value="vegan"
-              checked={option.vegan && !option.vegetarian}
+              checked={dietOption.vegan && !dietOption.vegetarian}
               onChange={e => handleRadio(e.target)}/>
             <span className="presentation__checkmark"></span>
           </label>
@@ -68,7 +68,7 @@ function Presentation() {
             ambas
             <input className="presentation__radio" type="radio" name="option" 
               value="both"
-              checked={option.vegan && option.vegetarian}
+              checked={dietOption.vegan && dietOption.vegetarian}
               onChange={e => handleRadio(e.target)} />
             <span className="presentation__checkmark"></span>
           </label>

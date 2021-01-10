@@ -16,14 +16,15 @@ import {
   DENOUNCE_RESTAURANT_STARTED,
   DENOUNCE_RESTAURANT_SUCCESS,
   DENOUNCE_RESTAURANT_FAILURE,
+  SET_DIET_OPTION,
 } from '../../constants/actionTypes'
 
 
 export const initialState = {
   restaurants: [],
   selectedRestaurant: {},
-  lastParams: {
-    foods: '',
+  lastFoodQuery: '',
+  dietOption: {
     vegan: true,
     vegetarian: true
   },
@@ -43,7 +44,7 @@ export const restaurant = (state = initialState, action) => {
     case GET_RESTAURANTS_SUCCESS:
       return Object.assign({}, state, {
         restaurants: [...payload.data],
-        lastParams: {...payload.params},
+        lastFoodQuery: payload.foods,
         getting: false
       })
     case GET_RESTAURANTS_FAILURE:
@@ -135,6 +136,11 @@ export const restaurant = (state = initialState, action) => {
     case CHANGE_SELECTED_RESTAURANT:
       return Object.assign({}, state, {
         selectedRestaurant: {...payload}
+      })
+
+    case SET_DIET_OPTION:
+      return Object.assign({}, state, {
+        dietOption: {...payload}
       })
 
     default:

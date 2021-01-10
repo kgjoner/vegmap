@@ -1,10 +1,9 @@
 import * as storage from '../../services/localStorage'
 import { notify } from '../notification/action'
-import { getUserLocation } from '../map/actions'
-import { getRestaurants } from '../restaurant/actions'
+import { getUserLocation, setCenterMapLocation } from '../map/actions'
 import { openPopup } from '../popup/actions'
 import { infoMessages } from '../../constants/systemMessages'
-import { notificationTypes, popups } from '../../constants/systemTypes'
+import { defaultLocation, notificationTypes, popups } from '../../constants/systemTypes'
 import {
   SET_CONNECTION_STATE, 
   SET_SW_EXISTENCE,
@@ -54,17 +53,9 @@ export const verifyServiceWorker = () => {
 export const getPermission = () => {
   return (dispatch) => {
     const permission = storage.getPermission()
-    const actionObject = {
-      type: SET_LOCATION_PERMISSION,
-      payload: permission
-    }
 
-    if(permission) {
-      dispatch(getUserLocation())
-      dispatch(actionObject)
-    } else if(permission === false) {
-      dispatch(getRestaurants())
-      dispatch(actionObject)
+    if(permission || permission === false) {
+      dispatch(setPermission(permission, false))
     } else {
       dispatch(openPopup(popups.ASK_FOR_LOCATION))
     }
@@ -72,12 +63,21 @@ export const getPermission = () => {
 }
 
 
-export const setPermission = (payload) => {
+export const setPermission = (permission, shouldPersist = true) => {
   return (dispatch) => {
-    storage.persistPermission(payload)
+    if(shouldPersist) {
+      storage.persistPermission(permission)
+    }
+
+    if(permission) {
+      dispatch(getUserLocation())
+    } else if(permission === false) {
+      dispatch(setCenterMapLocation(defaultLocation))
+    }
+
     dispatch({
       type: SET_LOCATION_PERMISSION,
-      payload
+      payload: permission
     })
   }
 }

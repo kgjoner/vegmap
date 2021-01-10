@@ -8,7 +8,7 @@
 }
 
 .checkbox__label {
-  color: #acacac;
+  color: var(--dark-color);
   font-size: 14px;
   font-weight: bold;
   display: block;
@@ -29,6 +29,8 @@
   width: 16px;
   margin-right: 5px;
   cursor: pointer;
+  background-color: transparent;
+  border-color: var(--dark-color);
 }
 
 .checkbox--error .checkbox__field  {

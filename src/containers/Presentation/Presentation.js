@@ -83,7 +83,9 @@ function Presentation() {
         <p className="presentation__user">como <strong>{user.name}</strong></p>
       </div> :
       isConnected 
-        ? <LoginButton />
+        ? <div className="presentation__btn-container">
+            <LoginButton />
+          </div>
         : null
       }
       

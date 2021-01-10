@@ -1,7 +1,7 @@
 .button {
   border: 0;
-  background-color: var(--light-color);
-  border-radius: 4px;
+  background-color: var(--dark-color);
+  border-radius: 40px 10px;
   padding: 8px 12px;
   font-size: 16px;
   font-weight: bold;
@@ -14,7 +14,7 @@
 
 .button:hover,
 .button:focus {
-  background-color: var(--light-color-variant);
+  background-color: var(--primary-color-variant);
 }
 
 .button:focus {

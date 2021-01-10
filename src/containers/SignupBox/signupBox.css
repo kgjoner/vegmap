@@ -1,10 +1,5 @@
 .signup {
   width: 670px;
-  background: #fdfdfd;
-  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 30px 20px;
-  overflow-y: scroll;
   max-height: calc(100vh - 30px);
   max-width: calc(100vw - 45px);
 }

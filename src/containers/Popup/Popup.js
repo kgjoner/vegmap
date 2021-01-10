@@ -87,7 +87,13 @@ function Popup() {
         role="presentation"
       >
 
-        <div className="popup__content">
+        <div 
+          className={
+            'popup__content' +
+            (popup === popups.ASK_FOR_LOCATION ? ' popup__content--slide-down' : '') +
+            (popup === popups.SIGNUP ? ' popup__content--large' : '')
+          }
+        >
 
           { popup === popups.SIGNUP ?
             <SignupBox /> : null

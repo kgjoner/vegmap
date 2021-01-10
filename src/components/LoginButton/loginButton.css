@@ -1,11 +1,9 @@
 .login-btn {
   width: 100%;
-  position: absolute;
-  bottom: 50px;
 }
 
 .login-btn button {
-  width: 150px;
+  min-width: 150px;
   height: 62px;
   border-radius: 80px 5px;
   background-color: var(--dark-color);
@@ -17,10 +15,10 @@
 
   font-size: 20px;
   font-weight: normal;
-
-  transform: rotate(-15deg);
 }
 
-.login-btn button:hover {
+.login-btn button:hover,
+.login-btn button:focus  {
   background-color: var(--primary-color-variant);
+  outline: none;
 }

@@ -69,10 +69,10 @@ function DenunciationForm() {
             </div>
 
             <Button type="submit"
-              variant="primary"
               text="Confirmar"
               isLoading={isLoading}
-              fullWidth thick />
+              fullWidth thick 
+            />
 
         </form>
       }

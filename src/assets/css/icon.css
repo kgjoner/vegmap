@@ -103,7 +103,7 @@
 }
 
 .icon.icon--text {
-  background-color: #acacac;
+  background-color: var(--dark-color);
 }
 
 .icon.icon--bigger {

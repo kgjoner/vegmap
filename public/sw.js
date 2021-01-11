@@ -33,12 +33,12 @@ self.addEventListener('activate', e => {
 })
 
 self.addEventListener('fetch', e => {
-  const { method, url, body } = e.request;
-  // const requestClone = e.request.clone() 
+  const { method, url } = e.request
+  const requestClone = e.request.clone()
 
   if(url.includes(`${self.location.host}/api`)) {
     e.respondWith(  
-      fetchApi(e.request)
+      fetchApi(method, url, requestClone)
       .then(response => response)
       .catch(() => {
         if(method === 'GET' && url.includes('search')) {
@@ -74,13 +74,19 @@ self.addEventListener('fetch', e => {
   }
 })
 
-function fetchApi(request) {
+async function fetchApi(method, url, request) {
   const apiBaseUrl =
-  'https://vegmap-backend.herokuapp.com'
-  // 'http://localhost:3030'
-  const fetchUrl = apiBaseUrl + request.url.split('/api')[1]
+  // 'https://vegmap-backend.herokuapp.com'
+  'http://localhost:3030'
+  const fetchUrl = apiBaseUrl + url.split('/api')[1]
+  
+  let fetchOptions = { method }
+  if(method !== 'GET') {
+    const body = await request.json()
+    fetchOptions.body = body
+  }
 
-  return fetch(fetchUrl)
+  return fetch(fetchUrl, fetchOptions)
     .then(response => {
       if(response) {
         response.clone().json().then(data => {
@@ -89,6 +95,7 @@ function fetchApi(request) {
       }
       return response
     })
+
 }
 
 // self.addEventListener('sync', e => {

@@ -16,6 +16,7 @@
 #app main {
   flex: 1;
   margin-left: 30px;
+  margin-bottom: 50px;
 }
 
 .app__header {

@@ -76,8 +76,8 @@ self.addEventListener('fetch', e => {
 
 async function fetchApi(method, url, request) {
   const apiBaseUrl =
-  // 'https://vegmap-backend.herokuapp.com'
-  'http://localhost:3030'
+  'https://vegmap-backend.herokuapp.com'
+  // 'http://localhost:3030'
   const fetchUrl = apiBaseUrl + url.split('/api')[1]
   
   let fetchOptions = { method }

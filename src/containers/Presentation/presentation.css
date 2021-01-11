@@ -144,7 +144,7 @@
 
 .presentation__btn-container {
   position: absolute;
-  bottom: 50px;
+  top: 375px;
   transform: rotate(-15deg);
 }
 

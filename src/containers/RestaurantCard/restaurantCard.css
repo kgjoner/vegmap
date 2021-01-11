@@ -25,29 +25,6 @@
   display: none;
 }
 
-.restaurant-card__option {
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  right: 0;
-  bottom: 0;
-  border-bottom-right-radius: 40px;
-  mask-image: radial-gradient(circle at top left, transparent 0, transparent 100px, black 41px);
-}
-
-.restaurant-card__option--both {
-  background-image: linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 50%, 
-    var(--secondary-color) 50%, var(--secondary-color) 100%)
-}
-
-.restaurant-card__option-vegan {
-  background-color: var(--primary-color);
-}
-
-.restaurant-card__option--vegetarian {
-  background-color: var(--secondary-color);
-}
-
 .restaurant-card__config {
   position: absolute;
   right: 13px;
@@ -235,6 +212,43 @@
   animation-delay: 1s;
 }
 
+.restaurant-card:nth-child(n+7) {
+  animation-delay: 1.2s;
+}
+
+.restaurant-card__option {
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  right: 0;
+  bottom: 0;
+  border-bottom-right-radius: 40px;
+  mask-image: radial-gradient(circle at top left, transparent 0, transparent 100px, black 41px);
+}
+
+.restaurant-card__option--both {
+  background-image: linear-gradient(to top right, var(--primary-color) 0%, var(--primary-color) 50%, 
+    var(--secondary-color) 50%, var(--secondary-color) 100%)
+}
+
+.restaurant-card__option-vegan {
+  background-color: var(--primary-color);
+}
+
+.restaurant-card__option--vegetarian {
+  background-color: var(--secondary-color);
+}
+
+.restaurant-card__exclusive {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  transform: rotate(-45deg);
+  color: var(--dark-color);
+}
+
+
+/* General */
 
 .vegan header .icon-box {
   background: var(--primary-color);

@@ -49,10 +49,6 @@
   cursor: pointer;
 }
 
-.search-bar__btn:focus, .search-bar__btn:hover {
-  background-color: var(--light-color-variant);
-}
-
 @media(max-width: 374px) {
   .search-bar {
     top: 600px;

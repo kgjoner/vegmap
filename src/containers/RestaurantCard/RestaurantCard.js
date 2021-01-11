@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleRestaurantLike, changeSelectedRestaurant } from '../../store/restaurant/actions'
 import { openPopup } from '../../store/popup/actions'
@@ -11,6 +11,7 @@ import "./restaurantCard.css"
 function RestaurantCard({ restaurant, variant }) {
   const [showMenu, setShowMenu] = useState(false)
   const [imgError, setImgError] = useState(false)
+  const canvasEl = useRef()
 
   const user = useSelector(state => state.user.user)
   const isWaiting = useSelector(state => state.restaurant.liking)
@@ -29,6 +30,33 @@ function RestaurantCard({ restaurant, variant }) {
       window.addEventListener('click', hideMenu)
     }
   }, [showMenu, hideMenu])
+
+  useEffect(() => {
+    if(!canvasEl.current) return
+
+    let canvas = canvasEl.current; 
+    let context = canvas.getContext("2d")
+
+    context.font = "16px Courgette"
+    context.fillStyle = "#025700"
+    context.textAlign = "center"
+
+    let string = "exclusivo!"
+
+    let angle = -Math.PI * 0.3
+    let radius = 100
+
+    context.translate(50, 0)
+    context.rotate(-1 * angle / 2)
+
+    for (let i = 0; i < string.length; i++) { 
+        context.rotate(angle / string.length)
+        context.save()
+        context.translate(0, 1 * radius)
+        context.fillText(string[i], 0, 0)
+        context.restore()
+    }
+  }, [canvasEl.current])
 
 
   function copyCoordinatesToClipboard(coords) {
@@ -78,9 +106,25 @@ function RestaurantCard({ restaurant, variant }) {
           ? ' restaurant-card__option--both'
           : restaurant.option.vegan 
             ? ' restaurant-card__option--vegan'
-            : ' restaurant-card__option--vegetarian') +
-        (restaurant.type !== 'default' ? ' restaurant-card--exclusive' : '')
+            : ' restaurant-card__option--vegetarian')
       }></div>
+
+      { restaurant.type !== 'default'
+        ? <canvas ref={canvasEl} className="restaurant-card__exclusive" width="100" height="100"></canvas> 
+        // ? <p className="restaurant-card__exclusive">
+        //     <span>e</span>
+        //     <span>x</span>
+        //     <span>c</span>
+        //     <span>l</span>
+        //     <span>u</span>
+        //     <span>s</span>
+        //     <span>i</span>
+        //     <span>v</span>
+        //     <span>o</span>
+        //     <span>!</span>
+        //   </p>
+        : null
+      }
 
       { user && !isOnMap ? 
         <button className="restaurant-card__config" 

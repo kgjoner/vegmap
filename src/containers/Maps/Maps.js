@@ -72,14 +72,6 @@ function Maps() {
     }
   }, [isPicking, selectedRestaurant, dispatch])
 
-
-  const hideMap = useCallback(() => {
-    if(Object.keys(selectedRestaurant).length > 0) {
-      dispatch(changeSelectedRestaurant(null))
-    }
-    dispatch(changeMapMode(mapModes.HIDDEN))
-  }, [selectedRestaurant, dispatch])
-
   return (
     <div className={`map 
       ${isHidden ? 'map--hidden' : ''}
@@ -120,14 +112,6 @@ function Maps() {
         </GoogleMapReact>
 
         : <p>Sem Localização</p>
-      }
-
-      { isPicking ? null :
-        <div className="map__btn-container">
-          <Button
-            text="Voltar"
-            onClick={hideMap} />
-        </div>
       }
 
       { Object.keys(selectedRestaurant).length > 0 ?

@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import "./foodInput.css"
 
 function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error, variant }) {
+  const inputField = useRef()
+
   return (
     <div className={`food-input
-      ${variant? `food-input--${variant}` : ''}`} >
+      ${variant? `food-input--${variant}` : ''}`} 
+      onClick={() => inputField.current.focus()}
+    >
 
       <label htmlFor="foods"
         className="food-input__label">
@@ -29,6 +33,7 @@ function FoodInput({ savedFoods, foodOnTyping, foodHint, handlers, label, error,
           <input name="foods" id="foods"
             type={variant === 'search' ? 'search' : 'text'}
             className="food-input__field"
+            ref={inputField}
             placeholder={variant === 'search' && savedFoods.length === 0 ? 'Pesquise por comidas...' : ''}
             value={foodOnTyping}
             onChange={e => handlers.change(e.target.value)}

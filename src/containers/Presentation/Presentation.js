@@ -38,7 +38,7 @@ function Presentation() {
       </div>
       
       <div className="presentation__config presentation__config--row">
-        <p className="presentation__config-name">Localização</p>
+        <p className="presentation__config-name">Permitir Localização</p>
         <Toggler 
           on={isLocationOn} 
           handleToggler={value => dispatch(setPermission(value))} 

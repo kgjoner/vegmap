@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { mapModes, popups } from '../../constants/systemTypes'
 import { changeMapMode } from '../../store/map/actions'
 import { openPopup } from '../../store/popup/actions'
+import { changeSelectedRestaurant } from '../../store/restaurant/actions'
 import './mapButton.css'
 
 const MapButton = () => {
   const isMapHidden = useSelector(state => state.map.mapMode === mapModes.HIDDEN)
+  const isMapPicking = useSelector(state => state.map.mapMode === mapModes.PICKING)
   const isConnected = useSelector(state => state.system.isConnected)
   const dispatch = useDispatch()
 
@@ -23,13 +25,17 @@ const MapButton = () => {
     if(isMapHidden) {
       dispatch(changeMapMode(mapModes.RESTAURANTS))
     } else {
+      dispatch(changeSelectedRestaurant(null))
       dispatch(changeMapMode(mapModes.HIDDEN))
     }
   }
 
   return (
     <button 
-      className="map-button"
+      className={
+        'map-button' +
+        (isMapPicking ? ' map-button--hidden' : '')
+      }
       onClick={toggleMap}
     >
       <span className="map-button__label">

@@ -25,6 +25,7 @@
   transform: rotate(75deg) scale(1.2);
   background: var(--box-color);
   z-index: -1;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 .logo {
@@ -49,7 +50,7 @@
 
 .presentation__config {
   margin: 10px 0;
-  width: 200px;
+  width: 220px;
 }
 
 .presentation__config--row {

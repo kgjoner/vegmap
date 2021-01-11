@@ -12,6 +12,7 @@ export const errorMessages = {
     OPTION: 'O restaurante deve atender ao menos uma das opções.',
     FOODS: 'Informe ao menos uma comida oferecida.',
     ADDRESS: 'Informe o endereço do restaurante.',
+    NEIGHBORHOOD: 'Informe o bairro onde fica o restaurante.',
     COORDS: 'Informe as coordenadas do restaurante.',
     REASON: 'Informe o motivo.'
   }

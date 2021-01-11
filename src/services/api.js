@@ -30,6 +30,7 @@ export const saveRestaurant = ({ method, restaurant, user }) => {
     ...restaurant, 
     author: user
   }
+
   return new Promise((resolve, reject) => {
     api[method]('/restaurants', body)
       .then(resp => resolve(resp.data))

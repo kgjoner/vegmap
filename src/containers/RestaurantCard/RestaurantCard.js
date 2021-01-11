@@ -109,20 +109,8 @@ function RestaurantCard({ restaurant, variant }) {
             : ' restaurant-card__option--vegetarian')
       }></div>
 
-      { restaurant.type !== 'default'
-        ? <canvas ref={canvasEl} className="restaurant-card__exclusive" width="100" height="100"></canvas> 
-        // ? <p className="restaurant-card__exclusive">
-        //     <span>e</span>
-        //     <span>x</span>
-        //     <span>c</span>
-        //     <span>l</span>
-        //     <span>u</span>
-        //     <span>s</span>
-        //     <span>i</span>
-        //     <span>v</span>
-        //     <span>o</span>
-        //     <span>!</span>
-        //   </p>
+      { restaurant.isExclusive || (restaurant.type && restaurant.type !== 'default')
+        ? <canvas ref={canvasEl} className="restaurant-card__exclusive" width="100" height="100"></canvas>
         : null
       }
 
@@ -206,7 +194,7 @@ function RestaurantCard({ restaurant, variant }) {
               aria-label="Copiar coordenadas">
               <div className="icon icon--pin"></div>
             </button>
-            { restaurant.address.split('- ')[1] }
+            { restaurant.neighborhood || restaurant.address.split('- ')[1] }
           </div>
         </div>
       </div>

@@ -36,6 +36,7 @@ export const errorNames = {
     OPTION: 'OPTION',
     FOODS: 'FOODS',
     ADDRESS: 'ADDRESS',
+    NEIGHBORHOOD: 'NEIGHBORHOOD',
     COORDS: 'COORDS',
     REASON: 'REASON'
   },

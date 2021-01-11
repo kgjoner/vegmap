@@ -8,7 +8,7 @@ export function existOrError(value, err) {
 
 
 export function checkWhetherRestaurantInputDataExist(restaurant) {
-  const {name, type, option, foods, address, latitude, longitude} = restaurant
+  const {name, type, option, foods, address, neighborhood, latitude, longitude} = restaurant
 
   existOrError(name, {
     name: errorNames.EMPTY_FIELD.NAME,
@@ -33,6 +33,11 @@ export function checkWhetherRestaurantInputDataExist(restaurant) {
   existOrError(address, {
     name: errorNames.EMPTY_FIELD.ADDRESS,
     message: errorMessages.EMPTY_FIELD.ADDRESS
+  })
+
+  existOrError(neighborhood, {
+    name: errorNames.EMPTY_FIELD.NEIGHBORHOOD,
+    message: errorMessages.EMPTY_FIELD.NEIGHBORHOOD
   })
 
   existOrError(latitude, {

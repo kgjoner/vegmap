@@ -7,7 +7,6 @@ import { setPinLocation, changeMapMode } from '../../store/map/actions'
 import { mapModes, errorNames, notificationTypes } from '../../constants/systemTypes'
 
 import Input from '../../components/Input'
-import Select from '../../components/Select'
 import Checkbox from '../../components/Checkbox'
 import FoodInput from '../../components/FoodInput'
 import Button from '../../components/Button'
@@ -18,8 +17,10 @@ function SignupBox() {
   const [name, setName] = useState('')
   const [type, setType] = useState('')
   const [option, setOption] = useState({ vegan: false, vegetarian: false })
+  const [isExclusive, setIsExclusive] = useState(false)
   const [foods, foodOnTyping, foodHint, foodHandlers, setFoods] = useFood([])
   const [address, setAddress] = useState('')
+  const [neighborhood, setNeighborhood] = useState('')
   const [website, setWebsite] = useState('')
   const [facebookUsername, setFacebookUsername] = useState('')
   const [instagramUsername, setInstagramUsername] = useState('')
@@ -43,24 +44,16 @@ function SignupBox() {
 
   const previousMapMode = usePrevious(mapMode)
 
-  const typeOptions = [
-    {value: 'vegan', label: 'Vegano Exclusivo'},
-    {value: 'vegetarian', label: 'Vegetariano'},
-    {value: 'default', label: 'Carnista'}
-  ]
-
   const options = [{
       id: 'vegan-option', 
       label: 'Opção Vegana', 
       value: option.vegan, 
       setValue: value => setOption(Object.assign({}, option, { vegan: value })),
-      disabled: type === 'vegan'
     }, {
       id: 'vegetarian-option', 
       label: 'Opção Vegetariana', 
       value: option.vegetarian,
       setValue: value => setOption(Object.assign({}, option, { vegetarian: value })),
-      disabled: type === 'vegan' || type === 'vegetarian'
   }]
 
   useEffect(() => {
@@ -69,7 +62,9 @@ function SignupBox() {
       setType(selectedRestaurant.type)
       setFoods([...selectedRestaurant.foods]) 
       setOption({...selectedRestaurant.option})
+      setIsExclusive(selectedRestaurant.isExclusive)
       setAddress(selectedRestaurant.address)
+      setNeighborhood(selectedRestaurant.neighborhood)
       setWebsite(selectedRestaurant.website)
       setFacebookUsername(selectedRestaurant.facebookUsername)
       setInstagramUsername(selectedRestaurant.instagramUsername)
@@ -94,8 +89,10 @@ function SignupBox() {
       name,
       type,
       option,
+      isExclusive,
       foods,
       address,
+      neighborhood,
       website,
       facebookUsername,
       instagramUsername,
@@ -128,16 +125,6 @@ function SignupBox() {
     }
   }, [pinLocation, mapMode, latitude, longitude, previousMapMode, dispatch])
 
-
-  function handleType(value) {
-    setType(value)
-    let newOption = {
-      vegan: value === 'vegan',
-      vegetarian: value === 'vegetarian',
-    }
-    setOption(newOption)
-  }
-
   return (
     <div className="signup">
       <h2 className="signup__title">
@@ -151,16 +138,17 @@ function SignupBox() {
             setValue={setName}
             error={error?.name === errorNames.EMPTY_FIELD.NAME}
           />
-          <Select id="restaurant-type"
-            label="Tipo*"
-            value={type}
-            setValue={handleType}
-            error={error?.name === errorNames.EMPTY_FIELD.TYPE}
-            options={typeOptions}
-          />
           <Checkbox id="option"
             error={error?.name === errorNames.EMPTY_FIELD.OPTION}
             options={options}
+          />
+          <Checkbox id="exclusive"
+            options={[{
+              id: 'exclusive-option', 
+              label: 'Exclusivo', 
+              value: isExclusive, 
+              setValue: value => setIsExclusive(value)
+            }]}
           />
         </div>
 
@@ -180,6 +168,12 @@ function SignupBox() {
             value={address}
             setValue={setAddress}
             error={error?.name === errorNames.EMPTY_FIELD.ADDRESS}
+          />
+          <Input id="neighborhood"
+            label="Bairro*"
+            value={neighborhood}
+            setValue={setNeighborhood}
+            error={error?.name === errorNames.EMPTY_FIELD.NEIGHBORHOOD}
           />
         </div>
 

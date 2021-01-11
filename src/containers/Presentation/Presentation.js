@@ -30,10 +30,12 @@ function Presentation() {
   }
 
   return (
-    <aside className="presentation">
+    <aside className={
+      'presentation' +
+      (user ? ' presentation--compact' : '')
+    }>
       <div className="logo">
         <img src={logo} className="logo__brand" alt="logo" width="80"/>
-        {/* <img src={logotype} className="logo__logotype" alt="logotype"/> */}
         <h1 className="logo__logotype">Vegmap</h1>
       </div>
       
@@ -75,16 +77,19 @@ function Presentation() {
         </div>
       </div>
       
-      { user ? 
-      <div>
-        <Button variant="primary"
-          text="Cadastrar Restaurante"
-          onClick={() => dispatch(openPopup(popups.SIGNUP))} />
-        <p className="presentation__user">como <strong>{user.name}</strong></p>
-      </div> :
-      isConnected 
+      { !user &&  isConnected 
         ? <div className="presentation__btn-container">
             <LoginButton />
+          </div>
+        : null
+      }
+
+      { user 
+        ? <div className="presentation__user">
+          <p className="presentation__user-info">como <strong>{user.name}</strong></p>
+            <Button variant="primary"
+              text="Cadastrar Restaurante"
+              onClick={() => dispatch(openPopup(popups.SIGNUP))} />
           </div>
         : null
       }

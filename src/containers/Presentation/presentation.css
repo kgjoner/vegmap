@@ -28,6 +28,13 @@
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
+.presentation--compact::before {
+  transition: 1s;
+  top: -120px;
+  left: -140px;
+  transform: rotate(95deg) scale(1.2) skewY(-19deg);
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -135,12 +142,6 @@
   cursor: pointer;
 }
 
-.presentation__user {
-  font-size: 0.9em;
-  color: var(--dark-color);
-  margin-top: 10px;
-}
-
 .presentation__btn-container {
   position: absolute;
   bottom: 50px;
@@ -183,4 +184,51 @@
   .logo__brand {
     height: 50px;
   }
+}
+
+
+.presentation__user {
+  position: fixed;
+  bottom: 35px;
+  z-index: 95;
+  transform: rotate(5deg);
+  animation: rollUp 1s;
+}
+
+@keyframes rollUp {
+  0%{
+    bottom: -100px;
+  }
+  100%{
+    bottom: 35px
+  }
+}
+
+.presentation__user::before {
+  content: '';
+  position: fixed;
+  bottom: -180px;
+  left: -220px;
+  height: 300px;
+  width: 500px;
+  background-color: var(--box-color);
+  border-radius: 10px 200px;
+  z-index: -1;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.presentation__user button {
+  height: 50px;
+  border-radius: 5px 40px;
+  background-color: var(--dark-color);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.presentation__user-info {
+  font-size: 0.9em;
+  color: var(--dark-color);
+  margin-bottom: 10px;
 }

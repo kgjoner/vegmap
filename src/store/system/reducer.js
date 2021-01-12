@@ -1,14 +1,16 @@
 import {
   SET_CONNECTION_STATE, 
   SET_SW_EXISTENCE,
-  SET_LOCATION_PERMISSION, 
+  SET_LOCATION_PERMISSION,
+  SET_WINDOW_WIDTH, 
 } from '../../constants/actionTypes'
 
 
 export const initialState = {
   isConnected: null,
   hasServiceWorker: null,
-  locationPermission: null
+  locationPermission: null,
+  windowWidth: window.innerWidth
 }
 
 export const system = (state = initialState, action) => {
@@ -27,6 +29,11 @@ export const system = (state = initialState, action) => {
     case SET_LOCATION_PERMISSION:
       return Object.assign({}, state, {
         locationPermission: payload
+      })
+
+    case SET_WINDOW_WIDTH:
+      return Object.assign({}, state, {
+        windowWidth: payload
       })
     
     default:

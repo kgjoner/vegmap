@@ -79,6 +79,12 @@
   height: 20px;
 }
 
+.icon--options {
+  mask-image: url('../img/options.svg');
+  width: 25px;
+  height: 25px;
+}
+
 .icon--loading {
   mask-image: url('../img/loading.svg');
   background-color: #fff;

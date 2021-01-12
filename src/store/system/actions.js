@@ -7,9 +7,18 @@ import { defaultLocation, notificationTypes, popups } from '../../constants/syst
 import {
   SET_CONNECTION_STATE, 
   SET_SW_EXISTENCE,
-  SET_LOCATION_PERMISSION, 
+  SET_LOCATION_PERMISSION,
+  SET_WINDOW_WIDTH, 
 } from '../../constants/actionTypes'
 
+
+function dispatchNotifyIfNecessary(dispatch, isConnected, previousState) {
+  if ( (isConnected && previousState.isConnected === false)
+    || (!isConnected && previousState.isConnected) ) {
+      const message = isConnected ? infoMessages.ONLINE : infoMessages.OFFLINE
+      dispatch(notify(notificationTypes.INFO, message, 10000))
+    }
+}
 
 export const verifyConnection = () => {
   let isConnected
@@ -82,11 +91,9 @@ export const setPermission = (permission, shouldPersist = true) => {
   }
 }
 
-
-function dispatchNotifyIfNecessary(dispatch, isConnected, previousState) {
-  if ( (isConnected && previousState.isConnected === false)
-    || (!isConnected && previousState.isConnected) ) {
-      const message = isConnected ? infoMessages.ONLINE : infoMessages.OFFLINE
-      dispatch(notify(notificationTypes.INFO, message, 10000))
-    }
+export const updateWindowWidth = () => {
+  return {
+    type: SET_WINDOW_WIDTH,
+    payload: window.innerWidth
+  }
 }

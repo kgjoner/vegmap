@@ -23,3 +23,11 @@
   background-color: var(--primary-color-variant);
   outline: none;
 }
+
+@media(max-width: 1000px) {
+  .login-btn button {
+    height: 35px;
+    font-size: 14px;
+    min-width: 90px;
+  }
+}

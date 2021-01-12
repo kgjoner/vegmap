@@ -148,44 +148,114 @@
   transform: rotate(-15deg);
 }
 
-.presentation__footer {
+.presentation__drop-btn {
+  background-color: transparent;
   position: absolute;
-  width: 100%;
-  bottom: 0;
-  padding: 10px 20px;
-  background-color: var(--dark-color);
-  color: #fdfdfd;
-  font-size: 0.85em;
-  display: flex;
-  justify-content: flex-end;
-  align-self: center; 
-}
-
-.presentation__footer .icon {
-  margin-left: 5px;
-  margin-right: 5px;
-  transform: scale(0.9);  
-  background-color: #fdfdfddd;
+  top: 18px;
+  left: 365px;
+  padding: 5px;
 }
 
 @media(max-width: 1000px) {
   .presentation {
-    min-height: auto;
-    height: 550px;
-    max-width: 440px;
+    width: 100%;
+    padding: 0px 20px 0 10px;
+  }
+
+  .presentation::before {
+    top: -290px;
+    left: -130px;
+    width: 400px;
+    height: 500px;
+    border-top-right-radius: 500px;
+    border-top-left-radius: 200px;
+    transform: rotate(123deg) skewY(40deg);
+    box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
   }
 
   .logo {
-    flex-wrap: wrap;
-    justify-content: center;
-    height: auto;
+    transform-origin: 0 0;
+    transform: scale(0.9);
   }
 
   .logo__brand {
-    height: 50px;
+    height: 40px;
+    width: 50px;
+  }
+
+  .logo__logotype {
+    font-size: 30px;
+  }
+
+  .presentation__btn-container {
+    position: absolute;
+    top: 20px;
+    left: 260px;
+    transform: rotate(0deg);
+  }
+
+  .presentation__dropdown--active {
+    padding: 100px 50px 20px 50px;
+    background-color: var(--box-color);
+    position: fixed;
+    top: -200px;
+    left: 0;
+    
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    animation: rollDown 0.6s forwards;
+    z-index: -2;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2)
+  }
+
+  .presentation__dropdown--hiding {
+    animation: hideUp 0.6s forwards;
+  }
+
+  .presentation__config {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .presentation__dropdown--active .presentation__config {
+    visibility: visible;
+    opacity: 1;
   }
 }
 
+@media(max-width: 420px) {
+  .presentation__btn-container {
+    left: auto;
+    right: 60px;
+  }
+
+  .presentation__drop-btn {
+    left: auto;
+    right: 10px;
+  }
+}
+
+@keyframes rollDown {
+  0% {
+    top: -200px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@keyframes hideUp {
+  0% {
+    top: 0px;
+  }
+  100% {
+    top: -250px;
+  }
+}
 
 .presentation__user {
   position: fixed;

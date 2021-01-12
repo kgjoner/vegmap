@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { verifyConnection, setConnection, verifyServiceWorker, getPermission } from './store/system/actions'
+import { verifyConnection, setConnection, verifyServiceWorker, getPermission, updateWindowWidth } from './store/system/actions'
 import { mapModes } from './constants/systemTypes'
 
 import Maps from './containers/Maps'
@@ -31,10 +31,12 @@ function App() {
 
     window.addEventListener('offline', () => dispatch(setConnection(false)))
     window.addEventListener('online', () => dispatch(setConnection(true)))
+    window.addEventListener('resize', () => dispatch(updateWindowWidth()))
 
     return () => {
       window.removeEventListener('offline', () => dispatch(setConnection(false)))
       window.removeEventListener('online', () => dispatch(setConnection(true)))
+      window.removeEventListener('resize', () => dispatch(updateWindowWidth()))
     }
   }, [dispatch])
 

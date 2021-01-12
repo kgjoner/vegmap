@@ -23,14 +23,15 @@
   height: 90px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
   z-index: 95;
+  padding-left: 400px;
+  padding-right: 40px;
 }
 
 .app__loading {
@@ -54,24 +55,46 @@
   color: var(--dark-color);
 }
 
+@media(min-width: 1200px) {
+  .app__header {
+    margin-left: calc(50vw - 600px);
+  }
+}
+
 @media (max-width: 1000px) {
   #app .container {
     flex-direction: column;
     padding: 20px 30px;
+    width: fit-content;
   }
 
   #app main {
     margin-left: 0;
-    margin-top: 80px;
+    margin-top: 20px;
+    margin-bottom: 70px;
   }
 
   #app aside {
     width: 100%;
   }
+
+  .app__header {
+    top: auto;
+    bottom: 0px;
+    padding: 0 20px;
+  }
 }
 
 @media (max-width: 640px) {
+  #app .container {
+    padding: 20px;
+  }
+
   #app main ul {
     grid-template-columns: 1fr;
+  }
+
+  .app__header {
+    padding: 0 10px;
   }
 }

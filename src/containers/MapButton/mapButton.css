@@ -1,5 +1,5 @@
 .map-button {
-  width: 50px;
+  min-width: 50px;
   height: 50px;
   background-color: var(--box-color);
   border-radius: 50%;
@@ -24,4 +24,20 @@
   left: -45px;
   color: var(--dark-color);
   font-weight: bold;
+}
+
+@media(max-width: 1200px) {
+  .map-button {
+    margin-left: 20px;
+  }
+
+  .map-button__label {
+    display: none;
+  }
+}
+
+@media(max-width: 600px) {
+  .map-button {
+    margin-left: 20px;
+  }
 }

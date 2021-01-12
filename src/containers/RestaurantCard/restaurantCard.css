@@ -55,8 +55,8 @@
   }
 
   .restaurant-card--float {
-    top: 100px;
-    left: 10px;
+    bottom: 90px;
+    right: 20px;
   }
 }
 

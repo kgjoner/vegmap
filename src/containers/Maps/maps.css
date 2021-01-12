@@ -27,7 +27,14 @@
   display: none !important;
 }
 
-/* remove a botão de tela cheia */
+/* remove o botão de tela cheia */
 .gm-fullscreen-control {
   display: none;
+}
+
+/* remove o botão de zoom */
+@media(max-width: 1000px) {
+  .gm-bundled-control {
+    display: none;
+  }
 }

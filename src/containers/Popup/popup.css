@@ -95,7 +95,7 @@
   border-radius: 4px;
 }
 
-@media(max-width: 1000px) {
+@media(max-width: 1200px) {
   .popup__bg:after {
     content: '';
     position: absolute;
@@ -104,5 +104,12 @@
     height: 20vh;
     width: 100%;
     background-color: rgba(0,0,0,0.6);
+  }
+}
+
+@media(max-width: 350px) {
+  .popup__content {
+    width: calc(100vw - 5px);
+    max-width: none;
   }
 }

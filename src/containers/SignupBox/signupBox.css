@@ -1,7 +1,7 @@
 .signup {
   width: 670px;
   max-height: calc(100vh - 30px);
-  max-width: calc(100vw - 45px);
+  max-width: calc(100vw - 150px);
 }
 
 .signup__title {
@@ -78,6 +78,10 @@
 }
 
 @media(max-width: 650px) {
+  .signup {
+    margin-top: 50px;
+  }
+
   .signup__group {
     flex-direction: column;
   }
@@ -89,5 +93,12 @@
 
   .signup__block {
     justify-content: flex-start;
+  }
+}
+
+@media(max-width: 350px) {
+  .singup {
+    width: calc(100vw - 60px);
+    max-width: none;
   }
 }
